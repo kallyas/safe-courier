@@ -1,5 +1,14 @@
 .nav-bar {
   display: flex;
+  height: 75px;
+  margin: 10px;
   flex-direction: row;
   justify-content: space-between;
+}
+
+.right {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 25px;
 }
