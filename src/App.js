@@ -1,44 +1,31 @@
-import { MDBContainer, MDBRow, MDBCol } from "mdbreact";
-import { FaPlusSquare } from 'react-icons/fa'
+import { useState } from 'react'
+import { MDBContainer } from 'mdbreact'
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import './App.css'
-import Navbar from './components/Navbar/Navbar';
-import ParcelList from "./components/ParcelList/ParcelList";
-import Sidebar from "./components/Sidebar/Sidebar";
-
-
-const onClick = () => {
-  console.log("clicked");
-}
+import Login from "./components/Login/Login";
+import Home from './components/Home/Home'
+import Signup from './components/Signup/Signup';
+import NotFound from './components/Common/NotFound'
 
 function App() {
+  const [isLoggedIn, setisLoggedIn] = useState(false)
+
   return (
-    <MDBContainer>
-      <MDBRow>
-        <MDBCol size="12" md="8">
-          <Navbar />
-          <MDBContainer className="hero-section">
-            <p>Chose the Most</p>
-            <p>Convinient Delivery</p>
-            <p onClick={onClick}>Add a new parcel <FaPlusSquare /></p>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/">
+          <MDBContainer>
+            {isLoggedIn ? <Home /> : <Login onClick={() => setisLoggedIn(true)} />}
           </MDBContainer>
-          <MDBCol>
-            Your Parcels
-            <MDBCol>
-              <ParcelList />
-            </MDBCol>
-          </MDBCol>
-        </MDBCol>
-        <MDBCol size="6" md="4"
-        style={{ width: '100%'}}
-        >📦Shipping
-        <MDBContainer>
-          <MDBRow>
-            <Sidebar />
-          </MDBRow>
-        </MDBContainer>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+        </Route>
+        <Route exact path="/signup">
+          <MDBContainer>
+            <Signup />
+          </MDBContainer>
+        </Route>
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 

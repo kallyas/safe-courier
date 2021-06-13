@@ -1,5 +1,6 @@
-import React from 'react'
-import {FaBell, FaUser, FaHamburger } from 'react-icons/fa'
+import { MDBRow } from 'mdbreact'
+import { FaHamburger } from 'react-icons/fa'
+import { FiBell, FiUser } from 'react-icons/fi'
 import Searchbar from '../Search/Searchbar'
 import './Navbar.css'
 
@@ -9,8 +10,12 @@ function Navbar() {
             <FaHamburger />
             <Searchbar />
             <div className="right">
-                <FaBell />
-                <FaUser />
+                <MDBRow>
+                    <FiBell />
+                </MDBRow>
+                <MDBRow>
+                    <FiUser />
+                </MDBRow>
             </div>
         </div>
     )
