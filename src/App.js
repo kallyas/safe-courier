@@ -1,27 +1,32 @@
-import { useState } from 'react'
-import { MDBContainer } from 'mdbreact'
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
+
 import './App.css'
+import './assets/css/space.min.css'
+
+import useToken  from './Utils/useToken'
+
 import Login from "./components/Login/Login";
 import Home from './components/Home/Home'
 import Signup from './components/Signup/Signup';
 import NotFound from './components/Common/NotFound'
+import Landing from './components/Landing/Landing';
 
 function App() {
-  const [isLoggedIn, setisLoggedIn] = useState(false)
-
+  const { token, setToken } = useToken()
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MDBContainer>
-            {isLoggedIn ? <Home /> : <Login onClick={() => setisLoggedIn(true)} />}
-          </MDBContainer>
+            <Landing />
+        </Route>
+        <Route exact path="/home">
+            {token ? <Home /> : <Redirect to="/login" />}
+        </Route>
+        <Route exact path="/login">
+          {token ? <Redirect to="/" /> : <Login setToken={setToken}  />}
         </Route>
         <Route exact path="/signup">
-          <MDBContainer>
-            <Signup />
-          </MDBContainer>
+            {token ? <Redirect to="/" /> : <Signup />}
         </Route>
         <Route component={NotFound} />
       </Switch>
