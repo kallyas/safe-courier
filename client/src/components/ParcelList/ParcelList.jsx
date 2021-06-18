@@ -1,6 +1,7 @@
 import React from "react";
+import GeocodeFn from "../Common/Geocode"
 
-function ParcelList({ items }) {
+function ParcelList({ items, cancelParcel }) {
   return (
     <div className="panel-body">
       <div className="table-responsive">
@@ -21,7 +22,7 @@ function ParcelList({ items }) {
           <tbody>
             {items.map((item, i) => {
               return [
-                <tr key={i} style={{cursor: "pointer"}} onClick={() => updateMap(item)}>
+                <tr key={i}>
                   <th scope="row">#</th>
                   <td>{item.parcelType}</td>
                   <td>{item.sender.username}</td>
@@ -31,13 +32,18 @@ function ParcelList({ items }) {
                   <td>
                     <span className={`label ${
                     item.status === "delivered" ? "label-success" : 
-                    item.status === "transit" ? "label-warning": 
+                    item.status === "transit" ? "label-warning":
+                    item.status === "pending" ? "label-default" : 
                     item.status === "cancelled" ? "label-danger":
                     " "}`}>{item.status}</span>
                   </td>
                   <td>{item.price}</td>
+                  <td><button>Details</button></td>
                   <td><button className="btn btn-sm btn-success">Edit</button></td>
-                  <td><button className={`btn btn-sm btn-danger ${item.status === "cancelled" ? "disabled": ""}`}>cancel</button></td>
+                  <td><button 
+                  className={`btn btn-sm btn-danger ${item.status === "cancelled" ? "disabled": ""}`}
+                  onClick={() => item.status === "cancelled" ? "" : cancelParcel(item._id)}
+                  >cancel</button></td>
                 </tr>,
               ];
             })}
@@ -50,5 +56,6 @@ function ParcelList({ items }) {
 
 const updateMap = (items) => {
   console.log({to: items.locationTo, from: items.locationFrom});
+  GeocodeFn(items.locationTo)
 }
 export default ParcelList;

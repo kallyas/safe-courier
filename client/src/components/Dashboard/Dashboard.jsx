@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
+import decode from "jwt-decode"
 import Form from "../AddParcel/Form";
 import Header from "../Header/Header";
-import Map from "../Map/Map";
 import Panel from "../Panel/Panel";
 import ParcelList from "../ParcelList/ParcelList";
 
@@ -11,6 +11,9 @@ function Dashboard({ token }) {
   const history = useHistory();
   const location = useLocation();
   const [items, setItems] = useState([])
+  const [render, setRender] = useState(false)
+
+  const user = decode(token)
   
   const fetchItems = async () => {
     const res = await fetch("http://localhost:5000/api/v1/parcels", {
@@ -19,6 +22,36 @@ function Dashboard({ token }) {
         "Authorization": `Bearer ${token}`
       }
     })
+    const data = await res.json()
+    return data
+  }
+
+  const cancelParcel = async (id) => {
+    const cancel = await fetchItem(id)
+    const update = {...cancel, status: "cancelled"}
+
+    const res = await fetch(`http://localhost:5000/api/v1/parcels/${id}/cancel`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(update)
+    })
+
+    const data = await res.json()
+    
+    setItems(
+      items.map((item) =>
+        item.id === id ? { ...item, status: data.status } : item
+      )
+    )
+
+    setRender(true)
+
+  }
+
+  const fetchItem = async (id) => {
+    const res = await fetch(`http://localhost:5000/api/v1/parcels/${id}`)
     const data = await res.json()
     return data
   }
@@ -37,15 +70,26 @@ function Dashboard({ token }) {
     console.log(data);
   }
 
+  const logOut = () => {
+    localStorage.removeItem("token")
+  }
   useEffect(() => {
     const getParcels = async () => {
       const response = await fetchItems(token)
       console.log(response);
-      setItems(response)
+      setItems(response.filter((item) => item.sender.username === user.username && item.sender.role === "user"))
     }
     getParcels()
+    console.log(decode(token));
+    if(decode(token) < new Date().getTime()) logOut()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [render])
+
+  if(location.pathname === "/add") {
+    if(!token) {
+      return ("Not authenticated, Redirecting...",  <Redirect to="/login" />)
+    }
+  }
 
   return (
     <>
@@ -108,27 +152,13 @@ function Dashboard({ token }) {
                 </div>
                 <div className="panel-body">
                   {location.pathname === "/home" ? (
-                    <ParcelList items={items} />
+                    <ParcelList items={items} cancelParcel={cancelParcel} />
                   ) : (
                     <Form onAdd={onAddParcel}/>
                   )}
                 </div>
               </div>
             </div>
-            {location.pathname === "/home" && (
-              <>
-            <div className="row">
-              <div className="col-lg-12 col-md-12">
-                <div className="panel panel-white">
-                  <div className="panel-heading clearfix">
-                    <h4 className="panel-title">Status</h4>
-                  </div>
-                  <Map />
-                </div>
-              </div>
-            </div>
-            </>
-            )}
           </div>
           <div className="row"></div>
         </div>
