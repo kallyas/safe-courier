@@ -34,7 +34,18 @@ const UserSchema = new Schema({
       return bcrypt.hashSync(value, 10);
     },
   },
-  contact: Number,
+  firstName: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  isAdmin: {
+    type: Boolean,
+    default: false
+  }
 });
 
 // create search index

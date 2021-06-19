@@ -1,17 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const trackingString = (length) => {
-  let prefix = "LK"
-  let result = ""
-  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  for(let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * 
-    chars.length))
-  }
-  return prefix.concat(result)
-}
-
 let validateEmail = (email) => {
   var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   return re.test(email);
@@ -49,10 +38,13 @@ const parcelSchema = new Schema({
     },
     trackingCode: {
         type: String,
-        default: trackingString(7)
     },
     weight: {
       type: Number,
+      required: true
+    },
+    city: {
+      type: String,
       required: true
     },
     recipient: {
@@ -63,8 +55,8 @@ const parcelSchema = new Schema({
       email: {
         type: String,
         trim: true,
+        unique: false,
         lowercase: true,
-        unique: true,
         required: "Email address is required",
         validate: [validateEmail, "Please fill a valid email address"],
         match: [

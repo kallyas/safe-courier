@@ -33,4 +33,6 @@ router.get("/user/:id", auth.authenticateToken, userController.findUserById);
 //login
 router.post("/auth/login", userController.Login);
 
+router.post("/verify", auth.authenticateToken);
+
 module.exports = router;

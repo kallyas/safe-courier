@@ -14,6 +14,7 @@ module.exports.createParcel = async (req, res, next) => {
     res.status(200).send({
       status: "success",
       message: "successfully created",
+      result
     });
   } catch (error) {
     console.log(error.message);

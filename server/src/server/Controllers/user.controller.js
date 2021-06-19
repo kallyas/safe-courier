@@ -28,9 +28,7 @@ module.exports.createUser = async (req, res, next) => {
     }
     const user = new User(req.body);
     const result = await user.save();
-    const token = jwt.sign({ id: user._id }, process.env.SECRET, {
-      expiresIn: 86400, // expires in 24 hours
-    });
+    const token = auth.generateAccessToken(result.toJSON())
     // res.send(result);
     res
       .status(200)
@@ -149,8 +147,8 @@ module.exports.Login = async (req, res, next) => {
       //compare passwords using Bcrypt
       const result = await bcrypt.compare(req.body.password, user.password);
       if (result) {
-        const data = req.body;
-        const token = auth.generateAccessToken(data);
+        //const data = req.body;
+        const token = auth.generateAccessToken(user.toJSON());
         res.send({ message: "logged In", token: token });
       } else {
         res.send({ message: "Passwords did not match!" });
