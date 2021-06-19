@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Form({ onAdd }) {
+function Form({ onAdd, id }) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [addressTo, setAddressTo] = useState("")
@@ -18,7 +18,7 @@ function Form({ onAdd }) {
     }
     
     onAdd({ 
-      sender: "60ca03558597f630b084d63b", 
+      sender: id, 
       recipient: {
         name,
         email
@@ -27,7 +27,8 @@ function Form({ onAdd }) {
       city, 
       parcelType: type,
       weight,
-      locationFrom: addressFrom
+      locationFrom: addressFrom,
+      trackingCode: "LK".concat(Math.random().toString(36).slice(2, 7).toUpperCase())
     })
 
     setAddressFrom("")

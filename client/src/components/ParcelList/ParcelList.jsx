@@ -1,10 +1,12 @@
 import React from "react";
-import GeocodeFn from "../Common/Geocode"
+import { useHistory } from "react-router-dom";
 
 function ParcelList({ items, cancelParcel }) {
+  const history = useHistory()
   return (
     <div className="panel-body">
-      <div className="table-responsive">
+      {items.length > 0 ? (
+        <div className="table-responsive">
         <table className="table">
         <thead>
             <tr>
@@ -38,11 +40,11 @@ function ParcelList({ items, cancelParcel }) {
                     " "}`}>{item.status}</span>
                   </td>
                   <td>{item.price}</td>
-                  <td><button>Details</button></td>
+                  <td><button onClick={() => {cancelParcel(item._id); history.push("/details")}}>Details</button></td>
                   <td><button className="btn btn-sm btn-success">Edit</button></td>
                   <td><button 
-                  className={`btn btn-sm btn-danger ${item.status === "cancelled" ? "disabled": ""}`}
-                  onClick={() => item.status === "cancelled" ? "" : cancelParcel(item._id)}
+                  className={`btn btn-sm btn-danger ${item.status === "cancelled" || item.status === "delivered" ? "disabled": ""}`}
+                  onClick={() => item.status === "cancelled" ? "" : item.status === "delivered" ? "" : cancelParcel(item._id)}
                   >cancel</button></td>
                 </tr>,
               ];
@@ -50,12 +52,11 @@ function ParcelList({ items, cancelParcel }) {
           </tbody>
         </table>
       </div>
+      ):
+      <p>No parcel orders Available</p>
+      }
     </div>
   );
 }
 
-const updateMap = (items) => {
-  console.log({to: items.locationTo, from: items.locationFrom});
-  GeocodeFn(items.locationTo)
-}
 export default ParcelList;
