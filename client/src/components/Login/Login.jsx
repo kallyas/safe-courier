@@ -1,29 +1,40 @@
 import { useState } from "react";
 import { useHistory } from 'react-router-dom'
+import useToken from "../../Utils/useToken"
 
-async function loginUser(credentials) {
-  return fetch('http://localhost:8080/login', {
+const Login = () => {
+  const [password, setPassword] = useState("")
+  const [username, setUsername] = useState("")
+  const [error, setError] = useState([])
+  const history = useHistory()
+  const { setToken } = useToken()
+
+  const API = process.env.REACT_APP_API_URL
+
+  const loginUser = async () => {
+    const res = await fetch(`${API}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(credentials)
+    body: JSON.stringify({username, password})
   })
-    .then(data => data.json())
- }
 
-const Login = ({setToken}) => {
-  const [password, setPassword] = useState("")
-  const [username, setUsername] = useState("")
-  const history = useHistory()
-
+    const data = await res.json()
+    return data
+  }
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
-      username,
-      password
-    });
-    setToken(token);
+    const {token, message} = await loginUser()
+    console.log(message);
+
+    if(message !== "logged In") {
+      setError(message)
+      return
+    }
+      setToken(token);
+      history.push("/home")
+      setError([])
   }
 
 return (
@@ -41,6 +52,7 @@ return (
                           value={username}
                           onChange={(e) => setUsername(e.target.value)}
                           />
+                          {error === "User not found!" && <p className="help-block" style={{ color: "red"}}>user does not exist</p>}
                       </div>
                       <div className="form-group">
                           <label htmlFor="password">Password</label>
@@ -49,6 +61,7 @@ return (
                           className="form-control" 
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}/>
+                          {error === "Passwords did not match!" && <p className="help-block" style={{ color: "red"}}>Incorect password</p>}
                       </div>
                       <button 
                       type="submit" 

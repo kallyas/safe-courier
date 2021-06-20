@@ -1,9 +1,12 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
-function ParcelList({ items }) {
+function ParcelList({ items, cancelParcel, onDetails }) {
+  const history = useHistory()
   return (
     <div className="panel-body">
-      <div className="table-responsive">
+      {items.length > 0 ? (
+        <div className="table-responsive">
         <table className="table">
         <thead>
             <tr>
@@ -21,7 +24,7 @@ function ParcelList({ items }) {
           <tbody>
             {items.map((item, i) => {
               return [
-                <tr key={i} style={{cursor: "pointer"}} onClick={() => updateMap(item)}>
+                <tr key={i}>
                   <th scope="row">#</th>
                   <td>{item.parcelType}</td>
                   <td>{item.sender.username}</td>
@@ -31,24 +34,29 @@ function ParcelList({ items }) {
                   <td>
                     <span className={`label ${
                     item.status === "delivered" ? "label-success" : 
-                    item.status === "transit" ? "label-warning": 
+                    item.status === "transit" ? "label-warning":
+                    item.status === "pending" ? "label-default" : 
                     item.status === "cancelled" ? "label-danger":
                     " "}`}>{item.status}</span>
                   </td>
                   <td>{item.price}</td>
+                  <td><button onClick={() => {onDetails(item._id); history.push("/details")}}>Details</button></td>
                   <td><button className="btn btn-sm btn-success">Edit</button></td>
-                  <td><button className={`btn btn-sm btn-danger ${item.status === "cancelled" ? "disabled": ""}`}>cancel</button></td>
+                  <td><button 
+                  className={`btn btn-sm btn-danger ${item.status === "cancelled" || item.status === "delivered" ? "disabled": ""}`}
+                  onClick={() => item.status === "cancelled" ? "" : item.status === "delivered" ? "" : cancelParcel(item._id)}
+                  >cancel</button></td>
                 </tr>,
               ];
             })}
           </tbody>
         </table>
       </div>
+      ):
+      <p>No parcel orders Available</p>
+      }
     </div>
   );
 }
 
-const updateMap = (items) => {
-  console.log({to: items.locationTo, from: items.locationFrom});
-}
 export default ParcelList;

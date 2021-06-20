@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Form({ onAdd }) {
+function Form({ onAdd, id }) {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [addressTo, setAddressTo] = useState("")
@@ -18,13 +18,18 @@ function Form({ onAdd }) {
     }
     
     onAdd({ 
-      sender: name, 
-      email, 
+      sender: id, 
+      recipient: {
+        name,
+        email
+      }, 
       locationTo: addressTo, 
       city, 
       parcelType: type,
       weight,
-      locationFrom: addressFrom
+      price: "$".concat(parseInt(weight*100).toString()),
+      locationFrom: addressFrom,
+      trackingCode: "LK".concat(Math.random().toString(36).slice(2, 7).toUpperCase())
     })
 
     setAddressFrom("")
@@ -32,6 +37,7 @@ function Form({ onAdd }) {
     setCity("")
     setWeight("")
     setType("")
+    setName("")
     setEmail("")
   }
   return (
@@ -66,7 +72,7 @@ function Form({ onAdd }) {
           <input
             type="text"
             value={addressTo}
-            onChange={(e) => setAddressTo(e.target.value)}
+            onChange={(e) => { setAddressTo(e.target.value); setError(false)}}
             className="form-control"
             id="inputAddress"
             placeholder="1234 Main St"
@@ -80,6 +86,7 @@ function Form({ onAdd }) {
             type="text"
             className="form-control"
             id="inputAddress2"
+            required
             placeholder="Apartment, studio, or floor"
           />
         </div>
@@ -96,8 +103,8 @@ function Form({ onAdd }) {
             <label htmlFor="inputState">Courier Type</label>
             <select id="inputState" 
             className="form-control" 
-            defaultValue="choose"
             value={type}
+            required
             onChange={(e) => setType(e.target.value)}
             >
               <option value="choose">Choose...</option>
@@ -111,6 +118,7 @@ function Form({ onAdd }) {
             className="form-control" 
             id="inputZip"
             value={weight}
+            required
             onChange={(e) => setWeight(e.target.value)} 
             />
           </div>

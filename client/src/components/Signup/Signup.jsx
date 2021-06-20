@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom"
+import useToken from "../../Utils/useToken"
 
 const Signup = () => {
   const [username, setUsername] = useState("")
@@ -9,30 +10,38 @@ const Signup = () => {
   const [password, setPassword] = useState("")
   const [error, setError] = useState([])
   const history = useHistory()
+  const { setToken } = useToken()
 
-  async function signUpUser(data) {
-    return fetch('http://localhost:8080/login', {
+  const API = process.env.REACT_APP_API_URL
+  const signUpUser = async () => {
+    const res = await fetch(`${API}/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        firstName,
+        lastName
+      })
     })
-      .then(data => data.json())
-      .catch(err => setError([...error, err]))
+      
+    const data = await res.json()
+    console.log(data);
+    return data
    }
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await signUpUser({
-      username,
-      password
-    });
-    console.log(token);
-  }
-
-  if(error.length > 0) {
-    return <p>{error[0]}</p>
+    const res = await signUpUser()
+    if(res.message !== "User created successfully") {
+      setError(res.message)
+      return
+    }
+    setToken(res.token)
+    history.push("/home")
   }
 
 return (
@@ -47,7 +56,9 @@ return (
                     <input type="text" 
                     className="form-control"
                     value={username}
+                    required
                     onChange={(e) => setUsername(e.target.value)} />
+                    
                 </div>
                 <div className="form-group">
                     <label htmlFor="FirstName">First name</label>
@@ -60,6 +71,7 @@ return (
                     <label htmlFor="LastName">Last name</label>
                     <input type="text" 
                     className="form-control"
+                    required
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)} />
                 </div>
@@ -68,13 +80,16 @@ return (
                       <input type="email" 
                         className="form-control"
                         value={email}
+                        required
                         onChange={(e) => setEmail(e.target.value)} />
+                        {error === "Email already exists" && <p style={{ color: "red"}} className="help-text">{error}</p>}
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
                     <input type="password" 
                     className="form-control"
                     value={password}
+                    required
                     onChange={(e) => setPassword(e.target.value)} />
                 </div>
                   <button type="submit" 

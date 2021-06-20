@@ -6,7 +6,7 @@ function Navbar() {
       <div className="container-fluid">
         <div className="navbar-header">
           <div className="logo-sm">
-            <a href="javascript:void(0)" id="sidebar-toggle-button">
+            <a href="." id="sidebar-toggle-button">
               <i className="fa fa-bars"></i>
             </a>
             <a className="logo-box" href="/home">
@@ -30,17 +30,17 @@ function Navbar() {
         >
           <ul className="nav navbar-nav">
             <li>
-              <a href="javascript:void(0)" id="collapsed-sidebar-toggle-button">
+              <a href="." id="collapsed-sidebar-toggle-button">
                 <i className="fa fa-bars"></i>
               </a>
             </li>
             <li>
-              <a href="javascript:void(0)" id="toggle-fullscreen">
+              <a href="." id="toggle-fullscreen">
                 <i className="fa fa-expand"></i>
               </a>
             </li>
             <li>
-              <a href="javascript:void(0)" id="search-button">
+              <a href="." id="search-button">
                 <i className="fa fa-search"></i>
               </a>
             </li>
@@ -48,7 +48,7 @@ function Navbar() {
           <ul className="nav navbar-nav navbar-right">
             <li>
               <a
-                href="javascript:void(0)"
+                href="."
                 className="right-sidebar-toggle"
                 data-sidebar-id="main-right-sidebar"
               >
@@ -57,7 +57,7 @@ function Navbar() {
             </li>
             <li className="dropdown">
               <a
-                href="javascript:void(0)"
+                href="."
                 className="dropdown-toggle"
                 data-toggle="dropdown"
                 role="button"
@@ -69,14 +69,14 @@ function Navbar() {
               <ul className="dropdown-menu dropdown-lg dropdown-content">
                 <li className="drop-title">
                   Notifications
-                  <a href="#" className="drop-title-link">
+                  <a href="." className="drop-title-link">
                     <i className="fa fa-angle-right"></i>
                   </a>
                 </li>
                 <li className="slimscroll dropdown-notifications">
                   <ul className="list-unstyled dropdown-oc">
                     <li>
-                      <a href="#">
+                      <a href=".">
                         <span className="notification-badge bg-primary">
                           <i className="fa fa-photo"></i>
                         </span>
@@ -88,7 +88,7 @@ function Navbar() {
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href=".">
                         <span className="notification-badge bg-primary">
                           <i className="fa fa-at"></i>
                         </span>
@@ -99,7 +99,7 @@ function Navbar() {
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href=".">
                         <span className="notification-badge bg-danger">
                           <i className="fa fa-bolt"></i>
                         </span>
@@ -110,7 +110,7 @@ function Navbar() {
                       </a>
                     </li>
                     <li>
-                      <a href="#">
+                      <a href=".">
                         <span className="notification-badge bg-success">
                           <i className="fa fa-bullhorn"></i>
                         </span>
@@ -126,7 +126,7 @@ function Navbar() {
             </li>
             <li className="dropdown user-dropdown">
               <a
-                href="#"
+                href="."
                 className="dropdown-toggle"
                 data-toggle="dropdown"
                 role="button"
@@ -141,23 +141,23 @@ function Navbar() {
               </a>
               <ul className="dropdown-menu">
                 <li>
-                  <a href="#">Profile</a>
+                  <a href=".">Profile</a>
                 </li>
                 <li>
-                  <a href="#">Calendar</a>
+                  <a href=".">Calendar</a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href=".">
                     <span className="badge pull-right badge-danger">42</span>
                     Messages
                   </a>
                 </li>
                 <li role="separator" className="divider"></li>
                 <li>
-                  <a href="#">Account Settings</a>
+                  <a href=".">Account Settings</a>
                 </li>
                 <li>
-                  <a href="#">Log Out</a>
+                  <a href=".">Log Out</a>
                 </li>
               </ul>
             </li>

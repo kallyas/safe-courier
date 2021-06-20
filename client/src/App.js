@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import "./App.css";
 import "./assets/css/space.min.css";
+import "./assets/css/toastr.min.css";
 
 import useToken from "./Utils/useToken";
 
@@ -27,6 +28,7 @@ function App() {
         <ProtectedRoute path="/add" >
           <Home  />
         </ProtectedRoute>
+        <ProtectedRoute path="/details" component={Home} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
