@@ -12,8 +12,9 @@ const Signup = () => {
   const history = useHistory()
   const { setToken } = useToken()
 
+  const API = process.env.REACT_APP_API_URL
   const signUpUser = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/auth/signup', {
+    const res = await fetch(`${API}/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

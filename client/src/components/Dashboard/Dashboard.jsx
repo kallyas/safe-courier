@@ -18,7 +18,7 @@ function Dashboard({ token }) {
 
   const user = decode(token);
 
-  const API = process.env.REACT_APP_API_URL || "http://localhost:5000/api/v1"
+  const API = process.env.REACT_APP_API_URL //|| "http://localhost:5000/api/v1"
 
   // get all parcel orders
   const fetchItems = async () => {

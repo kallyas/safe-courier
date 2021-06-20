@@ -9,9 +9,10 @@ const Login = () => {
   const history = useHistory()
   const { setToken } = useToken()
 
+  const API = process.env.REACT_APP_API_URL
 
   const loginUser = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/auth/login', {
+    const res = await fetch(`${API}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
