@@ -27,6 +27,7 @@ function Form({ onAdd, id }) {
       city, 
       parcelType: type,
       weight,
+      price: "$".concat(parseInt(weight*100).toString()),
       locationFrom: addressFrom,
       trackingCode: "LK".concat(Math.random().toString(36).slice(2, 7).toUpperCase())
     })

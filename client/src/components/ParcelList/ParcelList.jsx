@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-function ParcelList({ items, cancelParcel }) {
+function ParcelList({ items, cancelParcel, onDetails }) {
   const history = useHistory()
   return (
     <div className="panel-body">
@@ -40,7 +40,7 @@ function ParcelList({ items, cancelParcel }) {
                     " "}`}>{item.status}</span>
                   </td>
                   <td>{item.price}</td>
-                  <td><button onClick={() => {cancelParcel(item._id); history.push("/details")}}>Details</button></td>
+                  <td><button onClick={() => {onDetails(item._id); history.push("/details")}}>Details</button></td>
                   <td><button className="btn btn-sm btn-success">Edit</button></td>
                   <td><button 
                   className={`btn btn-sm btn-danger ${item.status === "cancelled" || item.status === "delivered" ? "disabled": ""}`}

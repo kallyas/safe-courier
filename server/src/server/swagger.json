@@ -23,22 +23,13 @@
   "paths": {
     "/users/{userId}/parcels": {
       "get": {
-        "summary": "Find pet by ID",
+        "summary": "Find parcel orders by a userId",
         "description": "Returns all parcel delivery orders by a specific user",
         "operationId": "getParcelByUserId",
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
-          {
-            "name": "petId",
-            "in": "path",
-            "description": "ID of pet to return",
-            "required": true,
-            "type": "integer",
-            "format": "int64"
-          },
           {
             "type": "string",
             "in": "header",
@@ -51,7 +42,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "$ref": "#/definitions/Parcel"
             }
           },
           "400": {
@@ -125,14 +116,13 @@
     "/parcels": {
       "get": {
         "tags": [
-          "store"
+          "parcel"
         ],
         "summary": "Find purchase order by ID",
         "description": "Get all parcel delivery orders",
         "operationId": "getParcels",
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
           {
@@ -140,17 +130,14 @@
             "in": "path",
             "description": "ID of pet that needs to be fetched",
             "required": true,
-            "type": "integer",
-            "maximum": 10,
-            "minimum": 1,
-            "format": "int64"
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/Order"
+              "$ref": "#/definitions/Parcel"
             }
           },
           "404": {
@@ -172,24 +159,31 @@
           "application/json"
         ],
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "name that need to be updated",
-            "required": true,
-            "type": "string"
-          },
           {
             "in": "body",
             "name": "body",
             "description": "Updated user object",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "description": "",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status"
+              ],
+              "x-examples": {
+                "example-1": {
+                  "status": "cancelled"
+                }
+              }
             }
           },
           {
@@ -214,6 +208,7 @@
           "type": "string",
           "name": "parcelId",
           "in": "path",
+          "description": "Parcel Id",
           "required": true
         }
       ]
@@ -227,24 +222,9 @@
         "description": "Logs In a user into the Application",
         "operationId": "loginUser",
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
-          {
-            "name": "username",
-            "in": "path",
-            "description": "The user name for login",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "password",
-            "in": "path",
-            "description": "The password for login in clear text",
-            "required": true,
-            "type": "string"
-          },
           {
             "in": "body",
             "name": "body",
@@ -303,8 +283,7 @@
           "application/json"
         ],
         "produces": [
-          "application/json",
-          "application/xml"
+          "application/json"
         ],
         "parameters": [
           {
@@ -385,10 +364,6 @@
         "password"
       ]
     }
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
   },
   "produces": [
     "application/json"

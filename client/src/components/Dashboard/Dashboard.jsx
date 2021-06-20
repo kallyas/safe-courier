@@ -5,6 +5,7 @@ import Form from "../AddParcel/Form";
 import Header from "../Header/Header";
 import Panel from "../Panel/Panel";
 import ParcelList from "../ParcelList/ParcelList";
+import Map from "../Map/Map"
 require('dotenv').config();
 
 function Dashboard({ token }) {
@@ -124,7 +125,6 @@ function Dashboard({ token }) {
       );
     };
     getParcels();
-    getDetails("60cdb734cb72182bc876e4a7");
     console.log(decode(token));
     if (decode(token).exp * 1000 < new Date().getTime()) logOut();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -170,13 +170,13 @@ function Dashboard({ token }) {
         <div id="main-wrapper">
           <div className="row">
             <div className="col-lg-3 col-md-6">
-              <Panel title="$1920" info="Total Income" />
+              <Panel title="0" info="sent" />
             </div>
             <div className="col-lg-3 col-md-6">
-              <Panel title="$1920" info="Total Income" />
+              <Panel title="0" info="Recieved" />
             </div>
             <div className="col-lg-3 col-md-6">
-              <Panel title="$1920" info="Total Income" />
+              <Panel title="0" info="Cancelled" />
             </div>
             <div className="col-lg-3 col-md-6">
               <div className="panel panel-white stats-widget">
@@ -229,12 +229,14 @@ function Dashboard({ token }) {
                 </div>
                 <div className="panel-body">
                   {location.pathname === "/home" ? (
-                    <ParcelList items={items} cancelParcel={cancelParcel} />
+                    <ParcelList items={items} cancelParcel={cancelParcel} onDetails={getDetails} />
                   ) : location.pathname === "/add" ? (
                     <Form onAdd={onAddParcel} id={user._id} />
                   ) : location.pathname === "/details" && render ? (
-                    // <ParcelList items={items} cancelParcel={getDetails}/>
-                    <p>{itemDetails.sender}</p>
+                    <>
+                    <p>{items[0].sender.name}</p>
+                    <Map />
+                    </>
                   ) : (
                     ""
                   )}

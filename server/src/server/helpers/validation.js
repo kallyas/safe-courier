@@ -28,6 +28,7 @@ const parcelCheck = (data) => {
     locationFrom: joi.string().required(),
     locationTo: joi.string().required(),
     weight: joi.number().required(),
+    price: joi.string(),
     recipient: joi.object().required(),
     trackingCode: joi.string(),
     city: joi.string().required()
