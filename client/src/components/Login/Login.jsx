@@ -5,6 +5,7 @@ import useToken from "../../Utils/useToken"
 const Login = () => {
   const [password, setPassword] = useState("")
   const [username, setUsername] = useState("")
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState([])
   const history = useHistory()
   const { setToken } = useToken()
@@ -24,12 +25,14 @@ const Login = () => {
     return data
   }
   const handleSubmit = async e => {
+    setLoading(true)
     e.preventDefault();
     const {token, message} = await loginUser()
     console.log(message);
 
     if(message !== "logged In") {
       setError(message)
+      setLoading(false)
       return
     }
       setToken(token);
@@ -50,6 +53,7 @@ return (
                           type="text" 
                           className="form-control"
                           value={username}
+                          required
                           onChange={(e) => setUsername(e.target.value)}
                           />
                           {error === "User not found!" && <p className="help-block" style={{ color: "red"}}>user does not exist</p>}
@@ -58,15 +62,16 @@ return (
                           <label htmlFor="password">Password</label>
                           <input 
                           type="password" 
-                          className="form-control" 
+                          className="form-control"
+                          required 
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}/>
                           {error === "Passwords did not match!" && <p className="help-block" style={{ color: "red"}}>Incorect password</p>}
                       </div>
                       <button 
                       type="submit" 
-                      className="btn b btn-primary"
-                      >Login</button>
+                      className={`btn b btn-primary ${loading ? "disabled" : ""}`}
+                      >{loading ? "Logging in" : "Login"}</button>
                       <button 
                       className="btn b btn-default"
                       onClick={() => history.push('/signup')}

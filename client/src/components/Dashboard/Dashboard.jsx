@@ -16,6 +16,7 @@ function Dashboard({ token }) {
   const [alert, setAlert] = useState(true);
   const [alerted, setAlerted] = useState(false);
   const [itemDetails, setItemDetails] = useState([])
+  const [loading, setLoading] = useState(false)
 
   const user = decode(token);
 
@@ -68,6 +69,7 @@ function Dashboard({ token }) {
 
   // add a new parcel order
   const onAddParcel = async (parcel) => {
+    setLoading(true)
     const res = await fetch(`${API}/parcels`, {
       method: "POST",
       headers: {
@@ -80,6 +82,7 @@ function Dashboard({ token }) {
     const data = await res.json();
     setItems([...items, data.result])
     setRender(true)
+    setLoading(false)
     console.log(data);
     console.log(user._id);
   };
@@ -231,7 +234,7 @@ function Dashboard({ token }) {
                   {location.pathname === "/home" ? (
                     <ParcelList items={items} cancelParcel={cancelParcel} onDetails={getDetails} />
                   ) : location.pathname === "/add" ? (
-                    <Form onAdd={onAddParcel} id={user._id} />
+                    <Form onAdd={onAddParcel} id={user._id} loading={loading} />
                   ) : location.pathname === "/details" && render ? (
                     <>
                     <p>{items[0].sender.name}</p>
