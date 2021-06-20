@@ -16,8 +16,6 @@ module.exports.searchUser = async (req, res, next) => {
   }
 };
 
-
-
 module.exports.searchUsers = async (req, res, next) => {
   try {
     const searchTerm = req.body.search;
