@@ -118,20 +118,11 @@
         "tags": [
           "parcel"
         ],
-        "summary": "Find purchase order by ID",
+        "summary": "get all parcel orders",
         "description": "Get all parcel delivery orders",
         "operationId": "getParcels",
         "produces": [
           "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "description": "ID of pet that needs to be fetched",
-            "required": true,
-            "type": "string"
-          }
         ],
         "responses": {
           "200": {
@@ -306,6 +297,159 @@
         }
       },
       "parameters": []
+    },
+    "/parcels/{parcelId}/destination": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "parcelId",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "put": {
+        "summary": "Change Location of a specific Order",
+        "operationId": "put-parcels-parcelId-destination",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Only users who created order can change",
+        "parameters": [
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer + token",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "locationTo": {
+                  "type": "string"
+                },
+                "": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "update body",
+            "x-examples": {
+              "Update Destination": {
+                "locationTo": "Jinja, Uganda"
+              }
+            }
+          }
+        ],
+        "tags": [
+          "parcel",
+          "put"
+        ]
+      }
+    },
+    "/parcels/{parcelId}/status": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "parcelId",
+          "in": "path",
+          "required": true,
+          "description": "parcel Id"
+        }
+      ],
+      "put": {
+        "summary": "Change Order Status",
+        "operationId": "put-parcels-parcelId-status",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Change status of a specific order. This can only be done by admin",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "status"
+              ],
+              "x-examples": {
+                "example-1": {
+                  "status": "delivered"
+                }
+              }
+            },
+            "description": ""
+          }
+        ],
+        "tags": [
+          "parcel",
+          "put"
+        ]
+      }
+    },
+    "/parcels/{parcelId}/presentLocation": {
+      "parameters": [
+        {
+          "type": "string",
+          "name": "parcelId",
+          "in": "path",
+          "required": true,
+          "description": "parcelId"
+        }
+      ],
+      "put": {
+        "summary": "Change present Location of the parcel",
+        "operationId": "put-parcels-parcelId-presentLocation",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "This is only accessible by admin",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "description": "",
+              "type": "object",
+              "properties": {
+                "locationTo": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "locationTo"
+              ],
+              "x-examples": {
+                "example-1": {
+                  "locationTo": "Gulu, Uganda"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "parcels",
+          "put"
+        ]
+      }
     }
   },
   "securityDefinitions": {},
@@ -323,7 +467,8 @@
         "message": {
           "type": "string"
         }
-      }
+      },
+      "title": ""
     },
     "User": {
       "type": "object",
@@ -363,6 +508,114 @@
         "email",
         "password"
       ]
+    },
+    "Parcel": {
+      "description": "",
+      "type": "object",
+      "properties": {
+        "recipient": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1
+            },
+            "email": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "name",
+            "email"
+          ]
+        },
+        "createdAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "price": {
+          "type": "string",
+          "minLength": 1
+        },
+        "_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sender": {
+          "type": "object",
+          "properties": {
+            "isAdmin": {
+              "type": "boolean"
+            },
+            "_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "username": {
+              "type": "string",
+              "minLength": 1
+            },
+            "firstName": {
+              "type": "string",
+              "minLength": 1
+            },
+            "lastName": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "isAdmin",
+            "_id",
+            "username",
+            "firstName",
+            "lastName"
+          ]
+        },
+        "locationTo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "city": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parcelType": {
+          "type": "string",
+          "minLength": 1
+        },
+        "weight": {
+          "type": "number"
+        },
+        "locationFrom": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trackingCode": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "recipient",
+        "createdAt",
+        "status",
+        "price",
+        "_id",
+        "sender",
+        "locationTo",
+        "city",
+        "parcelType",
+        "weight",
+        "locationFrom",
+        "trackingCode"
+      ],
+      "x-examples": {}
     }
   },
   "produces": [
