@@ -110,22 +110,73 @@ module.exports.updateDestination = async (req, res, next) => {
 
     const result = await Parcel.findByIdAndUpdate(id, updates, options)
     if(!result) return res.status(404).send({status: 404, message: "Parcel order not found"})
-    res.send(result)
+    res.status(200).send(result)
     
   } catch (error) {
     console.log(error.message);
     if (error instanceof mongoose.CastError) {
-      return next(createError(400, "Invalid User Id"));
+      return next(createError(400, "Invalid Parcel Id"));
     }
     next(error);
   }
 }
 
+module.exports.updateStatus = async (req, res, next) => {
+  try {
+    const id = req.params.parcelId
+    const updates = req.body
+    const options = { new: true}
 
+    //get the parcel of the given Id
+    const parcel = await Parcel.findById(id).select("-__v").populate("sender", "-password -__v")
 
-module.exports.destroy = (req, res) => {
-  Parcel.remove({}, (err) => {
-    if(err) console.log(err)
-    res.send("success")
-  })
+    //check if the user is admin
+    if(!parcel.sender.isAdmin) {
+      return res.status(401).send({ message: "unauthorized to perform this action"})
+    }
+
+    // if admin, update
+    const result = await Parcel.findByIdAndUpdate(id, updates, options)
+    if(!result) return res.status(404).send({ message: "Parcel order not found"})
+
+    res.status(200).send({ message: "Parcel order status updated successfully", result})
+
+  } catch (error) {
+    console.log(error.message);
+    if (error instanceof mongoose.CastError) {
+      return next(createError(400, "Invalid Parcel Id"));
+    }
+    next(error)
+  }
 }
+
+module.exports.updateLocation = async (req, res, next) => {
+  try {
+    const id = req.params.parcelId
+    const updates = req.body
+    const options = { new: true}
+
+    //get the parcel of the given Id
+    const parcel = await Parcel.findById(id).select("-__v").populate("sender", "-password -__v")
+
+    //check if the user is admin
+    if(!parcel.sender.isAdmin) {
+      return res.status(401).send({ message: "unauthorized to perform this action"})
+    }
+
+    // if admin, update
+    const result = await Parcel.findByIdAndUpdate(id, updates, options)
+    if(!result) return res.status(404).send({ message: "Parcel order not found"})
+
+    res.status(200).send({ message: "Parcel Location updated successfully", result})
+    
+  } catch (error) {
+    console.log(error.message);
+    if (error instanceof mongoose.CastError) {
+      return next(createError(400, "Invalid Parcel Id"));
+    }
+    next(error)
+    
+  }
+}
+

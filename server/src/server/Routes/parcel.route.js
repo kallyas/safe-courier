@@ -16,7 +16,7 @@ auth.authenticateToken,
 parcelController.createParcel
 )
 
-//get parcel
+//get parcel by id
 router.get("/parcels/:parcelId",
 parcelController.findParcelById
 )
@@ -37,7 +37,20 @@ auth.checkUser,
 parcelController.updateDestination
 )
 
-router.get("/dd", parcelController.destroy)
+//change the status of the specified parcel
+router.put("/parcels/:parcelId/status", 
+auth.authenticateToken,
+auth.checkUser,
+parcelController.updateStatus
+)
+
+//change present location of the specific parcel delivery order
+router.put("/parcels/:parcelId/presentLocation", 
+auth.authenticateToken,
+auth.checkUser,
+parcelController.updateLocation
+)
+
 
 module.exports = router;
 
