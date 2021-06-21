@@ -36,6 +36,7 @@ function Dashboard({ token }) {
 
   //cancel parcel order
   const cancelParcel = async (id) => {
+    setLoading(true)
     const cancel = await fetchItem(id);
     const update = { ...cancel, status: "cancelled" };
 
@@ -57,7 +58,7 @@ function Dashboard({ token }) {
         item.id === id ? { ...item, status: data.status } : item
       )
     );
-
+      setLoading(false)
     setRender(true);
   };
 
@@ -232,7 +233,7 @@ function Dashboard({ token }) {
                 </div>
                 <div className="panel-body">
                   {location.pathname === "/home" ? (
-                    <ParcelList items={items} cancelParcel={cancelParcel} onDetails={getDetails} />
+                    <ParcelList items={items} cancelParcel={cancelParcel} onDetails={getDetails}  />
                   ) : location.pathname === "/add" ? (
                     <Form onAdd={onAddParcel} id={user._id} loading={loading} />
                   ) : location.pathname === "/details" && render ? (
