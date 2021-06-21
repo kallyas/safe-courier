@@ -78,7 +78,7 @@ function ParcelList({ items, cancelParcel, onDetails }) {
                             : cancelParcel(item._id)
                         }
                       >
-                        cancel
+                        Cancel
                       </button>
                     </td>
                   </tr>,
