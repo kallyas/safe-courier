@@ -87,21 +87,17 @@ function Dashboard({ token }) {
     setItems([...items, data.result])
     setRender(true)
     setLoading(false)
-    console.log(data);
-    console.log(user._id);
   };
 
   // get parcel details
   const getDetails = async (id) => {
     const data = await fetchItem(id)
     //setItems([data])
-    console.log(data.sender);
     // const result = [data]
     // console.log(result);
     //console.log(result.filter((dat) => dat._id === id ))
     setItemDetails([...itemDetails, data])
     setRender(true)
-    console.log(itemDetails);
   }
 
   const logOut = () => {
@@ -132,7 +128,6 @@ function Dashboard({ token }) {
       );
     };
     getParcels();
-    console.log(decode(token));
     if (decode(token).exp * 1000 < new Date().getTime()) logOut();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [render]);
