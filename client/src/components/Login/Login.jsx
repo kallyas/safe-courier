@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from 'react-router-dom'
+import { Loading } from "elementz"
 import useToken from "../../Utils/useToken"
 
 const Login = () => {
@@ -56,7 +57,7 @@ return (
                           required
                           onChange={(e) => setUsername(e.target.value)}
                           />
-                          {error === "User not found!" && <p className="help-block" style={{ color: "red"}}>user does not exist</p>}
+                          {error === "User not found!" && <small className="help-block" style={{ color: "red"}}>We couldn't find account associated with that username</small>}
                       </div>
                       <div className="form-group">
                           <label htmlFor="password">Password</label>
@@ -66,8 +67,9 @@ return (
                           required 
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}/>
-                          {error === "Passwords did not match!" && <p className="help-block" style={{ color: "red"}}>Incorect password</p>}
+                          {error === "Passwords did not match!" && <small className="help-block" style={{ color: "red"}}>Ooops! It seems you entered an Incorect password</small>}
                       </div>
+                      {loading && <Loading primary lg style={{ marginBottom: "5px"}}/>}
                       <button 
                       type="submit" 
                       className={`btn b btn-primary ${loading ? "disabled" : ""}`}

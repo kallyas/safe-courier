@@ -25,9 +25,7 @@ function App() {
         <ProtectedRoute path="/home" component={Home} />
         <PublicRoute path="/login" component={Login} />
         <PublicRoute path="/signup" component={Signup} />
-        <ProtectedRoute path="/add" >
-          <Home  />
-        </ProtectedRoute>
+        <ProtectedRoute path="/add" component={Home}/>
         <ProtectedRoute path="/details" component={Home} />
         <Route component={NotFound} />
       </Switch>
