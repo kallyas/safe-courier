@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom"
+import { Loading } from "elementz"
 import useToken from "../../Utils/useToken"
 
 const Signup = () => {
@@ -96,6 +97,7 @@ return (
                     required
                     onChange={(e) => setPassword(e.target.value)} />
                 </div>
+                {loading && <Loading primary lg />}
                   <button type="submit" 
                   className={`btn b btn-primary ${loading ? "disabled" : ""}`}>
                     {loading ? "Registering..." : "Register"}

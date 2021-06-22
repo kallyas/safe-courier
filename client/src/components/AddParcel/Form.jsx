@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {Loading } from "elementz"
 
 function Form({ onAdd, id, loading }) {
   const [name, setName] = useState("");
@@ -42,6 +43,7 @@ function Form({ onAdd, id, loading }) {
     setName("");
     setEmail("");
   };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -132,6 +134,7 @@ function Form({ onAdd, id, loading }) {
             />
           </div>
         </div>
+        {loading && <Loading primary lg style={{ marginBottom: "5px"}}/>}
         <button
           type="submit"
           className={`btn btn-primary ${loading ? "disabled" : ""}`}
