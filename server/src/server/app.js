@@ -11,6 +11,7 @@ const parcel = require("./Routes/parcel.route")
 const search = require("./Routes/search.route");
 const middlewares = require("./middlewares");
 const RateLimit = require("./helpers/rateLimit");
+const sendEmail = require("./helpers/sendEmail")
 const swaggerDocument = require('./swagger.json');
 
 app.use(morgan("common"));
@@ -27,7 +28,7 @@ app.use(function (req, res, next) {
 });
 
 app.use(RateLimit);
-app.use("/api/v1/", Router, search, parcel);
+app.use("/api/v1/", Router, search, parcel, sendEmail);
 app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
