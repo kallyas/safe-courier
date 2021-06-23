@@ -1,17 +1,20 @@
 import { useState } from "react";
 import { useHistory } from 'react-router-dom'
+import { Loading } from "elementz"
 import useToken from "../../Utils/useToken"
 
 const Login = () => {
   const [password, setPassword] = useState("")
   const [username, setUsername] = useState("")
+  const [loading, setLoading] = useState(false)
   const [error, setError] = useState([])
   const history = useHistory()
   const { setToken } = useToken()
 
+  const API = process.env.REACT_APP_API_URL
 
   const loginUser = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/auth/login', {
+    const res = await fetch(`${API}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -23,12 +26,14 @@ const Login = () => {
     return data
   }
   const handleSubmit = async e => {
+    setLoading(true)
     e.preventDefault();
     const {token, message} = await loginUser()
     console.log(message);
 
     if(message !== "logged In") {
       setError(message)
+      setLoading(false)
       return
     }
       setToken(token);
@@ -49,23 +54,26 @@ return (
                           type="text" 
                           className="form-control"
                           value={username}
+                          required
                           onChange={(e) => setUsername(e.target.value)}
                           />
-                          {error === "User not found!" && <p className="help-block" style={{ color: "red"}}>user does not exist</p>}
+                          {error === "User not found!" && <small className="help-block" style={{ color: "red"}}>We couldn't find account associated with that username</small>}
                       </div>
                       <div className="form-group">
                           <label htmlFor="password">Password</label>
                           <input 
                           type="password" 
-                          className="form-control" 
+                          className="form-control"
+                          required 
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}/>
-                          {error === "Passwords did not match!" && <p className="help-block" style={{ color: "red"}}>Incorect password</p>}
+                          {error === "Passwords did not match!" && <small className="help-block" style={{ color: "red"}}>Ooops! It seems you entered an Incorect password</small>}
                       </div>
+                      {loading && <Loading primary lg style={{ marginBottom: "5px"}}/>}
                       <button 
                       type="submit" 
-                      className="btn b btn-primary"
-                      >Login</button>
+                      className={`btn b btn-primary ${loading ? "disabled" : ""}`}
+                      >{loading ? "Logging in" : "Login"}</button>
                       <button 
                       className="btn b btn-default"
                       onClick={() => history.push('/signup')}

@@ -28,7 +28,7 @@ module.exports.createUser = async (req, res, next) => {
     }
     const user = new User(req.body);
     const result = await user.save();
-    const token = auth.generateAccessToken(result.toJSON())
+    const token = auth.generateAccessToken(result.toJSON());
     // res.send(result);
     res
       .status(200)
@@ -46,9 +46,7 @@ module.exports.createUser = async (req, res, next) => {
 module.exports.findUserById = async (req, res, next) => {
   const id = req.params.id;
   try {
-    const user = await User.findById(id)
-      .select("-password")
-      .exec();
+    const user = await User.findById(id).select("-password").exec();
     // const user = await User.findOne({ _id: id });
     if (!user) {
       res.json({

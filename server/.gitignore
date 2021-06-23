@@ -2,6 +2,7 @@ requests.rest
 .env
 node_modules/
 api/
+heroku/
 # Logs
 logs
 *.log

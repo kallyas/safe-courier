@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom"
+import { Loading } from "elementz"
 import useToken from "../../Utils/useToken"
 
 const Signup = () => {
@@ -9,11 +10,13 @@ const Signup = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState([])
+  const [loading, setLoading] = useState(false)
   const history = useHistory()
   const { setToken } = useToken()
 
+  const API = process.env.REACT_APP_API_URL
   const signUpUser = async () => {
-    const res = await fetch('http://localhost:5000/api/v1/auth/signup', {
+    const res = await fetch(`${API}/auth/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -33,10 +36,12 @@ const Signup = () => {
    }
 
   const handleSubmit = async e => {
+    setLoading(true)
     e.preventDefault();
     const res = await signUpUser()
     if(res.message !== "User created successfully") {
       setError(res.message)
+      setLoading(false)
       return
     }
     setToken(res.token)
@@ -64,6 +69,7 @@ return (
                     <input type="text" 
                     className="form-control"
                     value={firstName}
+                    required
                     onChange={(e) => setFirstName(e.target.value)} />
                 </div>
                 <div className="form-group">
@@ -91,8 +97,11 @@ return (
                     required
                     onChange={(e) => setPassword(e.target.value)} />
                 </div>
+                {loading && <Loading primary lg />}
                   <button type="submit" 
-                  className="btn b btn-primary">Register</button>
+                  className={`btn b btn-primary ${loading ? "disabled" : ""}`}>
+                    {loading ? "Registering..." : "Register"}
+                  </button>
                   <button 
                   className="btn b btn-default"
                   onClick={() => history.push('/login')}>Login</button><br />

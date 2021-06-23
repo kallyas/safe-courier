@@ -1,44 +1,49 @@
 import { useState } from "react";
+import {Loading } from "elementz"
 
-function Form({ onAdd, id }) {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [addressTo, setAddressTo] = useState("")
-  const [city, setCity] = useState("")
-  const [type, setType] = useState("")
-  const [weight, setWeight] = useState("")
-  const [addressFrom, setAddressFrom] = useState("")
-  const [error, setError] = useState(false)
+function Form({ onAdd, id, loading }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [addressTo, setAddressTo] = useState("");
+  const [city, setCity] = useState("");
+  const [type, setType] = useState("");
+  const [weight, setWeight] = useState("");
+  const [addressFrom, setAddressFrom] = useState("");
+  const [error, setError] = useState(false);
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    if(!name){
-      setError(true)
-      return
+    e.preventDefault();
+    if (!name) {
+      setError(true);
+      return;
     }
-    
-    onAdd({ 
-      sender: id, 
+
+    onAdd({
+      sender: id,
       recipient: {
         name,
-        email
-      }, 
-      locationTo: addressTo, 
-      city, 
+        email,
+      },
+      locationTo: addressTo,
+      city,
       parcelType: type,
       weight,
+      price: "$".concat(parseInt(weight * 100).toString()),
       locationFrom: addressFrom,
-      trackingCode: "LK".concat(Math.random().toString(36).slice(2, 7).toUpperCase())
-    })
+      trackingCode: "LK".concat(
+        Math.random().toString(36).slice(2, 7).toUpperCase()
+      ),
+    });
 
-    setAddressFrom("")
-    setAddressTo("")
-    setCity("")
-    setWeight("")
-    setType("")
-    setName("")
-    setEmail("")
-  }
+    setAddressFrom("");
+    setAddressTo("");
+    setCity("");
+    setWeight("");
+    setType("");
+    setName("");
+    setEmail("");
+  };
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -71,7 +76,10 @@ function Form({ onAdd, id }) {
           <input
             type="text"
             value={addressTo}
-            onChange={(e) => { setAddressTo(e.target.value); setError(false)}}
+            onChange={(e) => {
+              setAddressTo(e.target.value);
+              setError(false);
+            }}
             className="form-control"
             id="inputAddress"
             placeholder="1234 Main St"
@@ -92,19 +100,22 @@ function Form({ onAdd, id }) {
         <div className="form-row">
           <div className={`form-group ${error ? "has-error" : ""} col-md-6`}>
             <label htmlFor="inputCity">City</label>
-            <input type="text" 
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="form-control" 
-            id="inputCity" />
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className="form-control"
+              id="inputCity"
+            />
           </div>
           <div className="form-group col-md-4">
             <label htmlFor="inputState">Courier Type</label>
-            <select id="inputState" 
-            className="form-control" 
-            value={type}
-            required
-            onChange={(e) => setType(e.target.value)}
+            <select
+              id="inputState"
+              className="form-control"
+              value={type}
+              required
+              onChange={(e) => setType(e.target.value)}
             >
               <option value="choose">Choose...</option>
               <option value="courier">Courier</option>
@@ -113,19 +124,34 @@ function Form({ onAdd, id }) {
           </div>
           <div className="form-group col-md-2">
             <label htmlFor="inputZip">Weight</label>
-            <input type="text" 
-            className="form-control" 
-            id="inputZip"
-            value={weight}
-            required
-            onChange={(e) => setWeight(e.target.value)} 
+            <input
+              type="text"
+              className="form-control"
+              id="inputZip"
+              value={weight}
+              required
+              onChange={(e) => setWeight(e.target.value)}
             />
           </div>
         </div>
-        <button type="submit" 
-        className="btn btn-primary"
-        style={{marginLeft: "15px"}}>
-          create order
+        {loading && <Loading primary lg style={{ marginBottom: "5px"}}/>}
+        <button
+          type="submit"
+          className={`btn btn-primary ${loading ? "disabled" : ""}`}
+          style={{ marginLeft: "15px" }}
+        >
+          {loading ? (
+            <>
+              <span
+                class="spinner-border spinner-border-sm"
+                role="status"
+                aria-hidden="true"
+              ></span>
+              Creating Order...
+            </>
+          ) : (
+            "create order"
+          )}
         </button>
       </form>
     </>
