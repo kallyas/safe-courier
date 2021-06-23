@@ -6,6 +6,11 @@ safe courier provides courier quotes based on weight categories
 1. Node JS
 2. Mongo DB for backend database
 
+### Tech Stack
+1. Node JS
+2. React JS
+3. Mongo DB
+
 ### Environment Variables
 ### `.env` file for server
 ```.env
@@ -24,15 +29,18 @@ REACT_APP_API_URL= specify API URL
 ```
 
 ### How to run
-`git clone` the repository or [download the Zip](https://github.com/kallyas/safe-courier/archive/refs/heads/develop.zip) file. 
+`git clone` the repository or [download the zip](https://github.com/kallyas/safe-courier/archive/refs/heads/develop.zip) file. 
 <br>
 use the [develop](https://github.com/kallyas/safe-courier/) branch<br>
 run `npm install` to install dependencies<br>
-run `concurrently \"cd server && npm install\" \"cd client && npm install\""` to install dependencies in both client and server folders<br>
+run `npm run instDep` to install dependencies in both client and server folders<br>
 run `npm run start` to start server and client<br>
 
+visit: http://localhost:5000/api/v1 to test API<br>
+visit: http://localhost:3000 for front end
 
-### Preview
+
+### Live Preview
 [API](https://safe-courier-backend-api.herokuapp.com/api/v1/)<br>
 [API DOCS](https://safe-courier-backend-api.herokuapp.com/api/v1/api-docs/)<br>
 [Front End](https://safe-courier-front-end.netlify.app)<br>
