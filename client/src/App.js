@@ -26,7 +26,7 @@ function App() {
         <PublicRoute path="/login" component={Login} />
         <PublicRoute path="/signup" component={Signup} />
         <ProtectedRoute path="/add" component={Home}/>
-        <ProtectedRoute path="/details" component={Home} />
+        <ProtectedRoute path="/details/:id" component={Home} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

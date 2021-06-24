@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function Sidebar() {
   const logout = () => {
     localStorage.removeItem("token");
@@ -17,10 +19,12 @@ function Sidebar() {
         <div className="page-sidebar-menu">
           <ul className="accordion-menu">
             <li className="active-page">
-              <a href="/home">
+              <Link to={{
+                pathname: "/home"
+              }}>
                 <i className="menu-icon icon-home4"></i>
                 <span>Dashboard</span>
-              </a>
+              </Link>  
             </li>
             <li className="menu-divider"></li>
             <li>

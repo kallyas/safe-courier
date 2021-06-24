@@ -12,11 +12,11 @@ require('dotenv').config();
 function Dashboard({ token }) {
   const history = useHistory();
   const location = useLocation();
+  const { state } = useLocation()
   const [items, setItems] = useState([]);
   const [render, setRender] = useState(false);
   const [alert, setAlert] = useState(true);
   const [alerted, setAlerted] = useState(false);
-  const [itemDetails, setItemDetails] = useState([])
   const [loading, setLoading] = useState(false)
 
   const user = decode(token);
@@ -61,8 +61,8 @@ function Dashboard({ token }) {
         item.id === id ? { ...item, status: data.status } : item
       )
     );
-    setLoading(false)
     setRender(true);
+    setLoading(false)
   };
 
   const fetchItem = async (id) => {
@@ -87,22 +87,9 @@ function Dashboard({ token }) {
     setItems([...items, data.result])
     setRender(true)
     setLoading(false)
-    console.log(data);
-    console.log(user._id);
+    window.alert("Parcel added successfully")
   };
 
-  // get parcel details
-  const getDetails = async (id) => {
-    const data = await fetchItem(id)
-    //setItems([data])
-    console.log(data.sender);
-    // const result = [data]
-    // console.log(result);
-    //console.log(result.filter((dat) => dat._id === id ))
-    setItemDetails([...itemDetails, data])
-    setRender(true)
-    console.log(itemDetails);
-  }
 
   const logOut = () => {
     localStorage.removeItem("token");
@@ -118,7 +105,7 @@ function Dashboard({ token }) {
 
       setItems(
         response.filter((item) => {
-          if (item.sender.isAdmin === true) {
+          if (item.sender.isAdmin) {
             return (
               item.sender.isAdmin === true || item.sender.isAdmin === false
             );
@@ -132,7 +119,6 @@ function Dashboard({ token }) {
       );
     };
     getParcels();
-    console.log(decode(token));
     if (decode(token).exp * 1000 < new Date().getTime()) logOut();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [render]);
@@ -142,6 +128,8 @@ function Dashboard({ token }) {
       return "Not authenticated, Redirecting..."(<Redirect to="/login" />);
     }
   }
+
+
 
   return (
     <>
@@ -153,7 +141,7 @@ function Dashboard({ token }) {
               ? "Dashboard"
               : location.pathname === "/add"
               ? "Add new Parcel"
-              : location.pathname === "/details"
+              : location.pathname === `/details/${state?.items._id}`
               ? "Details"
               : ""}
           </h3>
@@ -200,7 +188,7 @@ function Dashboard({ token }) {
                       onClick={() =>
                         location.pathname === "/home"
                           ? history.push("/add")
-                          : location.pathname === "/details"
+                          : location.pathname === `/details/${state?.items._id}`
                           ? history.push("/add")
                           : history.push("/home")
                       }
@@ -230,9 +218,8 @@ function Dashboard({ token }) {
                       ? "Add Parcel"
                       : location.pathname === "/home"
                       ? "Your Parcels"
-                      : location.pathname === "/details"
-                      ? "Parcel Details"
-                      : ""}
+                      :"Parcel Details"
+                      }
                   </h4>
                 </div>
                 <div className="panel-body">
@@ -240,16 +227,22 @@ function Dashboard({ token }) {
                     <>
                     <Loading.Skeleton isLoading={loading}>
                          <Loading.Skeleton.Custom reactangle>
-                         <ParcelList items={items} cancelParcel={cancelParcel} onDetails={getDetails}  />
+                         <ParcelList items={items} cancelParcel={cancelParcel} />
 				                </Loading.Skeleton.Custom>
                     </Loading.Skeleton>
                     </>
                   ) : location.pathname === "/add" ? (
                     <Form onAdd={onAddParcel} id={user._id} loading={loading} />
-                  ) : location.pathname === "/details" && render ? (
+                  ) : location.pathname === `/details/${state?.items._id}` ? (
                     <>
-                    <p>{items[0].sender.name}</p>
-                    <Map />
+                    <p><strong>Sender:</strong> {state?.items.sender.username}</p>
+                    <p><strong>Reciever:</strong> {state?.items.recipient.name}</p>
+                    <p><strong>Location From:</strong> {state?.items.locationFrom}</p>
+                    <p><strong>Destination:</strong> {state?.items.locationTo}</p>
+                    <p><strong>Status:</strong> {state?.items.status}</p>
+                    <p><strong>Tracking Code:</strong> {state?.items.trackingCode}</p>
+                    <p><strong>Price:</strong> {state?.items.price}</p>
+                    <p><strong>Weight:</strong> {state?.items.weight}</p>
                     </>
                   ) : (
                     ""
@@ -258,6 +251,22 @@ function Dashboard({ token }) {
               </div>
             </div>
           </div>
+          {location.pathname === `/details/${state?.items._id}` && (
+            <>
+            <div className="row">
+              <div className="col-lg-12 col-md-12">
+                <div className="panel panel-white">
+                  <div className="panel-heading clearfix">
+                    <h4 className="panel-title">Location on Map</h4>
+                  </div>
+                  <div className="panel-body">
+                    <Map />
+                  </div>
+                </div>
+              </div>
+            </div>
+            </>
+          )}
           <div className="row"></div>
         </div>
         <div className="page-footer">
