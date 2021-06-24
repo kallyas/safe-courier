@@ -36,7 +36,12 @@ describe('Parcels', () => {
                "parcelType": "courier",
                   "sender": "60ca03558597f630b084d63b",
                   "locationFrom": "Kampala Uganda",
-                  "weight": 4
+                  "weight": 4,
+                  "recipient": {
+                    "email": "test@example.com",
+                    "name": "test"
+                  },
+                  "city": "kampala",
           }
             chai.request(server)
             .post('/api/v1/parcels')
@@ -52,11 +57,15 @@ describe('Parcels', () => {
 
       it('it should POST a parcel ', (done) => {
           let parcel = {
-             "parcelType": "courier",
-                "sender": "60ca03558597f630b084d63b",
-                "locationFrom": "Kampala Uganda",
-                "locationTo": "Mukono Uganda",
-                "weight": 4
+            "parcelType": "courier",
+            "sender": "60ca03558597f630b084d63b",
+            "locationFrom": "Kampala Uganda",
+            "weight": 4,
+            "recipient": {
+              "email": "test@example.com",
+              "name": "test"
+            },
+            "city": "kampala",
           }
             chai.request(server)
             .post('/api/v1/parcels')
