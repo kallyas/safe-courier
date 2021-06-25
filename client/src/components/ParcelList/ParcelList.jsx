@@ -59,7 +59,14 @@ function ParcelList({ items, cancelParcel }) {
                       </Link>
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-success">Edit</button>
+                    <Link to={{
+                        pathname: `edit/${item._id}`,
+                        state: { items: item}
+                      }}
+                      >
+                      <button className={`btn btn-sm btn-success`}
+                      >Edit</button>
+                    </Link>
                     </td>
                     <td>
                       <button
