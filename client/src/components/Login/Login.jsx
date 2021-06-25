@@ -11,7 +11,7 @@ const Login = () => {
   const history = useHistory()
   const { setToken } = useToken()
 
-  const API = process.env.REACT_APP_API_URL
+  const API = process.env.REACT_APP_API_URL 
 
   const loginUser = async () => {
     const res = await fetch(`${API}/auth/login`, {

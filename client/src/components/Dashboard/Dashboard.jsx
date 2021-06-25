@@ -7,6 +7,7 @@ import Header from "../Header/Header";
 import Panel from "../Panel/Panel";
 import ParcelList from "../ParcelList/ParcelList";
 import Map from "../Map/Map"
+import EditParcel from "../Edit/EditParcel";
 require('dotenv').config();
 
 function Dashboard({ token }) {
@@ -244,9 +245,11 @@ function Dashboard({ token }) {
                     <p><strong>Price:</strong> {state?.items.price}</p>
                     <p><strong>Weight:</strong> {state?.items.weight}</p>
                     </>
-                  ) : (
-                    ""
-                  )}
+                  ) : location.pathname === `/edit/${state?.items._id}` ? (
+                    <>
+                    <EditParcel state={state} loading={loading} />
+                    </>
+                  ): ""}
                 </div>
               </div>
             </div>
