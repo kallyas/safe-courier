@@ -105,9 +105,9 @@ function Dashboard({ token }) {
       }
 
       setItems(
-        response.filter((item) => item.sender.username === user.username && item.sender.isAdmin ? 
-        item.sender.isAdmin || !item.sender.isAdmin :
-        !item.sender.isAdmin && item.sender.username === user.username)
+       user.isAdmin ? response : response.filter(
+         item => item.sender.username === user.username && !item.sender.isAdmin
+       )
       );
     };
     getParcels();
