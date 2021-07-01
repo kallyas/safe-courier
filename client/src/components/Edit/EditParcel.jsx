@@ -21,10 +21,11 @@ function EditParcel({ state, loading, onUpdate }) {
           <>
           <form onSubmit={handleSubmit}>
           <div className="form-row">
-            <div className={`form-group ${error ? "has-error" : ""} col-md-6`}>
+            <div className={`form-group ${error ? "has-error" : ""} col-md-4`}>
               <label htmlFor="name">Recipient Name</label>
               <input
                 type="text"
+                disabled
                 className={`form-control`}
                 id="name"
                 value={name}
@@ -32,11 +33,12 @@ function EditParcel({ state, loading, onUpdate }) {
                 placeholder="Enter Recipient Name"
               />
             </div>
-            <div className={`form-group ${error ? "has-error" : ""} col-md-6`}>
+            <div className={`form-group ${error ? "has-error" : ""} col-md-4`}>
               <label htmlFor="recipient-email">Recepient Email</label>
               <input
                 type="email"
                 value={email}
+                disabled
                 onChange={(e) => setEmail(e.target.value)}
                 className="form-control"
                 id="recipient-email"
@@ -44,11 +46,12 @@ function EditParcel({ state, loading, onUpdate }) {
               />
             </div>
           </div>
-          <div className={`form-group ${error ? "has-error" : ""} col-md-6`}>
+          <div className={`form-group ${error ? "has-error" : ""} col-md-4`}>
             <label htmlFor="inputAddress">Recipient Address</label>
             <input
               type="text"
               value={addressTo}
+              disabled
               onChange={(e) => {
                 setAddressTo(e.target.value);
                 setError(false);
@@ -58,12 +61,13 @@ function EditParcel({ state, loading, onUpdate }) {
               placeholder="1234 Main St"
             />
           </div>
-          <div className={`form-group ${error ? "has-error" : ""} col-md-6`}>
+          <div className={`form-group ${error ? "has-error" : ""} col-md-4`}>
             <label htmlFor="inputAddress2">Sender Address </label>
             <input
               value={addressFrom}
               onChange={(e) => setAddressFrom(e.target.value)}
               type="text"
+              disabled
               className="form-control"
               id="inputAddress2"
               required
@@ -71,11 +75,12 @@ function EditParcel({ state, loading, onUpdate }) {
             />
           </div>
           <div className="form-row">
-            <div className={`form-group ${error ? "has-error" : ""} col-md-6`}>
+            <div className={`form-group ${error ? "has-error" : ""} col-md-4`}>
               <label htmlFor="inputCity">City</label>
               <input
                 type="text"
                 value={city}
+                disabled
                 onChange={(e) => setCity(e.target.value)}
                 className="form-control"
                 id="inputCity"
