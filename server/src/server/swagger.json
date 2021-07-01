@@ -55,7 +55,7 @@
         "security": [],
         "tags": [
           "user",
-          "parcel"
+          "parcels"
         ]
       },
       "parameters": [
@@ -101,7 +101,7 @@
         },
         "security": [],
         "tags": [
-          "parcel"
+          "parcels"
         ]
       },
       "parameters": [
@@ -115,9 +115,6 @@
     },
     "/parcels": {
       "get": {
-        "tags": [
-          "parcel"
-        ],
         "summary": "get all parcel orders",
         "description": "Get all parcel delivery orders",
         "operationId": "getParcels",
@@ -134,15 +131,24 @@
           "404": {
             "description": "Parcels not found"
           }
-        }
+        },
+        "parameters": [
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer + Token",
+            "required": true
+          }
+        ],
+        "tags": [
+          "parcels"
+        ]
       },
       "parameters": []
     },
     "/parcels/{parcelId}/cancel": {
       "put": {
-        "tags": [
-          "user"
-        ],
         "summary": "Cancel Parcel Order",
         "description": "This can only be done by the logged in user.",
         "operationId": "cancelParcelOrder",
@@ -192,7 +198,10 @@
           "404": {
             "description": "User not found"
           }
-        }
+        },
+        "tags": [
+          "parcels"
+        ]
       },
       "parameters": [
         {
@@ -347,8 +356,7 @@
           }
         ],
         "tags": [
-          "parcel",
-          "put"
+          "parcels"
         ]
       }
     },
@@ -394,11 +402,17 @@
               }
             },
             "description": ""
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer + Token",
+            "required": true
           }
         ],
         "tags": [
-          "parcel",
-          "put"
+          "parcels"
         ]
       }
     },
@@ -443,11 +457,17 @@
                 }
               }
             }
+          },
+          {
+            "type": "string",
+            "in": "header",
+            "name": "Authorization",
+            "description": "Bearer + Token",
+            "required": true
           }
         ],
         "tags": [
-          "parcels",
-          "put"
+          "parcels"
         ]
       }
     }
@@ -512,23 +532,10 @@
     "Parcel": {
       "description": "",
       "type": "object",
+      "x-examples": {},
       "properties": {
         "recipient": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "minLength": 1
-            },
-            "email": {
-              "type": "string",
-              "minLength": 1
-            }
-          },
-          "required": [
-            "name",
-            "email"
-          ]
+          "$ref": "#/definitions/User"
         },
         "createdAt": {
           "type": "string",
@@ -548,6 +555,13 @@
         },
         "sender": {
           "type": "object",
+          "required": [
+            "isAdmin",
+            "_id",
+            "username",
+            "firstName",
+            "lastName"
+          ],
           "properties": {
             "isAdmin": {
               "type": "boolean"
@@ -568,14 +582,7 @@
               "type": "string",
               "minLength": 1
             }
-          },
-          "required": [
-            "isAdmin",
-            "_id",
-            "username",
-            "firstName",
-            "lastName"
-          ]
+          }
         },
         "locationTo": {
           "type": "string",
@@ -614,8 +621,7 @@
         "weight",
         "locationFrom",
         "trackingCode"
-      ],
-      "x-examples": {}
+      ]
     }
   },
   "produces": [
