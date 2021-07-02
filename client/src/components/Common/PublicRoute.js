@@ -3,6 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import useToken from '../../Utils/useToken';
 
 import { Preloader } from "../index"
+import { Routes } from "../../routes"
 
 // handle the public routes
 function PublicRoute({ component: Component, ...rest }) {
@@ -22,7 +23,7 @@ function PublicRoute({ component: Component, ...rest }) {
       <Component {...props} />
       </>
       ) : 
-      <Redirect to={{ pathname: '/home' }} />
+      <Redirect to={{ pathname: Routes.UserDashboard.path }} />
     }
     />
   )

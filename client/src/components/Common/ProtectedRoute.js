@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import useToken from "../../Utils/useToken";
 
 import { Preloader } from "../index"
+import { Routes } from "../../routes"
 
 function ProtectedRoute({ component: Component, ...rest }) {
   const [loaded, setLoaded] = useState(false);
@@ -24,7 +25,7 @@ function ProtectedRoute({ component: Component, ...rest }) {
           </>
         ) : (
           <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
+            to={{ pathname: Routes.SignIn.path, state: { from: props.location } }}
           />
         )
       }

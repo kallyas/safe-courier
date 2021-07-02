@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { HashRouter } from "react-router-dom";
 
 // core styles
 import "./scss/volt.scss";
@@ -13,10 +12,10 @@ import { ScrollToTop } from "./components/index"
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter>
+    <>
       <ScrollToTop />
       <App />
-    </HashRouter>
+    </>
   </React.StrictMode>,
   document.getElementById('root')
 );

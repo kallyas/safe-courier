@@ -8,12 +8,12 @@ import "./assets/css/toastr.min.css";
 import useToken from "./Utils/useToken";
 
 import Home from "./components/Home/Home";
-import Signup from "./components/Signup/Signup";
 import NotFound from "./components/Common/NotFound";
 import Landing from "./components/Landing/Landing";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
 import PublicRoute from "./components/Common/PublicRoute";
 import Signin from "./pages/Signin";
+import Signup from "./pages/signup"
 
 function App() {
   const { token } = useToken();
@@ -23,7 +23,7 @@ function App() {
         <Route exact path={Routes.LandingPage.path} >
           { token ? <Redirect to={Routes.UserDashboard.path} /> : <Landing />}
           </Route>
-        <ProtectedRoute path={Routes.UserDashboard.path} component={Home} />
+        <ProtectedRoute exact path={Routes.UserDashboard.path} component={Home} />
         <PublicRoute exact path={Routes.SignIn.path} component={Signin} />
         <PublicRoute exact path={Routes.SignUp.path} component={Signup} />
         <ProtectedRoute path="/add" component={Home}/>
