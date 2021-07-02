@@ -2,13 +2,12 @@
 import { faGoogle, faTwitter, faYahoo, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { faGlobeEurope, } from '@fortawesome/free-solid-svg-icons';
 
-import USAFlag from '../assets/img/flags/united-states-of-america.svg';
-import CanadaFlag from '../assets/img/flags/canada.svg';
-import GermanyFlag from '../assets/img/flags/germany.svg';
-import FranceFlag from '../assets/img/flags/france.svg';
-import JapanFlag from '../assets/img/flags/japan.svg';
-import ItalyFlag from '../assets/img/flags/italy.svg';
-
+import USAFlag from '../assets/flags/united-states-of-america.svg';
+import CanadaFlag from '../assets/flags/canada.svg';
+import GermanyFlag from '../assets/flags/germany.svg';
+import FranceFlag from '../assets/flags/france.svg';
+import JapanFlag from '../assets/flags/japan.svg';
+import ItalyFlag from '../assets/flags/italy.svg';
 
 const pageVisits = [
     { id: 1, views: 4.525, returnValue: 255, bounceRate: 42.55, pageName: "/demo/admin/index.html" },
