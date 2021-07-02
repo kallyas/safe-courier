@@ -8,12 +8,12 @@ import "./assets/css/toastr.min.css";
 import useToken from "./Utils/useToken";
 
 import Home from "./components/Home/Home";
-import NotFound from "./components/Common/NotFound";
 import Landing from "./components/Landing/Landing";
 import ProtectedRoute from "./components/Common/ProtectedRoute";
 import PublicRoute from "./components/Common/PublicRoute";
 import Signin from "./pages/Signin";
 import Signup from "./pages/signup"
+import NotFound from "./pages/NotFound"
 
 function App() {
   const { token } = useToken();

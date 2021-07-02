@@ -1,7 +1,7 @@
 
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faUnlockAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -20,6 +20,15 @@ const Signup =  () => {
                   <h3 className="mb-0">Create an account</h3>
                 </div>
                 <Form className="mt-4">
+                <Form.Group id="username" className="mb-4">
+                    <Form.Label>Username</Form.Label>
+                    <InputGroup>
+                      <InputGroup.Text>
+                        <FontAwesomeIcon icon={faUser} />
+                      </InputGroup.Text>
+                      <Form.Control autoFocus required type="text" placeholder="username" />
+                    </InputGroup>
+                  </Form.Group>
                   <Form.Group id="email" className="mb-4">
                     <Form.Label>Your Email</Form.Label>
                     <InputGroup>
