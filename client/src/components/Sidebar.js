@@ -9,11 +9,11 @@ import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesb
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
-import ThemesbergLogo from "../assets/img/themesberg.svg";
-import ReactHero from "../assets/img/technologies/react-hero-logo.svg";
-import ProfilePicture from "../assets/img/team/profile-picture-3.jpg";
+import ThemesbergLogo from "../assets/images/themesberg.svg";
+import ReactHero from "../assets/images/react-hero-logo.svg";
+import ProfilePicture from "../assets/images/profile-picture-3.jpg";
 
-export default (props = {}) => {
+const Sidebar = (props = {}) => {
   const location = useLocation();
   const { pathname } = location;
   const [show, setShow] = useState(false);
@@ -158,3 +158,5 @@ export default (props = {}) => {
     </>
   );
 };
+
+export default Sidebar
