@@ -13,7 +13,7 @@ import { ScrollToTop } from "./components/index"
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter basename="#">
+    <HashRouter basename="/">
       <ScrollToTop />
       <App />
     </HashRouter>

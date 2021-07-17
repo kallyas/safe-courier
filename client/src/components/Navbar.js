@@ -1,6 +1,8 @@
 /* eslint-disable import/no-anonymous-default-export */
 
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import decode from "jwt-decode"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faCog, faEnvelopeOpen, faSearch, faSignOutAlt, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
@@ -9,10 +11,14 @@ import { Row, Col, Nav, Form, Image, Navbar, Dropdown, Container, ListGroup, Inp
 import NOTIFICATIONS_DATA from "../data/notifications";
 import Profile3 from "../assets/images/profile-picture-3.jpg";
 
+import AuthService from "../service/AuthService"
+import { Routes } from "../routes"
 
-export default (props) => {
+export default ({ token }) => {
   const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
   const areNotificationsRead = notifications.reduce((acc, notif) => acc && notif.read, true);
+  const history = useHistory()
+  const user = decode(token)
 
   const markNotificationsAsRead = () => {
     setTimeout(() => {
@@ -89,7 +95,7 @@ export default (props) => {
                 <div className="media d-flex align-items-center">
                   <Image src={Profile3} className="user-avatar md-avatar rounded-circle" />
                   <div className="media-body ms-2 text-dark align-items-center d-none d-lg-block">
-                    <span className="mb-0 font-small fw-bold">Bonnie Green</span>
+                    <span className="mb-0 font-small fw-bold">{user.username}</span>
                   </div>
                 </div>
               </Dropdown.Toggle>
@@ -109,7 +115,12 @@ export default (props) => {
 
                 <Dropdown.Divider />
 
-                <Dropdown.Item className="fw-bold">
+                <Dropdown.Item className="fw-bold"
+                  onClick={() => {
+                    AuthService.logout()
+                    history.push(Routes.SignIn.path)
+                }}
+                >
                   <FontAwesomeIcon icon={faSignOutAlt} className="text-danger me-2" /> Logout
                 </Dropdown.Item>
               </Dropdown.Menu>

@@ -4,12 +4,11 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faBoxOpen, faChartPie, faFileAlt, faSignOutAlt, faTimes, faHandHoldingUsd } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { Routes } from "../routes";
-import ThemesbergLogo from "../assets/images/themesberg.svg";
 import ReactHero from "../assets/images/react-hero-logo.svg";
 import ProfilePicture from "../assets/images/profile-picture-3.jpg";
 
@@ -97,18 +96,16 @@ const Sidebar = (props = {}) => {
               </Nav.Link>
             </div>
             <Nav className="flex-column pt-3 pt-md-0">
-              <NavItem title="Volt React" link={Routes.LandingPage.path} image={ReactHero} />
+              <NavItem title="📦 Safe Courier" link={Routes.LandingPage.path} />
 
               <NavItem title="Overview" link={Routes.UserDashboard.path} icon={faChartPie} />
-              {/* <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} /> */}
+              <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
               {/* <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} /> */}
 
               <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
                 <NavItem title="Sign In" link={Routes.SignIn.path} />
                 <NavItem title="Sign Up" link={Routes.SignUp.path} />
               </CollapsableNavItem>
-
-              <NavItem external title="Plugins" link="https://demo.themesberg.com/volt-pro-react/#/plugins/charts" target="_blank" badgeText="Pro" icon={faChartPie} />
 
               <Dropdown.Divider className="my-3 border-indigo" />
 
@@ -117,8 +114,7 @@ const Sidebar = (props = {}) => {
               <CollapsableNavItem eventKey="components/" title="Components" icon={faBoxOpen}>
             
               </CollapsableNavItem>
-              <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} />
-
+             
             </Nav>
           </div>
         </SimpleBar>
