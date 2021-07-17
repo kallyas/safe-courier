@@ -1,10 +1,6 @@
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { Routes } from "./routes"
 
-import "./App.css";
-import "./assets/css/space.min.css";
-import "./assets/css/toastr.min.css";
-
 import useToken from "./Utils/useToken";
 
 import Home from "./components/Home/Home";
@@ -14,6 +10,7 @@ import ProtectedRouteWithSidebar from "./components/Common/ProtectedRouteWithSid
 import PublicRoute from "./components/Common/PublicRoute";
 
 import UserDashboard from "./pages/dashboard/UserDashboard"
+import Transactions from "./pages/Transactions"
 import Signin from "./pages/Signin";
 import Signup from "./pages/signup"
 import NotFound from "./pages/NotFound"
@@ -27,6 +24,7 @@ function App() {
           { token ? <Redirect to={Routes.UserDashboard.path} /> : <Landing />}
           </Route>
         <ProtectedRouteWithSidebar exact path={Routes.UserDashboard.path} component={UserDashboard} />
+        <ProtectedRouteWithSidebar exact path={Routes.Transactions.path} component={Transactions}/>
         <PublicRoute exact path={Routes.SignIn.path} component={Signin} />
         <PublicRoute exact path={Routes.SignUp.path} component={Signup} />
         <ProtectedRoute path="/add" component={Home}/>
