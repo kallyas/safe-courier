@@ -3,5 +3,6 @@ export const Routes = {
     AdminDashboard: { path: "/admin/dashboard"},
     UserDashboard: { path: "/user/dashboard"},
     SignIn: { path: "/auth/login"},
-    SignUp: { path: "/auth/signup"}
+    SignUp: { path: "/auth/signup"},
+    Transactions: { path: "/user/dashboard/transactions" }
 }
