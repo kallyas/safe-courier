@@ -1,12 +1,29 @@
 /* eslint-disable import/no-anonymous-default-export */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
 
-import { TransactionsTable } from "../components/Tables";
+import TransactionsTable  from "../components/TransactionsTable";
+import { ParcelService } from "../service/ParcelService";
 
-export default () => {
+export default ({ token }) => {
+    const [items, setItems] = useState([])
+
+    useEffect(() => {
+      const getParcels = async () => {
+        const res = await ParcelService.fetchItems(token)
+        console.log(res)
+        if (res.message === "No Parcels Found!") {
+          setItems([]);
+          return;
+        }
+        setItems(res);
+      }
+
+      getParcels();
+    }, [token]);
+
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -57,7 +74,7 @@ export default () => {
         </Row>
       </div>
 
-      <TransactionsTable />
+      <TransactionsTable items={items}/>
     </>
   );
 };

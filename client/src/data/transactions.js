@@ -1,6 +1,7 @@
 
 import moment from "moment-timezone";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default [
     {
         "invoiceNumber": 300500,
