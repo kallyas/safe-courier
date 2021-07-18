@@ -14,6 +14,7 @@ import Transactions from "./pages/Transactions"
 import Signin from "./pages/Signin";
 import Signup from "./pages/signup"
 import NotFound from "./pages/NotFound"
+require('dotenv').config()
 
 function App() {
   const { token } = useToken();
