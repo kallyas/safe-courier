@@ -10,6 +10,7 @@
     "instDep": "concurrently \"cd server && npm install\" \"cd client && npm install\"",
     "test": "cd server && npm test",
     "build": "cd client && npm install && npm run build"
+    "azure": "cd client && env REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} && npm start"
   },
   "repository": {
     "type": "git",
