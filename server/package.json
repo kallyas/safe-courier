@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js --trace-warnings",
+    "prod": "node src/index.js --trace-warnings",
     "test": "mocha src/server/test/parcel.test.js --exit"
   },
   "engines": {
