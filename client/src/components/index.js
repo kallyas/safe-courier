@@ -3,6 +3,7 @@ import Preloader from "./Preloader"
 import Footer from "./Footer"
 import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
+import TableLoader from "./TableLoader"
 
 
 export {
@@ -10,5 +11,6 @@ export {
     Preloader,
     Footer,
     Navbar,
-    Sidebar
+    Sidebar,
+    TableLoader
 }

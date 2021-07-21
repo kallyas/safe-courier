@@ -26,6 +26,7 @@ function App() {
           </Route>
         <ProtectedRouteWithSidebar exact path={Routes.UserDashboard.path} component={UserDashboard} />
         <ProtectedRouteWithSidebar exact path={Routes.Transactions.path} component={Transactions}/>
+        <ProtectedRouteWithSidebar exact path={Routes.Details.path} component={Transactions}/>
         <PublicRoute exact path={Routes.SignIn.path} component={Signin} />
         <PublicRoute exact path={Routes.SignUp.path} component={Signup} />
         <ProtectedRoute path="/add" component={Home}/>

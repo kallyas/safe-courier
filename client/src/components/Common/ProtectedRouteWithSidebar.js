@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
+import decode from "jwt-decode"
 import useToken from "../../Utils/useToken";
 
 import { Preloader, Sidebar, Footer, Navbar } from "../index"
 import { Routes } from "../../routes"
+import AuthService from "../../service/AuthService"
 
 function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
     const [loaded, setLoaded] = useState(false);
@@ -11,8 +13,12 @@ function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
 
     useEffect(() => {
       const timer = setTimeout(() => setLoaded(true), 1000);
+      if (decode(token)?.exp * 1000 < new Date().getTime()){
+        AuthService.logout();
+        return window.location.href = Routes.SignIn.path;
+      }
       return () => clearTimeout(timer);
-    }, []);
+    }, [token]);
   
     const localStorageIsSettingsVisible = () => {
       return localStorage.getItem('settingsVisible') === 'false' ? false : true

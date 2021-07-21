@@ -4,9 +4,11 @@ import {  faEdit, faEllipsisH, faEye, faTrashAlt } from '@fortawesome/free-solid
 import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
+import { Routes } from "../routes"
+
     const TransactionsTable = ({ items }) => {
     const TableRow = (props) => {
-      const { parcelType, sender, locationTo, trackingCode, createdAt, price, status } = props;
+      const { _id, parcelType, sender, locationTo, trackingCode, createdAt, price, status } = props;
       const statusVariant = status === "delivered" ? "success"
         : status === "transit" ? "warning"
           : status === "cancelled" ? "danger" : "primary";
@@ -14,7 +16,10 @@ import { Link } from 'react-router-dom';
       return (
         <tr>
           <td>
-            <Card.Link as={Link} to={""} className="fw-normal">
+            <Card.Link as={Link} to={{
+              pathname: `${Routes.Details.path}/${_id}`,
+              state: { items: props.item}
+              }} className="fw-normal">
               {"#"}
             </Card.Link>
           </td>
@@ -95,7 +100,7 @@ import { Link } from 'react-router-dom';
               </tr>
             </thead>
             <tbody>
-              {items.map((t, i) => <TableRow key={`transaction-${i}`} {...t} />)}
+              {items?.map((t, i) => <TableRow key={`transaction-${i}`} {...t} />)}
             </tbody>
           </Table>
           <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">

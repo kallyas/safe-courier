@@ -4,5 +4,6 @@ export const Routes = {
     UserDashboard: { path: "/user/dashboard"},
     SignIn: { path: "/auth/login"},
     SignUp: { path: "/auth/signup"},
-    Transactions: { path: "/user/dashboard/transactions" }
+    Transactions: { path: "/user/dashboard/transactions" },
+    Details: { path: "/user/dashboard/details/:id" }
 }

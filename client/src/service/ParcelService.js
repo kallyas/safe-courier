@@ -47,6 +47,20 @@ export const ParcelService = {
 
         const data = await res.json();
         return data;
-    }
+    },
+
+    searchParcel: async ({ token, search }) => {
+        const res = await fetch(`${API}/parcels/search`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(search),
+        });
+
+        const data = await res.json();
+        return data;
+    },
 
 }

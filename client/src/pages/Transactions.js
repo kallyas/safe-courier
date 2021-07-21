@@ -2,25 +2,32 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown } from '@themesberg/react-bootstrap';
+import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown, Card } from '@themesberg/react-bootstrap';
 
 import TransactionsTable  from "../components/TransactionsTable";
 import { ParcelService } from "../service/ParcelService";
 
 export default ({ token }) => {
     const [items, setItems] = useState([])
+    const [loading, setLoading] = useState(false)
+    // const [search, setSearch] = useState('')
+
+    const search = async (key) => {
+        const res = await ParcelService.searchParcel(token, { search: key});
+        setItems(res);
+    }
 
     useEffect(() => {
+      setLoading(true)
       const getParcels = async () => {
         const res = await ParcelService.fetchItems(token)
-        console.log(res)
         if (res.message === "No Parcels Found!") {
           setItems([]);
           return;
         }
         setItems(res);
+        setLoading(false)
       }
-
       getParcels();
     }, [token]);
 
@@ -51,7 +58,9 @@ export default ({ token }) => {
               <InputGroup.Text>
                 <FontAwesomeIcon icon={faSearch} />
               </InputGroup.Text>
-              <Form.Control type="text" placeholder="Search" />
+              <Form.Control type="text" placeholder="Search"
+              onSubmit={(e) => {e.preventDefault(); search(e.target.value)}}
+              />
             </InputGroup>
           </Col>
           <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
@@ -73,8 +82,15 @@ export default ({ token }) => {
           </Col>
         </Row>
       </div>
-
-      <TransactionsTable items={items}/>
+      { loading ? (
+        <>
+        <Card border="light" className="table-wrapper table-responsive shadow-sm">
+            <Card.Body className="pt-0">
+              <p className="align-items-center">Loading data...</p>
+            </Card.Body>
+        </Card>
+        </>
+      ) : <TransactionsTable items={items} /> }
     </>
   );
 };
