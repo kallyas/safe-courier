@@ -3,7 +3,7 @@ import { Col, Row, Card, Button, Table } from '@themesberg/react-bootstrap';
 
 import { Routes } from "../routes"
 
-const Recent = ({ items }) => {
+const Recent = ({ items, loading }) => {
     const TableRow = (props) => {
         const { parcelType, createdAt, price, status } = props;
         const statusVariant = status === "delivered" ? "success"
@@ -48,7 +48,19 @@ const Recent = ({ items }) => {
             </tr>
           </thead>
           <tbody>
-            {items?.map(item => <TableRow key={`page-visit-${item._id}`} {...item} />)}
+            {!loading ?
+            (
+              <>
+              {items?.map(item => <TableRow key={`page-visit-${item._id}`} {...item} />)}
+            </>
+            )
+            :
+            (<>
+              <tr>
+              <td colSpan="4">Loading...</td>
+              </tr>
+            </>)
+          }
           </tbody>
         </Table>
       </Card>

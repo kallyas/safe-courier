@@ -38,7 +38,7 @@ function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
         token ? (
           <>
           <Preloader show={loaded ? false : true} />
-          <Sidebar />
+          <Sidebar token={token} />
           
           <main className="content">
             <Navbar token={token} />

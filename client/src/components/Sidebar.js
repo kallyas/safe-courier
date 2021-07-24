@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import React, { useState } from "react";
 import SimpleBar from 'simplebar-react';
@@ -6,17 +7,28 @@ import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faBoxOpen, faChartPie, faFileAlt, faSignOutAlt, faTimes, faHandHoldingUsd } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import decode from "jwt-decode"
 
 import { Routes } from "../routes";
+import AuthService from "../service/AuthService";
 import ReactHero from "../assets/images/react-hero-logo.svg";
-import ProfilePicture from "../assets/images/profile-picture-3.jpg";
+import ProfilePicture from "../assets/images/profile_placeholder.png";
 
 const Sidebar = (props = {}) => {
   const location = useLocation();
   const { pathname } = location;
+  const history = useHistory();
   const [show, setShow] = useState(false);
   const showClass = show ? "show" : "";
+
+  const { token } = props
+  const user  = decode(token)
+
+  const logout = () => {
+    AuthService.logout();
+    history.push(Routes.SignIn.path);
+  }
 
   const onCollapse = () => setShow(!show);
 
@@ -85,8 +97,10 @@ const Sidebar = (props = {}) => {
                   <Image src={ProfilePicture} className="card-img-top rounded-circle border-white" />
                 </div>
                 <div className="d-block">
-                  <h6>Hi, Jane</h6>
-                  <Button as={Link} variant="secondary" size="xs" to={Routes.SignIn.path} className="text-dark">
+                  <h6>Hi, {user?.username}</h6>
+                  <Button variant="secondary" size="xs" className="text-dark"
+                    onClick={logout}
+                  >
                     <FontAwesomeIcon icon={faSignOutAlt} className="me-2" /> Sign Out
                   </Button>
                 </div>
@@ -102,18 +116,18 @@ const Sidebar = (props = {}) => {
               <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
               {/* <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} /> */}
 
-              <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
+              {/* <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
                 <NavItem title="Sign In" link={Routes.SignIn.path} />
                 <NavItem title="Sign Up" link={Routes.SignUp.path} />
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
 
               <Dropdown.Divider className="my-3 border-indigo" />
 
-              <CollapsableNavItem eventKey="documentation/" title="Getting Started" icon={faBook}>
+              {/* <CollapsableNavItem eventKey="documentation/" title="Getting Started" icon={faBook}>
               </CollapsableNavItem>
               <CollapsableNavItem eventKey="components/" title="Components" icon={faBoxOpen}>
             
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
              
             </Nav>
           </div>

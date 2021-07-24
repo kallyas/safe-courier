@@ -9,7 +9,7 @@ import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import { Row, Col, Nav, Form, Image, Navbar, Dropdown, Container, ListGroup, InputGroup } from '@themesberg/react-bootstrap';
 
 import NOTIFICATIONS_DATA from "../data/notifications";
-import Profile3 from "../assets/images/profile-picture-3.jpg";
+import Profile3 from "../assets/images/profile_placeholder.png";
 
 import AuthService from "../service/AuthService"
 import { Routes } from "../routes"
