@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react'
 import { Card } from "@themesberg/react-bootstrap"
 
-import mapboxgl from 'mapbox-gl'
+import mapboxgl from '!mapbox-gl'
 
 const MiniMap = () => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
