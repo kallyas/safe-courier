@@ -67,7 +67,12 @@ import { Routes } from "../routes"
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item>
+                  <Link to={{
+                    pathname: `${Routes.Details.path}/${_id}`,
+                    state: { item: props}
+                  }} >
                   <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
+                  </Link>
                 </Dropdown.Item>
                 <Dropdown.Item>
                   <FontAwesomeIcon icon={faEdit} className="me-2" /> Edit
@@ -120,7 +125,7 @@ import { Routes } from "../routes"
               </Pagination>
             </Nav>
             <small className="fw-bold">
-              Showing <b>{items.length}</b> out of <b>25</b> entries
+              Showing <b>{items.length}</b> out of <b>{items.length}</b> entries
             </small>
           </Card.Footer>
         </Card.Body>
