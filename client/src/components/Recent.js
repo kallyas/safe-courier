@@ -29,7 +29,7 @@ const Recent = ({ items, loading }) => {
         <Card.Header>
           <Row className="align-items-center">
             <Col>
-              <h5>Latest Parcel Orders</h5>
+              <h5>Recent Parcel Orders</h5>
             </Col>
             <Col className="text-end">
               <Link to={{ pathname: Routes.Transactions.path }}>
