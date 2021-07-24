@@ -5,6 +5,7 @@ import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
 import TableLoader from "./TableLoader"
 import Recent from "./Recent"
+import MiniMap from "./MiniMap"
 
 
 export {
@@ -14,5 +15,6 @@ export {
     Navbar,
     Sidebar,
     TableLoader,
-    Recent
+    Recent,
+    MiniMap
 }

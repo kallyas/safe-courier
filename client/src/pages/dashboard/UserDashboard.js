@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt, faPlus, faTasks, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Button, Dropdown, ButtonGroup } from '@themesberg/react-bootstrap';
 
-import { TeamMembersWidget, ProgressTrackWidget, RankingWidget, AcquisitionWidget } from "../../components/Widgets";
-import { Recent } from "../../components/index";
+
+import { Recent, MiniMap } from "../../components/index";
 import { ParcelService } from "../../service/ParcelService";
 
 const UserDashboard = ({ token }) => {
@@ -61,29 +61,13 @@ const UserDashboard = ({ token }) => {
                 <Col xs={12} className="mb-4">
                   <Recent items={items} loading={loading}/>
                 </Col>
-
-                <Col xs={12} lg={6} className="mb-4">
-                  <TeamMembersWidget />
-                </Col>
-
-                <Col xs={12} lg={6} className="mb-4">
-                  <ProgressTrackWidget />
-                </Col>
               </Row>
             </Col>
 
             <Col xs={12} xl={4}>
               <Row>
                 <Col xs={12} className="mb-4">
-                 
-                </Col>
-
-                <Col xs={12} className="px-0 mb-4">
-                  <RankingWidget />
-                </Col>
-
-                <Col xs={12} className="px-0">
-                  <AcquisitionWidget />
+                 <MiniMap />
                 </Col>
               </Row>
             </Col>
