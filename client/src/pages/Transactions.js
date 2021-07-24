@@ -25,7 +25,7 @@ export default ({ token }) => {
           setItems([]);
           return;
         }
-        setItems(res);
+        setItems(res.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1));
         setLoading(false)
       }
       getParcels();

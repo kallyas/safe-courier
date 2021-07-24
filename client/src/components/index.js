@@ -4,6 +4,7 @@ import Footer from "./Footer"
 import Navbar from "./Navbar"
 import Sidebar from "./Sidebar"
 import TableLoader from "./TableLoader"
+import Recent from "./Recent"
 
 
 export {
@@ -12,5 +13,6 @@ export {
     Footer,
     Navbar,
     Sidebar,
-    TableLoader
+    TableLoader,
+    Recent
 }
