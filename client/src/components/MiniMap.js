@@ -1,9 +1,12 @@
+/* eslint-disable import/no-webpack-loader-syntax */
 
 //import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import { useRef, useEffect } from 'react'
 import { Card } from "@themesberg/react-bootstrap"
 
-import mapboxgl from 'mapbox-gl'
+import mapboxgl from '!mapbox-gl'
+import MapboxDirections from '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions'
+import '@mapbox/mapbox-gl-directions/dist/mapbox-gl-directions.css'
 
 const MiniMap = () => {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
@@ -13,9 +16,16 @@ const MiniMap = () => {
         const map = new mapboxgl.Map({
             container: containerRef.current,
             style: 'mapbox://styles/mapbox/streets-v11',
-            center: [-104.9876, 39.7405],
+            center: [32.58662, 0.32400],
             zoom: 12.5,
         })
+
+        const directions = new MapboxDirections({
+            accessToken: mapboxgl.accessToken,
+            profile: 'mapbox.driving',
+            unit: 'metric'
+        })
+        map.addControl(directions, 'top-left');
         map.addControl(new mapboxgl.NavigationControl(), "bottom-right")
         return () => map.remove()
     }, [])

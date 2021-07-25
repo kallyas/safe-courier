@@ -28,7 +28,7 @@ const Signup =  () => {
   const handleChange = (e) => {
     setData({
       ...data,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value.toLowerCase().trim()
     })
   }
 
@@ -39,10 +39,11 @@ const Signup =  () => {
 
   const submit = async (e) => {
     setLoading(true)
+    setError([])
     e.preventDefault();
     const res = await AuthService.signUp(data)
     if(res.message !== "User created successfully") {
-      setError([...error, res.message])
+      setError([res.message])
       setLoading(false)
       return
     }
@@ -63,11 +64,7 @@ const Signup =  () => {
                   <h3 className="mb-0" style={{ fontFamily: "Ubuntu"}}>Create an account</h3>
                 </div>
                 {error.length > 0 ? <Alert variant="danger">
-                  {error.map(err => 
-                    <ul>
-                      <li>{err}</li>
-                    </ul>
-                  )}
+                  { error }
                 </Alert>
                 : ""
               }

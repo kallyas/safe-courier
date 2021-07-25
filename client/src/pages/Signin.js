@@ -24,16 +24,17 @@ const  Signin = () => {
   const handleChange = (e) => {
     setData({
       ...data,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value.toLowerCase().trim()
     })
   }
 
   const submit = async (e) => {
     setLoading(true)
+    setError([])
     e.preventDefault();
     const { token, message } = await AuthService.login(data)
     if(message !== "logged In") {
-      setError([...error, message])
+      setError([message])
       setLoading(false)
       return
     }
@@ -54,11 +55,7 @@ const  Signin = () => {
                   <h3 className="mb-0" style={{ fontFamily: "Ubuntu" }}>Sign into your account</h3>
                 </div>
                 {error.length > 0 ? <Alert variant="danger">
-                  {error.map(err => 
-                    <ul key={err}>
-                      <li>{err}</li>
-                    </ul>
-                  )}
+                  { error }
                 </Alert>
                 : ""
               }
