@@ -29,7 +29,7 @@ module.exports.createParcel = async (req, res, next) => {
 
 module.exports.getParcels = async (req, res, next) => {
   try {
-    const results = await Parcel.find({}, { __v: 0 })
+    const results = await Parcel.find({}, { __v: 0 }).cache({ expire: 60})
       .populate("sender", "-password -email -__v")
       .exec();
     if (!results.length)
@@ -72,7 +72,7 @@ module.exports.findParcelById = async (req, res, next) => {
 module.exports.getParcelsByUser = async (req, res, next) => {
   const id = req.params.userId;
   try {
-    const parcels = await Parcel.find({ sender: mongoose.Types.ObjectId(id) });
+    const parcels = await Parcel.find({ sender: mongoose.Types.ObjectId(id) }).cache({ expire: 60});
 
     if (!parcels)
       return res

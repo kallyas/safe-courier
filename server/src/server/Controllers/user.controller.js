@@ -17,7 +17,7 @@ module.exports.createUser = async (req, res, next) => {
       return res.status(400).send({ message: error.details[0].message });
 
     const existingUser = await User.findOne({
-      username: req.body.username,
+      username: req.body.username.toLowerCase(),
     });
     if (existingUser)
       return res.status(400).send({ message: "Username already taken! " });
@@ -30,7 +30,7 @@ module.exports.createUser = async (req, res, next) => {
     const result = await user.save()
     const token = auth.generateAccessToken(result.toJSON());
     res
-      .status(200)
+      .status(201)
       .send({ message: "User created successfully", token: token });
   } catch (error) {
     console.log(error.message);
