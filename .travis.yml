@@ -10,7 +10,7 @@ branches:
 env:
   global:
     - PORT=3000
-    - MONGODB_URL=mongodb://localhost:27017/safe-courier
+    - DB_URL_TEST=mongodb://localhost:27017/safe-courier
     - TEST_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJfaWQiOiI2MGNjY2UwMzYwZWU1MTFlNDAzMWM4MTAiLCJ1c2VybmFtZSI6ImJvYnNvbiIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJEQxTHNhLkdnREgxTG5TNWtMakJuRi5sbzRaMTVMdEEvVFI0V1hsWTBKTTF4OC5ONFV0bzEuIiwiZmlyc3ROYW1lIjoiQm9iIiwibGFzdE5hbWUiOiJNdWdpc2hhIiwiX192IjowLCJpYXQiOjE2MjQxNzM3NTYsImV4cCI6MTYyNDI2MDE1OTZ9.bFD1rz_Cf4fnRXSo_R2i3n4pblbi1zRpSfYhnzvatkE
     - ACCESS_TOKEN_SECRET=sedasfdf
     - REFRESH_TOKEN_SECRET=sdafgorntoieworwevnir
