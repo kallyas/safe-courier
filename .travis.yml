@@ -11,7 +11,7 @@ env:
   global:
     - PORT=3000
     - DB_URL_TEST=mongodb://localhost:27017/safe-courier
-    - TEST_TOKEN=${{ ACCESS_TOKEN.ACCESS_TOKEN }}
+    - TEST_TOKEN=${{ secrets.ACCESS_TOKEN }}
     - ACCESS_TOKEN_SECRET=sedasfdf
     - REFRESH_TOKEN_SECRET=sdafgorntoieworwevnir
     - SECRET=s3cr3t
