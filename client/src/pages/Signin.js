@@ -32,15 +32,19 @@ const  Signin = () => {
     setLoading(true)
     setError([])
     e.preventDefault();
-    const { token, message } = await AuthService.login(data)
-    if(message !== "logged In") {
-      setError([message])
-      setLoading(false)
-      return
+    try {
+      const { token, message } = await AuthService.login(data)
+      if(message !== "logged In") {
+        setError([message])
+        setLoading(false)
+        return
+      }
+      setToken(token)
+    } catch(err) {
+      return setError(err)
     }
     setLoading(false)
     setError([])
-    setToken(token)
     history.push(Routes.UserDashboard.path)
   }
 

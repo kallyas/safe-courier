@@ -13,7 +13,7 @@ function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
 
     useEffect(() => {
       const timer = setTimeout(() => setLoaded(true), 1000);
-      if (decode(token)?.exp * 1000 < new Date().getTime()){
+      if (token && decode(token)?.exp * 1000 < new Date().getTime()){
         AuthService.logout();
         return window.location.href = Routes.SignIn.path;
       }

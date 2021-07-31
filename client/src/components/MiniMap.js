@@ -25,6 +25,7 @@ const MiniMap = () => {
             profile: 'mapbox.driving',
             unit: 'metric'
         })
+        
         map.addControl(directions, 'top-left');
         map.addControl(new mapboxgl.NavigationControl(), "bottom-right")
         return () => map.remove()
