@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon src/index.js --trace-warnings",
     "prod": "node src/index.js --trace-warnings",
-    "test": "mocha src/server/test/parcel.test.js --exit"
+    "test": "mocha --recursive src/server/test --exit"
   },
   "engines": {
     "node": "^12.x"
@@ -45,6 +45,7 @@
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
     "mocha": "^8.2.1",
+    "mockgoose": "^8.0.4",
     "mongoose": "^5.12.0",
     "morgan": "^1.10.0",
     "nodemailer": "^6.6.2",

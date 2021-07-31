@@ -11,7 +11,7 @@ parcelController.getParcels
 )
 
 //create a new parcel 
-router.post("/parcels", 
+router.post("/parcels",
 auth.authenticateToken, 
 parcelController.createParcel
 )
