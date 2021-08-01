@@ -146,12 +146,12 @@ module.exports.Login = async (req, res, next) => {
       if (result) {
         //const data = req.body;
         const token = auth.generateAccessToken(user.toJSON());
-        res.send({ message: "logged In", token: token });
+        return res.send({ message: "logged In", token: token });
       } else {
-        res.send({ message: "Passwords did not match!" });
+        return res.status(400).send({ message: "Passwords did not match!" });
       }
     } else {
-      res.status(404).send({ message: "User not found!" });
+      return res.status(404).send({ message: "User not found!" });
     }
   } catch (error) {
     next(error);
