@@ -9,11 +9,7 @@ import ProtectedRoute from "./components/Common/ProtectedRoute";
 import ProtectedRouteWithSidebar from "./components/Common/ProtectedRouteWithSidebar"
 import PublicRoute from "./components/Common/PublicRoute";
 
-import UserDashboard from "./pages/dashboard/UserDashboard"
-import Transactions from "./pages/Transactions"
-import Signin from "./pages/Signin";
-import Signup from "./pages/signup"
-import NotFound from "./pages/NotFound"
+import { UserDashboard, Transactions, Signin, Signup, NotFound, ParcelDetails } from "./pages/index"
 require('dotenv').config()
 
 function App() {
@@ -26,7 +22,7 @@ function App() {
           </Route>
         <ProtectedRouteWithSidebar exact path={Routes.UserDashboard.path} component={UserDashboard} />
         <ProtectedRouteWithSidebar exact path={Routes.Transactions.path} component={Transactions}/>
-        <ProtectedRouteWithSidebar exact path={Routes.Details.path} component={Transactions}/>
+        <ProtectedRouteWithSidebar path={Routes.Details.path} component={ParcelDetails}/>
         <PublicRoute exact path={Routes.SignIn.path} component={Signin} />
         <PublicRoute exact path={Routes.SignUp.path} component={Signup} />
         <ProtectedRoute path="/add" component={Home}/>
