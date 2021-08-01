@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar"
 import TableLoader from "./TableLoader"
 import Recent from "./Recent"
 import MiniMap from "./MiniMap"
+import Progress from "./Progress"
 
 
 export {
@@ -16,5 +17,6 @@ export {
     Sidebar,
     TableLoader,
     Recent,
-    MiniMap
+    MiniMap,
+    Progress
 }
