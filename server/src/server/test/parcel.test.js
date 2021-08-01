@@ -11,9 +11,12 @@ let app = require('../../index');
 
 describe('Parcel', () => {
   beforeEach(done => {
-    Parcel.remove({}, err => {
-      done();
-    })
+    User.remove({}, err => {})
+    Parcel.remove({}, err => done(err))
+  })
+
+  afterEach(done => {
+    User.remove({}, err => done(err))
   })
 
   let parcel = {
@@ -29,20 +32,35 @@ describe('Parcel', () => {
     weight: 4
   }
 
+ let user = {
+      email: "test@gmail.com",
+      password: "test",
+      firstName: "test",
+      lastName: "test",
+      username: "test"
+ }
+
+
   describe('/POST parcel', () => {
     it('should create a parcel (with Authentication)', done => {
       request(app)
-      .post('/api/v1/parcels')
-      .set('Authorization', `Bearer ${process.env.TEST_TOKEN}`)
-      .send(parcel)
-      .then(res => {
-        expect(res.status).to.equal(201);
-        expect(res.body).to.contain.property('status')
-        expect(res.body).to.contain.property('message')
-        expect(res.body).to.contain.property('result')
-        expect(res.body.result).to.be.an('object')
-        done()
-      }).catch(err => done(err))
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .then(res => {
+          const { token } = res.body
+          request(app)
+            .post('/api/v1/parcels')
+            .set('Authorization', `Bearer ${token}`)
+            .send(parcel)
+            .then(res => {
+              expect(res.status).to.equal(201);
+              expect(res.body).to.contain.property('status')
+              expect(res.body).to.contain.property('message')
+              expect(res.body).to.contain.property('result')
+              expect(res.body.result).to.be.an('object')
+              done()
+            }).catch(err => done(err))
+        }).catch(err => done(err))
     })
 
     it('should fail to post a parcel without authentication', done => {
@@ -69,46 +87,64 @@ describe('Parcel', () => {
         weight: 4
       }
       request(app)
-      .post('/api/v1/parcels')
-      .set('Authorization', `Bearer ${process.env.TEST_TOKEN}`)
-      .send(parcelWithoutParcelType)
-      .then(res => {
-        expect(res.status).to.equal(400);
-        expect(res.text).to.be.equal('{"message":"\\"parcelType\\" is required"}');
-        done()
-      }).catch(err => done(err))
+      .post('/api/v1/auth/signup')
+        .send(user)
+        .then(res => {
+          const { token } = res.body
+          request(app)
+          .post('/api/v1/parcels')
+          .set('Authorization', `Bearer ${token}`)
+          .send(parcelWithoutParcelType)
+          .then(res => {
+            expect(res.status).to.equal(400);
+            expect(res.text).to.be.equal('{"message":"\\"parcelType\\" is required"}');
+            done()
+          }).catch(err => done(err))
+        }).catch(err => done(err))
     })
   })
 
   describe('/GET parcel', () => {
     it('should get a parcel', done => {
       request(app)
-      .post('/api/v1/parcels')
-      .set('Authorization', `Bearer ${process.env.TEST_TOKEN}`)
-      .send(parcel)
-      .then(res => {
-        request(app)
-        .get('/api/v1/parcels')
-        .set('Authorization', `Bearer ${process.env.TEST_TOKEN}`)
+        .post('/api/v1/auth/signup')
+        .send(user)
         .then(res => {
-          expect(res.status).to.equal(200);
-          expect(res.body.length).to.equal(1);
-          expect(res.body).to.be.an('array')
-          done()
+          const { token } = res.body
+          request(app)
+          .post('/api/v1/parcels')
+          .set('Authorization', `Bearer ${token}`)
+          .send(parcel)
+          .then(res => {
+            request(app)
+            .get('/api/v1/parcels')
+            .set('Authorization', `Bearer ${token}`)
+            .then(res => {
+              expect(res.status).to.equal(200);
+              expect(res.body.length).to.equal(1);
+              expect(res.body).to.be.an('array')
+              done()
+            }).catch(err => done(err))
+          }).catch(err => done(err))
         }).catch(err => done(err))
-      }).catch(err => done(err))
     })
 
     it('should not find a parcel', done => {
       request(app)
-      .get('/api/v1/parcels')
-      .set('Authorization', `Bearer ${process.env.TEST_TOKEN}`)
-      .then(res => {
-        expect(res.status).to.equal(200);
-        expect(res.body).to.be.an('object');
-        expect(res.body.message).to.be.equal('No Parcels Found!');
-        done()
-      }).catch(err => done(err))
+        .post('/api/v1/auth/signup')
+        .send(user)
+        .then(res => {
+          const { token } = res.body
+          request(app)
+            .get('/api/v1/parcels')
+            .set('Authorization', `Bearer ${token}`)
+            .then(res => {
+              expect(res.status).to.equal(200);
+              expect(res.body).to.be.an('object');
+              expect(res.body.message).to.be.equal('No Parcels Found!');
+              done()
+            }).catch(err => done(err))
+        }).catch(err => done(err))
     })
   })
 })
