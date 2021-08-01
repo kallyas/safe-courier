@@ -27,7 +27,7 @@ import { Routes } from "../routes"
           </td>
           <td>
             <span className="fw-normal">
-              {sender.username}
+              {sender?.username}
             </span>
           </td>
           <td>
