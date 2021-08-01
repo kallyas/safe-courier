@@ -7,6 +7,7 @@ cache: npm
 branches:
   only:
     - backend-api
+    - develop
 env:
   global:
     - PORT=3000
