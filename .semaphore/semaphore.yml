@@ -1,0 +1,32 @@
+version: v1.0
+name: Test MyApp
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: MongoDB
+    task:
+      jobs:
+        - name: MongoDB Create user
+          commands:
+            - sem-service start mongodb
+            - sudo apt install mongodb-clients -y
+            - 'echo ''db.createUser( {user:"username", pwd:"password", roles:[], mechanisms:["SCRAM-SHA-1"]  } )'' | mongo s2'
+        - name: MongoDB Create admin user
+          commands:
+            - sem-service start mongodb
+            - sudo apt install mongodb-clients -y
+            - 'echo ''db.createUser({user:"username", pwd:"password", roles:[{role:"userAdminAnyDatabase",db:"admin"}], mechanisms:["SCRAM-SHA-1"]})'' | mongo admin'
+  - name: Test
+    task:
+      jobs:
+        - name: Test
+          commands:
+            - checkout
+            - sem-version node 12
+            - cache restore
+            - npm install
+            - cache store
+            - npm run build --if-present
+            - npm test
