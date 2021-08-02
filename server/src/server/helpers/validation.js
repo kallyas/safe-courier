@@ -29,10 +29,14 @@ const parcelCheck = (data) => {
     locationTo: joi.string().required(),
     weight: joi.number().required(),
     price: joi.string(),
+    pickupLocation: joi.string(),
+    dropOffLocation: joi.string(),
+    description: joi.string(),
     recipient: joi.object().required(),
     trackingCode: joi.string(),
     presentLocation: joi.string(),
-    city: joi.string().required()
+    city: joi.string().required(),
+    notes: joi.string()
   })
   return validateSchema.validate(data)
 }

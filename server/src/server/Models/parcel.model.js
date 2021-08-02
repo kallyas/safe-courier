@@ -11,6 +11,9 @@ const parcelSchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: Text
+  },
   sender: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -52,6 +55,9 @@ const parcelSchema = new Schema({
       type: String,
       required: true,
     },
+    phone: {
+      type: String,
+    },
     email: {
       type: String,
       trim: true,
@@ -67,6 +73,15 @@ const parcelSchema = new Schema({
   },
   presentLocation: {
     type: String
+  },
+  pickupLocation: {
+    type: String
+  },
+  dropOffLocation: {
+    type: String
+  },
+  notes: {
+    type: Text
   }
 });
 
