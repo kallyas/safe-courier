@@ -5,6 +5,7 @@ import Signup from './signup'
 import Transactions from './Transactions'
 import UserDashboard from './dashboard/UserDashboard'
 import AdminDashboard from './dashboard/AdminDashboard'
+import Settings from './Settings'
 
 export {
     ParcelDetails,
@@ -13,5 +14,6 @@ export {
     Signup,
     Transactions,
     UserDashboard,
-    AdminDashboard
+    AdminDashboard,
+    Settings
 }
