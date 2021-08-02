@@ -18,6 +18,8 @@ blocks:
             - sem-service start mongodb
             - sudo apt install mongodb-clients -y
             - 'echo ''db.createUser({user:"username", pwd:"password", roles:[{role:"userAdminAnyDatabase",db:"admin"}], mechanisms:["SCRAM-SHA-1"]})'' | mongo admin'
+      secrets:
+        - name: test
   - name: Test
     task:
       jobs:
