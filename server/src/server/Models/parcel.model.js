@@ -12,7 +12,7 @@ const parcelSchema = new Schema({
     required: true,
   },
   description: {
-    type: Text
+    type: String
   },
   sender: {
     type: mongoose.Schema.Types.ObjectId,
@@ -81,7 +81,7 @@ const parcelSchema = new Schema({
     type: String
   },
   notes: {
-    type: Text
+    type: String
   }
 });
 
