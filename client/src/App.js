@@ -13,7 +13,8 @@ import {
   Signin, Signup, 
   NotFound, 
   ParcelDetails,
-  Settings
+  Settings,
+  Schedule,
  } from "./pages/index"
 require('dotenv').config()
 
@@ -29,6 +30,7 @@ function App() {
         <ProtectedRouteWithSidebar exact path={Routes.Transactions.path} component={Transactions}/>
         <ProtectedRouteWithSidebar path={Routes.Details.path} component={ParcelDetails}/>
         <ProtectedRouteWithSidebar path={Routes.Settings.path} component={Settings}/>
+        <ProtectedRouteWithSidebar path={Routes.Schedule.path} component={Schedule}/>
         <PublicRoute exact path={Routes.SignIn.path} component={Signin} />
         <PublicRoute exact path={Routes.SignUp.path} component={Signup} />
         <Route component={NotFound} />

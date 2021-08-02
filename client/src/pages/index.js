@@ -6,6 +6,7 @@ import Transactions from './Transactions'
 import UserDashboard from './dashboard/UserDashboard'
 import AdminDashboard from './dashboard/AdminDashboard'
 import Settings from './Settings'
+import Schedule from './Schedule'
 
 export {
     ParcelDetails,
@@ -15,5 +16,6 @@ export {
     Transactions,
     UserDashboard,
     AdminDashboard,
-    Settings
+    Settings,
+    Schedule
 }

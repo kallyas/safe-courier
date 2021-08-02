@@ -5,7 +5,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faFileAlt, faSignOutAlt, faTimes, faHandHoldingUsd, faCog } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarAlt, faBook, faBoxOpen, faChartPie, faFileAlt, faSignOutAlt, faTimes, faHandHoldingUsd, faCog } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import decode from "jwt-decode"
@@ -114,7 +114,8 @@ const Sidebar = (props = {}) => {
 
               <NavItem title="Overview" link={Routes.UserDashboard.path} icon={faChartPie} />
               <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
-              <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
+              <NavItem title="Schedule" link={Routes.Schedule.path} icon={faCalendarAlt} />
+              
 
               {/* <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
                 <NavItem title="Sign In" link={Routes.SignIn.path} />
@@ -122,6 +123,7 @@ const Sidebar = (props = {}) => {
               </CollapsableNavItem> */}
 
               <Dropdown.Divider className="my-3 border-indigo" />
+              <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
 
               {/* <CollapsableNavItem eventKey="documentation/" title="Getting Started" icon={faBook}>
               </CollapsableNavItem>

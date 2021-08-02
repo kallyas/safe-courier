@@ -6,5 +6,6 @@ export const Routes = {
     SignUp: { path: "/auth/signup"},
     Transactions: { path: "/user/dashboard/transactions" },
     Details: { path: "/user/dashboard/details" },
-    Settings: { path: "/user/dashboard/settings" }
+    Settings: { path: "/user/dashboard/settings" },
+    Schedule: { path: "/user/dashboard/schedule" }
 }
