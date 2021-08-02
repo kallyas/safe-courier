@@ -3,13 +3,18 @@ import { Routes } from "./routes"
 
 import useToken from "./Utils/useToken";
 
-import Home from "./components/Home/Home";
 import Landing from "./components/Landing/Landing";
-import ProtectedRoute from "./components/Common/ProtectedRoute";
 import ProtectedRouteWithSidebar from "./components/Common/ProtectedRouteWithSidebar"
 import PublicRoute from "./components/Common/PublicRoute";
 
-import { UserDashboard, Transactions, Signin, Signup, NotFound, ParcelDetails } from "./pages/index"
+import { 
+  UserDashboard, 
+  Transactions, 
+  Signin, Signup, 
+  NotFound, 
+  ParcelDetails,
+  Settings
+ } from "./pages/index"
 require('dotenv').config()
 
 function App() {
@@ -23,11 +28,9 @@ function App() {
         <ProtectedRouteWithSidebar exact path={Routes.UserDashboard.path} component={UserDashboard} />
         <ProtectedRouteWithSidebar exact path={Routes.Transactions.path} component={Transactions}/>
         <ProtectedRouteWithSidebar path={Routes.Details.path} component={ParcelDetails}/>
+        <ProtectedRouteWithSidebar path={Routes.Settings.path} component={Settings}/>
         <PublicRoute exact path={Routes.SignIn.path} component={Signin} />
         <PublicRoute exact path={Routes.SignUp.path} component={Signup} />
-        <ProtectedRoute path="/add" component={Home}/>
-        <ProtectedRoute path="/details/:id" component={Home} />
-        <ProtectedRoute path="/edit/:id" component={Home} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>
