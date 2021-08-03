@@ -16,7 +16,12 @@ import { Routes } from "../routes"
       return (
         <tr>
           <td>
-            <Card.Link as={Link} className="fw-normal">
+            <Card.Link as={Link} className="fw-normal"
+              to={{
+                pathname: `${Routes.Details.path}/${_id}`,
+                state: { item: props}
+              }}
+            >
               {"#"}
             </Card.Link>
           </td>
