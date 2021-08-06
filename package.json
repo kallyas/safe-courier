@@ -7,9 +7,9 @@
     "server": "cd server && npm start",
     "client": "cd client && npm start",
     "start": "concurrently \"npm:server\" \"npm:client\"",
-    "instDep": "concurrently \"cd server && npm install\" \"cd client && npm install\"",
-    "test": "cd server && npm test",
+    "test": "cd server && npm install && npm test",
     "build": "cd client && npm install && npm run build",
+    "instDep": "concurrently \"cd server && npm install\" \"cd client && npm install\"",
     "azure": "cd client && npm install && env REACT_APP_API_URL=${{ secrets.REACT_APP_API_URL }} && npm run build"
   },
   "repository": {

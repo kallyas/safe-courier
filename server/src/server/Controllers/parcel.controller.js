@@ -12,7 +12,7 @@ module.exports.createParcel = async (req, res, next) => {
 
     const parcel = new Parcel(req.body);
     const result = await parcel.save();
-    res.status(200).send({
+    res.status(201).send({
       status: "success",
       message: "successfully created",
       result,
@@ -48,7 +48,6 @@ module.exports.findParcelById = async (req, res, next) => {
     const parcel = await Parcel.findById(id)
       .select("-__v")
       .populate("sender", "-password -__v");
-    // const parcel = await User.findOne({ _id: id });
     if (!parcel) {
       return res.status(404).send({
         status: 404,
@@ -72,7 +71,7 @@ module.exports.findParcelById = async (req, res, next) => {
 module.exports.getParcelsByUser = async (req, res, next) => {
   const id = req.params.userId;
   try {
-    const parcels = await Parcel.find({ sender: mongoose.Types.ObjectId(id) });
+    const parcels = await Parcel.find({ sender: mongoose.Types.ObjectId(id) })
 
     if (!parcels)
       return res
