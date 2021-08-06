@@ -68,9 +68,9 @@ describe("Parcel", () => {
 				.post("/api/v1/parcels")
 				.send(parcel)
 				.then((res) => {
-					expect(res.status).to.equal(403);
+					expect(res.status).to.equal(401);
 					expect(res.text).to.be.equal(
-						'{"message":"Forbidden, Missing Access Token"}'
+						'{"message":"Unauthorized, Missing Access Token"}'
 					);
 					done();
 				})
