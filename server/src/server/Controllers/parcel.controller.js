@@ -48,7 +48,6 @@ module.exports.findParcelById = async (req, res, next) => {
     const parcel = await Parcel.findById(id)
       .select("-__v")
       .populate("sender", "-password -__v");
-    // const parcel = await User.findOne({ _id: id });
     if (!parcel) {
       return res.status(404).send({
         status: 404,

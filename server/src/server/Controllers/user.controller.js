@@ -143,7 +143,6 @@ module.exports.Login = async (req, res, next) => {
 			//compare passwords using Bcrypt
 			const result = await bcrypt.compare(req.body.password, user.password);
 			if (result) {
-				//const data = req.body;
 				const token = auth.generateAccessToken(user.toJSON());
 				return res.send({ message: "logged In", token: token });
 			} else {
