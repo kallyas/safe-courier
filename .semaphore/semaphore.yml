@@ -20,6 +20,17 @@ blocks:
             - 'echo ''db.createUser({user:"username", pwd:"password", roles:[{role:"userAdminAnyDatabase",db:"admin"}], mechanisms:["SCRAM-SHA-1"]})'' | mongo admin'
       secrets:
         - name: test
+      env_vars:
+        - name: DB_URL_TEST
+          value: 'mongodb+srv://admin:RYGvAr1ine0kZmVf@api.4wjwu.mongodb.net/safe-courier-api-test?retryWrites=true&w=majority'
+        - name: SECRET
+          value: sdgudifghoisdfhgioh
+        - name: ACCESS_TOKEN_SECRET
+          value: awtgadrgtfbrdr
+        - name: REFRESH_TOKEN_SECRET
+          value: earnatafsvfdbt
+        - name: NODE_ENV
+          value: test
   - name: Test
     task:
       jobs:
