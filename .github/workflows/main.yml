@@ -29,3 +29,8 @@ jobs:
     - run: npm test
       env:
         CI: true
+        TEST_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        SECRET: s3cr3t
+        ACCESS_TOKEN_SECRET: sedasfdf
+        REFRESH_TOKEN_SECRET: sdafgorntoieworwevnir
+        DB_URL_TEST: mongodb://localhost:27017/safe-courier
