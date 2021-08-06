@@ -1,5 +1,6 @@
-import React from 'react'
+import { Link } from "react-router-dom"
 import './Landing.css'
+import { Routes } from "../../routes"
 
 function Landing() {
     return (
@@ -13,7 +14,11 @@ function Landing() {
                     <h6 className="u-custom-font u-text u-text-font u-text-1">about us</h6>
                     <h1 className="u-text u-text-palette-4-base u-text-2">Safe Courier Delivery Service</h1>
                     <p className="u-text u-text-palette-5-dark-3 u-text-3">Whether you need to move something across town, between cities or across the country</p>
-                    <a href="/login" className="u-btn u-btn-round u-button-style u-palette-4-base u-radius-50 u-text-body-alt-color u-btn-1">Login to continue</a>
+                    <Link to={{ pathname: Routes.SignIn.path}}>
+                      <button className="u-btn u-btn-round u-button-style u-palette-4-base u-radius-50 u-text-body-alt-color u-btn-1">
+                        Get started
+                      </button>
+                    </Link>
                   </div>
                 </div>
                 <div className="u-align-right u-container-style u-expand-resize u-image u-layout-cell u-right-cell u-size-29 u-image-1">

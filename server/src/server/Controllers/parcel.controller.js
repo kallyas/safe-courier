@@ -172,6 +172,7 @@ module.exports.updateStatus = async (req, res, next) => {
 module.exports.updateLocation = async (req, res, next) => {
   try {
     const id = req.params.parcelId;
+    const filter = { _id: id }
     const updates = req.body;
     const options = { new: true };
 
@@ -188,7 +189,7 @@ module.exports.updateLocation = async (req, res, next) => {
     }
 
     // if admin, update
-    const result = await Parcel.findByIdAndUpdate(id, updates, options);
+    const result = await Parcel.findOneAndUpdate(filter, updates, options);
     if (!result)
       return res.status(404).send({ message: "Parcel order not found" });
 

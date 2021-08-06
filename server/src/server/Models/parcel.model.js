@@ -65,6 +65,9 @@ const parcelSchema = new Schema({
       ],
     },
   },
+  presentLocation: {
+    type: String
+  }
 });
 
 parcelSchema.index({ "$**": "text" });

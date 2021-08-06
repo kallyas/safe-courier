@@ -31,6 +31,7 @@ const parcelCheck = (data) => {
     price: joi.string(),
     recipient: joi.object().required(),
     trackingCode: joi.string(),
+    presentLocation: joi.string(),
     city: joi.string().required()
   })
   return validateSchema.validate(data)

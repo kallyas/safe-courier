@@ -18,15 +18,18 @@ parcelController.createParcel
 
 //get parcel by id
 router.get("/parcels/:parcelId",
+auth.authenticateToken,
 parcelController.findParcelById
 )
 
 // get all parcels for a given user
 router.get("/users/:userId/parcels",
+auth.authenticateToken,
 parcelController.getParcelsByUser)
 
 // cancel the specific parcel delivery order
 router.put("/parcels/:parcelId/cancel",
+auth.authenticateToken,
 parcelController.cancelParcel 
 )
 

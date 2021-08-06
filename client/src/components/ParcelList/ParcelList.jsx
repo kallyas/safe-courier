@@ -1,8 +1,8 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function ParcelList({ items, cancelParcel, onDetails }) {
-  const history = useHistory();
+function ParcelList({ items, cancelParcel }) {
+  // const history = useHistory();
   return (
     <div className="panel-body">
       {items.length > 0 ? (
@@ -50,17 +50,23 @@ function ParcelList({ items, cancelParcel, onDetails }) {
                     </td>
                     <td>{item.price}</td>
                     <td>
-                      <button
-                        onClick={() => {
-                          onDetails(item._id);
-                          history.push("/details");
-                        }}
+                      <Link to={{
+                        pathname: `details/${item._id}`,
+                        state: { items: item}
+                      }}
                       >
-                        Details
-                      </button>
+                      <button>Details</button>
+                      </Link>
                     </td>
                     <td>
-                      <button className="btn btn-sm btn-success">Edit</button>
+                    <Link to={{
+                        pathname: `edit/${item._id}`,
+                        state: { items: item}
+                      }}
+                      >
+                      <button className={`btn btn-sm btn-success`}
+                      >Edit</button>
+                    </Link>
                     </td>
                     <td>
                       <button
