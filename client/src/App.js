@@ -1,33 +1,38 @@
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-
-import "./App.css";
-import "./assets/css/space.min.css";
-import "./assets/css/toastr.min.css";
+import { Routes } from "./routes"
 
 import useToken from "./Utils/useToken";
 
-import Login from "./components/Login/Login";
-import Home from "./components/Home/Home";
-import Signup from "./components/Signup/Signup";
-import NotFound from "./components/Common/NotFound";
 import Landing from "./components/Landing/Landing";
-import ProtectedRoute from "./components/Common/ProtectedRoute";
+import ProtectedRouteWithSidebar from "./components/Common/ProtectedRouteWithSidebar"
 import PublicRoute from "./components/Common/PublicRoute";
+
+import { 
+  UserDashboard, 
+  Transactions, 
+  Signin, Signup, 
+  NotFound, 
+  ParcelDetails,
+  Settings,
+  Schedule,
+ } from "./pages/index"
+require('dotenv').config()
 
 function App() {
   const { token } = useToken();
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" >
-          { token ? <Redirect to="/home" /> : <Landing />}
+        <Route exact path={Routes.LandingPage.path} >
+          { token ? <Redirect to={Routes.UserDashboard.path} /> : <Landing />}
           </Route>
-        <ProtectedRoute path="/home" component={Home} />
-        <PublicRoute path="/login" component={Login} />
-        <PublicRoute path="/signup" component={Signup} />
-        <ProtectedRoute path="/add" component={Home}/>
-        <ProtectedRoute path="/details/:id" component={Home} />
-        <ProtectedRoute path="/edit/:id" component={Home} />
+        <ProtectedRouteWithSidebar exact path={Routes.UserDashboard.path} component={UserDashboard} />
+        <ProtectedRouteWithSidebar exact path={Routes.Transactions.path} component={Transactions}/>
+        <ProtectedRouteWithSidebar path={Routes.Details.path} component={ParcelDetails}/>
+        <ProtectedRouteWithSidebar path={Routes.Settings.path} component={Settings}/>
+        <ProtectedRouteWithSidebar path={Routes.Schedule.path} component={Schedule}/>
+        <PublicRoute exact path={Routes.SignIn.path} component={Signin} />
+        <PublicRoute exact path={Routes.SignUp.path} component={Signup} />
         <Route component={NotFound} />
       </Switch>
     </BrowserRouter>

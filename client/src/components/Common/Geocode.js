@@ -1,7 +1,7 @@
 import Geocode from "react-geocode";
 
 // set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-Geocode.setApiKey("AIzaSyA0LMZv6kpcyvLj6uGPdeXGHt5Sx7pRjnw");
+Geocode.setApiKey("API_KEY");
 // set response language. Defaults to english.
 Geocode.setLanguage("en");
 Geocode.setLocationType("ROOFTOP");
