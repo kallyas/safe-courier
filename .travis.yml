@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - "12"
+services:
+  - mongodb
+cache: npm
+branches:
+  only:
+    - backend-api
+    - develop
+env:
+  global:
+    - PORT=3000
+    - DB_URL_TEST=mongodb://localhost:27017/safe-courier
+    - ACCESS_TOKEN_SECRET=sedasfdf
+    - REFRESH_TOKEN_SECRET=sdafgorntoieworwevnir
+    - SECRET=s3cr3t
+script:
+  - npm test

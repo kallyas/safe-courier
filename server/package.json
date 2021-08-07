@@ -4,8 +4,9 @@
   "description": "safe courier api for courier delivery service.",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js --trace-warnings",
-    "test": "mocha src/server/test/parcel.test.js --exit"
+    "dev": "nodemon src/index.js --trace-warnings",
+    "start": "node src/index.js --trace-warnings",
+    "test": "mocha --recursive src/server/test --exit"
   },
   "engines": {
     "node": "^12.x"
@@ -25,39 +26,35 @@
   "homepage": "https://github.com/kallyas/safe-courier#readme",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
-    "axios": "^0.21.1",
-    "bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
-    "chai": "^4.2.0",
     "core-util-is": "^1.0.2",
     "cors": "^2.8.5",
-    "debug": "^4.3.1",
-    "dotenv": "^8.2.0",
+    "debug": "^4.3.2",
+    "dotenv": "^8.6.0",
     "express": "^4.17.1",
-    "express-rate-limit": "^5.2.3",
-    "express-validator": "^6.7.0",
-    "generate-mocha": "^1.0.0",
+    "express-rate-limit": "^5.3.0",
+    "express-validator": "^6.12.1",
     "hash": "^0.2.1",
-    "helmet": "^4.2.0",
+    "helmet": "^4.6.0",
     "http-errors": "^1.8.0",
-    "joi": "^17.3.0",
+    "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^2.2.0",
-    "mocha": "^8.2.1",
-    "mongoose": "^5.12.0",
+    "mongoose": "^5.13.5",
     "morgan": "^1.10.0",
-    "nodemailer": "^6.6.2",
-    "supertest": "^4.0.2",
+    "nodemailer": "^6.6.3",
+    "redis": "^3.1.2",
     "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
+    "chai": "^4.3.4",
+    "chai-http": "^2.0.1",
     "faker": "^4.1.0",
     "jest": "^26.6.3",
-    "nodemon": "^2.0.6",
-    "prettier": "^2.2.1",
-    "supertest": "^4.0.2",
-    "chai": "^3.5.0",
-    "chai-http": "^2.0.1",
-    "mocha": "^2.4.5"
+    "mocha": "^8.4.0",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.3.2",
+    "supertest": "^4.0.2"
   }
 }

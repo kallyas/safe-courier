@@ -46,6 +46,14 @@ const UserSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  role: {
+    type: String,
+    default: "basic"
+  },
+  status: {
+    type: String,
+    default: "pending"
+  }
 });
 
 // create search index
