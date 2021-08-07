@@ -28,7 +28,7 @@ function App() {
           </Route>
         <ProtectedRouteWithSidebar exact path={Routes.UserDashboard.path} component={UserDashboard} />
         <ProtectedRouteWithSidebar exact path={Routes.Transactions.path} component={Transactions}/>
-        <ProtectedRouteWithSidebar path={Routes.Details.path} component={ParcelDetails}/>
+        <ProtectedRouteWithSidebar path={`${Routes.Details.path}/:id`} component={ParcelDetails}/>
         <ProtectedRouteWithSidebar path={Routes.Settings.path} component={Settings}/>
         <ProtectedRouteWithSidebar path={Routes.Schedule.path} component={Schedule}/>
         <PublicRoute exact path={Routes.SignIn.path} component={Signin} />

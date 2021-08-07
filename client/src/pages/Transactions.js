@@ -2,10 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown, Card } from '@themesberg/react-bootstrap';
+import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown} from '@themesberg/react-bootstrap';
 
 import TransactionsTable  from "../components/TransactionsTable";
 import { ParcelService } from "../service/ParcelService";
+import TableSkeleton from "../components/skeleton/TableSkeleton";
 
 export default ({ token }) => {
     const [items, setItems] = useState([])
@@ -84,11 +85,7 @@ export default ({ token }) => {
       </div>
       { loading ? (
         <>
-        <Card border="light" className="table-wrapper table-responsive shadow-sm">
-            <Card.Body className="pt-0">
-              <p className="align-items-center">Loading data...</p>
-            </Card.Body>
-        </Card>
+        <TableSkeleton />
         </>
       ) : <TransactionsTable items={items} /> }
     </>
