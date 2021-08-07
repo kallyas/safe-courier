@@ -6,6 +6,7 @@ import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-ic
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown, Card } from '@themesberg/react-bootstrap';
 import { Progress } from "../components";
 import { ParcelService } from "../service/ParcelService"
+import DetailsSkeleton from "../components/skeleton/parcelDetailsSkeleton";
 
 
 const ParcelDetails = ({ token }) => {
@@ -66,7 +67,7 @@ const ParcelDetails = ({ token }) => {
                     </Row>
                     </Card.Header>
                     <Card.Body>
-                       <Progress variant={statusVariant} label={item.status} value={56} />
+                            <Progress variant={statusVariant} label={item.status} value={56} loading={loading}/>
                        <Col xs={12} className="mb-4">
                          <Row>
                           <Col xs={12} xl={8}>
@@ -126,7 +127,7 @@ const ParcelDetails = ({ token }) => {
       </Row>
           </>
         ) :
-        <p>Loading data</p>
+        <DetailsSkeleton />
         }
         </>
     )
