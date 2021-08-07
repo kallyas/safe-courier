@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown, Card } from '@themesberg/react-bootstrap';
@@ -8,24 +8,25 @@ import { Progress } from "../components";
 import { ParcelService } from "../service/ParcelService"
 
 
-// create arrow functional component and export default
 const ParcelDetails = ({ token }) => {
-    const [item, setItem] = useState(null)
+  const [item, setItem] = useState({})
+  const [loading, setLoading] = useState(true)
     const { state } = useLocation()
-    const statusVariant = state.item.status === "delivered" ? "success"
-    : state.item.status === "transit" ? "warning"
-      : state.item.status === "cancelled" ? "danger" : "primary";
-
-    console.log(state)
-    // useEffect to fetch parcel by Id using ParcelService
-    useEffect(() => {
-        const getParcel = async () => {
-          const res = await ParcelService.getParcel(state.item._id, token)
-          setItem(res)
-        }
-        getParcel()
-    }, [state.item._id, token])
+    const statusVariant = item.status === "delivered" ? "success"
+    : item.status === "transit" ? "warning"
+        : item.status === "cancelled" ? "danger" : "primary";
   
+    const { id } = useParams()
+    useEffect(() => {
+      setLoading(true)
+        const getParcel = async () => {
+          const res = await ParcelService.getParcel(id, token)
+          console.log(res)
+          setItem(res)
+          setLoading(false)
+        }
+      getParcel()
+    }, [id, token])
     return (
         <>
         <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -36,7 +37,7 @@ const ParcelDetails = ({ token }) => {
                     <Breadcrumb.Item active>Details</Breadcrumb.Item>
                 </Breadcrumb>
             <h4>Parcel Details</h4>
-            <p className="mb-0">{ item?.trackingCode }</p>
+            <p className="mb-0">{ item.trackingCode }</p>
             </div>
             <div className="btn-toolbar mb-2 mb-md-0">
                 <ButtonGroup>
@@ -45,7 +46,9 @@ const ParcelDetails = ({ token }) => {
                 </ButtonGroup>
             </div>
         </div>
-        <Row>
+        {!loading ? (
+          <>
+            <Row>
         <Col xs={12} xl={12} className="mb-4">
           <Row>
             <Col xs={12} xl={7} className="mb-4">
@@ -55,7 +58,7 @@ const ParcelDetails = ({ token }) => {
                   <Card.Header>
                     <Row className="align-items-center">
                       <Col>
-                        {/* <h5>Status: {item?.status.charAt(0).toUpperCase() + item.status.slice(1)}</h5> */}
+                        <h5>Status: {item.status.charAt(0).toUpperCase() + item.status.slice(1)}</h5>
                       </Col>
                       <Col className="text-end">
                         Updated: { new Date(item.createdAt).toDateString() }
@@ -121,6 +124,10 @@ const ParcelDetails = ({ token }) => {
           </Row>
         </Col>
       </Row>
+          </>
+        ) :
+        <p>Loading data</p>
+        }
         </>
     )
 }
