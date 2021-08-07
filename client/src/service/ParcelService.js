@@ -1,8 +1,13 @@
 const API = process.env.REACT_APP_API_URL
 
 
-const fetchItem = async (id) => {
-    const res = await fetch(`${API}/parcels/${id}`);
+const fetchItem = async (id, token) => {
+    const res = await fetch(`${API}/parcels/${id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
     const data = await res.json();
     return data;
 }
@@ -20,7 +25,7 @@ export const ParcelService = {
       },
 
     cancelParcel: async ({ token, id }) => {
-        const cancel = await fetchItem(id);
+        const cancel = await fetchItem(id, token);
         const update = { ...cancel, status: "cancelled" };
         const res = await fetch(`${API}/parcels/${id}/cancel`, {
             method: "PUT",
@@ -62,5 +67,15 @@ export const ParcelService = {
         const data = await res.json();
         return data;
     },
+    getParcel: async (id, token) => {
+        const res = await fetch(`${API}/parcels/${id}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+        const data = await res.json();
+        return data;
+    }
 
 }
