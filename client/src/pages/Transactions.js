@@ -8,7 +8,7 @@ import TransactionsTable  from "../components/TransactionsTable";
 import { ParcelService } from "../service/ParcelService";
 import TableSkeleton from "../components/skeleton/TableSkeleton";
 
-export default ({ token }) => {
+export default ({ token, user }) => {
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
     // const [search, setSearch] = useState('')
@@ -18,6 +18,7 @@ export default ({ token }) => {
         setItems(res);
     }
 
+  console.log(user)
     useEffect(() => {
       setLoading(true)
       const getParcels = async () => {
@@ -26,10 +27,15 @@ export default ({ token }) => {
           setItems([]);
           return;
         }
-        setItems(res.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1));
+
+        setItems(
+          user.isAdmin ? res.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1)
+          : res.filter(item => item.sender.username === user.username && !item.sender.isAdmin).sort((a, b) => a.createdAt < b.createdAt ? 1 : -1)
+          );
         setLoading(false)
       }
       getParcels();
+      // eslint-disable-next-line
     }, [token]);
 
   return (

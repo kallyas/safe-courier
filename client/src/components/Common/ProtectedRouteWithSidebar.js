@@ -10,6 +10,7 @@ import AuthService from "../../service/AuthService"
 function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
     const [loaded, setLoaded] = useState(false);
     const { token } = useToken()
+    const user = decode(token)
 
     useEffect(() => {
       const timer = setTimeout(() => setLoaded(true), 1000);
@@ -42,7 +43,7 @@ function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
           
           <main className="content">
             <Navbar token={token} />
-            <Component token={token} {...props} />
+              <Component token={token} {...props} user={user}/>
             <Footer toggleSettings={toggleSettings} showSettings={showSettings} />
           </main>
           </>
