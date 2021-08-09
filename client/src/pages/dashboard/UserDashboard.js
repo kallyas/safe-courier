@@ -21,7 +21,8 @@ const UserDashboard = ({ token, user }) => {
         setLoading(false);
         return;
       }
-      setItems(res.filter(p => p.status !== "cancelled" && p.sender.username === user.username && !p.sender.isAdmin));
+      setItems(user.sender.isAdmin ? res.filter(p => p.status !== "cancelled")
+       : res.filter(p => p.status !== "cancelled" && p.sender.username === user.username && !p.sender.isAdmin));
       setLoading(false);
     }
     getParcels();
