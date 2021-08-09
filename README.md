@@ -1,5 +1,5 @@
 ![safe-courier](https://socialify.git.ci/kallyas/safe-courier/image?description=1&font=Raleway&logo=https%3A%2F%2Fi.imgur.com%2Fo1KgON7.png&owner=1&theme=Light)
-# safe-courier [![Build Status](https://travis-ci.com/morisha/safe-courier.svg?branch=backend-api)](https://travis-ci.com/morisha/safe-courier) [![Run tests](https://github.com/kallyas/safe-courier/actions/workflows/safe-main.yml/badge.svg)](https://github.com/kallyas/safe-courier/actions/workflows/safe-main.yml)
+# safe-courier [![Build Status](https://travis-ci.com/morisha/safe-courier.svg?branch=backend-api)](https://travis-ci.com/morisha/safe-courier) [![Run tests](https://github.com/kallyas/safe-courier/actions/workflows/safe-main.yml/badge.svg)](https://github.com/kallyas/safe-courier/actions/workflows/safe-main.yml) [![CircleCI](https://circleci.com/gh/kallyas/safe-courier.svg?style=shield)](https://circleci.com/gh/kallyas/safe-courier) <img src="https://ci.appveyor.com/api/projects/status/github/kallyas/safe-courier?svg=true&passingText=develop%20-%20OK" alt="Project Badge">
 
 Safe courier is a courier service that helps users deliver parcels to different destinations. <br>
 safe courier provides courier quotes based on weight categories

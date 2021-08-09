@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Col, Row, Card, Button, Table } from "@themesberg/react-bootstrap";
-
-import { Routes } from "../routes";
+import { Routes } from "../routes"
+import RecentSkeleton from './skeleton/RecentSkeleton';
 
 const Recent = ({ items, loading }) => {
   const TableRow = (props) => {
@@ -69,17 +69,16 @@ const Recent = ({ items, loading }) => {
                 </>
               )}
             </>
-          ) : (
-            <>
-              <tr>
-                <td colSpan="4">Loading...</td>
-              </tr>
-            </>
-          )}
-        </tbody>
-      </Table>
-    </Card>
-  );
-};
+            )
+            :
+            (<>
+              {Array(4).fill().map(item => <RecentSkeleton key={item} />)}
+            </>)
+          }
+          </tbody>
+        </Table>
+      </Card>
+    );
+  };
 
 export default Recent;
