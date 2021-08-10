@@ -32,6 +32,7 @@ function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
       localStorage.setItem('settingsVisible', !showSettings);
     }
 
+
   return (
     <Route
       {...rest}

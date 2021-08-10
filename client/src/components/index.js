@@ -7,6 +7,7 @@ import TableLoader from "./TableLoader"
 import Recent from "./Recent"
 import MiniMap from "./MiniMap"
 import Progress from "./Progress"
+import OrdersAnalytics from "./ordersAnalytics"
 
 
 export {
@@ -18,5 +19,6 @@ export {
     TableLoader,
     Recent,
     MiniMap,
-    Progress
+    Progress,
+    OrdersAnalytics
 }

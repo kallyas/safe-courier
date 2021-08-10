@@ -1,15 +1,21 @@
 /* eslint-disable import/no-anonymous-default-export */
 
-import React from "react";
+// import React, { useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCashRegister, faChartLine, faCloudUploadAlt, faPlus, faRocket, faTasks, faUserShield } from '@fortawesome/free-solid-svg-icons';
+import { faCashRegister, faChartLine,  faPlus, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Button, Dropdown, ButtonGroup } from '@themesberg/react-bootstrap';
 
 import { CounterWidget, CircleChartWidget, BarChartWidget, TeamMembersWidget, ProgressTrackWidget, RankingWidget, SalesValueWidget, SalesValueWidgetPhone, AcquisitionWidget } from "../../components/Widgets";
 import { PageVisitsTable } from "../../components/Tables";
 import { trafficShares, totalOrders } from "../../data/charts";
+import { Redirect } from "react-router-dom";
+import { Routes } from "../../routes";
 
-export default () => {
+const AdminDashboard = ({ user }) => {
+ 
+  if (!user.isAdmin) {
+    return <Redirect to={Routes.UserDashboard.path} />
+  }
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
@@ -20,18 +26,6 @@ export default () => {
           <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-2">
             <Dropdown.Item className="fw-bold">
               <FontAwesomeIcon icon={faTasks} className="me-2" /> New Task
-            </Dropdown.Item>
-            <Dropdown.Item className="fw-bold">
-              <FontAwesomeIcon icon={faCloudUploadAlt} className="me-2" /> Upload Files
-            </Dropdown.Item>
-            <Dropdown.Item className="fw-bold">
-              <FontAwesomeIcon icon={faUserShield} className="me-2" /> Preview Security
-            </Dropdown.Item>
-
-            <Dropdown.Divider />
-
-            <Dropdown.Item className="fw-bold">
-              <FontAwesomeIcon icon={faRocket} className="text-danger me-2" /> Upgrade to Pro
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -130,3 +124,5 @@ export default () => {
     </>
   );
 };
+
+export default AdminDashboard;
