@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCog, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown, Card } from '@themesberg/react-bootstrap';
+import { Col, Row, Form, Button, ButtonGroup, Breadcrumb, InputGroup, Dropdown} from '@themesberg/react-bootstrap';
 
 import TransactionsTable  from "../components/TransactionsTable";
 import { ParcelService } from "../service/ParcelService";
+import TableSkeleton from "../components/skeleton/TableSkeleton";
 
-export default ({ token }) => {
+export default ({ token, user }) => {
     const [items, setItems] = useState([])
     const [loading, setLoading] = useState(false)
     // const [search, setSearch] = useState('')
@@ -17,6 +18,7 @@ export default ({ token }) => {
         setItems(res);
     }
 
+  console.log(user)
     useEffect(() => {
       setLoading(true)
       const getParcels = async () => {
@@ -25,10 +27,15 @@ export default ({ token }) => {
           setItems([]);
           return;
         }
-        setItems(res.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1));
+
+        setItems(
+          user.isAdmin ? res.sort((a, b) => a.createdAt < b.createdAt ? 1 : -1)
+          : res.filter(item => item.sender.username === user.username && !item.sender.isAdmin).sort((a, b) => a.createdAt < b.createdAt ? 1 : -1)
+          );
         setLoading(false)
       }
       getParcels();
+      // eslint-disable-next-line
     }, [token]);
 
   return (
@@ -84,11 +91,7 @@ export default ({ token }) => {
       </div>
       { loading ? (
         <>
-        <Card border="light" className="table-wrapper table-responsive shadow-sm">
-            <Card.Body className="pt-0">
-              <p className="align-items-center">Loading data...</p>
-            </Card.Body>
-        </Card>
+        <TableSkeleton />
         </>
       ) : <TransactionsTable items={items} /> }
     </>
