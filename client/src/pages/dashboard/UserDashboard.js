@@ -7,11 +7,14 @@ import { Col, Row, Button, Dropdown, ButtonGroup } from '@themesberg/react-boots
 
 import { Recent, MiniMap } from "../../components/index";
 import { ParcelService } from "../../service/ParcelService";
+import { Redirect } from "react-router-dom";
+import { Routes } from "../../routes";
 
 const UserDashboard = ({ token, user }) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  
   useEffect(() => {
     setLoading(true);
     const getParcels = async () => {
@@ -21,13 +24,17 @@ const UserDashboard = ({ token, user }) => {
         setLoading(false);
         return;
       }
-      setItems(user.sender.isAdmin ? res.filter(p => p.status !== "cancelled")
-       : res.filter(p => p.status !== "cancelled" && p.sender.username === user.username && !p.sender.isAdmin));
+      setItems(user.isAdmin ? res.filter(p => p.status !== "cancelled")
+      : res.filter(p => p.status !== "cancelled" && p.sender.username === user.username && !p.sender.isAdmin));
       setLoading(false);
     }
     getParcels();
     // eslint-disable-next-line
   }, [token]);
+
+  if (user.isAdmin) {
+    return <Redirect to={Routes.AdminDashboard.path} />
+  }
   return (
     <>
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">

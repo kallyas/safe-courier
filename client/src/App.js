@@ -15,6 +15,7 @@ import {
   ParcelDetails,
   Settings,
   Schedule,
+  AdminDashboard,
  } from "./pages/index"
 require('dotenv').config()
 
@@ -27,6 +28,7 @@ function App() {
           { token ? <Redirect to={Routes.UserDashboard.path} /> : <Landing />}
           </Route>
         <ProtectedRouteWithSidebar exact path={Routes.UserDashboard.path} component={UserDashboard} />
+        <ProtectedRouteWithSidebar exact path={Routes.AdminDashboard.path} component={AdminDashboard} />
         <ProtectedRouteWithSidebar exact path={Routes.Transactions.path} component={Transactions}/>
         <ProtectedRouteWithSidebar path={`${Routes.Details.path}/:id`} component={ParcelDetails}/>
         <ProtectedRouteWithSidebar path={Routes.Settings.path} component={Settings}/>
