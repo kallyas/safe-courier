@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const userController = require("../Controllers/user.controller");
 const auth = require("../helpers/auth");
+const verifyToken = require("../helpers/verify");
 
 //Default Route
 router.get("/", (req, res) => {
@@ -33,6 +34,6 @@ router.get("/user/:id", auth.authenticateToken, userController.findUserById);
 //login
 router.post("/auth/login", userController.Login);
 
-router.post("/verify", auth.authenticateToken);
+router.post("/verify", userController.verifyToken);
 
 module.exports = router;
