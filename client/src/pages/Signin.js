@@ -60,6 +60,7 @@ const  Signin = () => {
                 <div className="text-center text-md-center mb-4 mt-md-0">
                   <h3 className="mb-0" style={{ fontFamily: "Ubuntu" }}>Sign into your account</h3>
                 </div>
+                {history.location.state?.sessionExpired && <Alert variant="warning">Your session has expired. Please sign in again.</Alert>}
                 {error.length > 0 ? <Alert variant="danger">
                   { error }
                 </Alert>
