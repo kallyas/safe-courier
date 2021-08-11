@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, useHistory } from "react-router-dom";
 import decode from "jwt-decode"
 import useToken from "../../Utils/useToken";
 
@@ -9,6 +10,7 @@ import AuthService from "../../service/AuthService"
 
 function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
     const [loaded, setLoaded] = useState(false);
+    const history = useHistory();
     const { token } = useToken()
     const user = decode(token)
 
@@ -16,7 +18,10 @@ function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
       const timer = setTimeout(() => setLoaded(true), 1000);
       if (token && decode(token)?.exp * 1000 < new Date().getTime()){
         AuthService.logout();
-        return window.location.href = Routes.SignIn.path;
+        return history.push({
+          pathname: Routes.SignIn.path,
+          state: { sessionExpired: true }
+        })
       }
       return () => clearTimeout(timer);
     }, [token]);
