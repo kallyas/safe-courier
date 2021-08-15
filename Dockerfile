@@ -4,7 +4,7 @@ WORKDIR /app/
 
 COPY client/package*.json ./
 
-RUN npm install --prefer-offline
+RUN npm install
 
 COPY client/ . .
 
