@@ -1,4 +1,4 @@
-FROM node:current-alpine AS build
+FROM node:latest as node
 
 WORKDIR /app/
 
@@ -6,7 +6,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 
 COPY client/package*.json ./
 
-RUN npm install -g npm@latest
+RUN npm install -g npm@7.20.6
 RUN npm install
 RUN npm install react-scripts@latest -g
 
