@@ -6,7 +6,7 @@ COPY client/package*.json ./
 
 RUN npm install --prefer-offline
 
-COPY . .
+COPY client/ . .
 
 RUN npm build
 
