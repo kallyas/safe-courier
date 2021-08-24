@@ -24,7 +24,7 @@ export const ParcelService = {
         return data;
       },
 
-    cancelParcel: async ({ token, id }) => {
+    cancelParcel: async (token, id) => {
         const cancel = await fetchItem(id, token);
         const update = { ...cancel, status: "cancelled" };
         const res = await fetch(`${API}/parcels/${id}/cancel`, {
@@ -40,7 +40,7 @@ export const ParcelService = {
         return data;
     },
 
-    createParcel: async ({ token, parcel }) => {
+    createParcel: async (token, parcel) => {
         const res = await fetch(`${API}/parcels`, {
             method: "POST",
             headers: {
@@ -54,7 +54,7 @@ export const ParcelService = {
         return data;
     },
 
-    searchParcel: async ({ token, search }) => {
+    searchParcel: async (token, search) => {
         const res = await fetch(`${API}/parcels/search`, {
             method: "POST",
             headers: {

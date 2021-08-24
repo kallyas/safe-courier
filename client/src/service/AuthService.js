@@ -30,6 +30,20 @@ const AuthService = {
 
     logout: () => {
         localStorage.removeItem("token")
+    },
+    verifyToken: async (token) => {
+        const res = await fetch(`${API}/verify/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({token: token})
+        })
+        if(res.status === 200) {
+            return true
+        } else {
+            return false
+        }
     }
 }
 

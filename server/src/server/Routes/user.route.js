@@ -5,7 +5,6 @@ require("dotenv").config();
 
 const userController = require("../Controllers/user.controller");
 const auth = require("../helpers/auth");
-const verifyToken = require("../helpers/verify");
 
 //Default Route
 router.get("/", (req, res) => {
