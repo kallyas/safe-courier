@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCloudUploadAlt, faPlus, faTasks, faUserShield } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Button, Dropdown, ButtonGroup } from '@themesberg/react-bootstrap';
@@ -44,7 +45,9 @@ const UserDashboard = ({ token, user }) => {
           </Dropdown.Toggle>
           <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-2">
             <Dropdown.Item className="fw-bold">
+              <Link to={Routes.AddParcel.path}>
               <FontAwesomeIcon icon={faTasks} className="me-2" /> New Order
+              </Link>
             </Dropdown.Item>
             <Dropdown.Item className="fw-bold">
               <FontAwesomeIcon icon={faCloudUploadAlt} className="me-2" /> Upload Files

@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import decode from "jwt-decode"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell, faCog, faEnvelopeOpen, faSearch, faSignOutAlt, faUserShield } from "@fortawesome/free-solid-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
@@ -14,11 +13,10 @@ import Profile3 from "../assets/images/profile_placeholder.png";
 import AuthService from "../service/AuthService"
 import { Routes } from "../routes"
 
-export default ({ token }) => {
+export default ({ token, user }) => {
   const [notifications, setNotifications] = useState(NOTIFICATIONS_DATA);
   const areNotificationsRead = notifications.reduce((acc, notif) => acc && notif.read, true);
   const history = useHistory()
-  const user = decode(token)
 
   const markNotificationsAsRead = () => {
     setTimeout(() => {

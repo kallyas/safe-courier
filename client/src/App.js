@@ -16,6 +16,7 @@ import {
   Settings,
   Schedule,
   AdminDashboard,
+  AddParcel
  } from "./pages/index"
 require('dotenv').config()
 
@@ -33,6 +34,7 @@ function App() {
         <ProtectedRouteWithSidebar path={`${Routes.Details.path}/:id`} component={ParcelDetails}/>
         <ProtectedRouteWithSidebar path={Routes.Settings.path} component={Settings}/>
         <ProtectedRouteWithSidebar path={Routes.Schedule.path} component={Schedule}/>
+        <ProtectedRouteWithSidebar path={Routes.AddParcel.path} component={AddParcel} />
         <PublicRoute exact path={Routes.SignIn.path} component={Signin} />
         <PublicRoute exact path={Routes.SignUp.path} component={Signup} />
         <Route component={NotFound} />

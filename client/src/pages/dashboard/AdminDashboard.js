@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 
 // import React, { useEffect } from "react";
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCashRegister, faChartLine,  faPlus, faTasks } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Button, Dropdown, ButtonGroup } from '@themesberg/react-bootstrap';
@@ -21,11 +22,13 @@ const AdminDashboard = ({ user }) => {
       <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
         <Dropdown className="btn-toolbar">
           <Dropdown.Toggle as={Button} variant="primary" size="sm" className="me-2">
-            <FontAwesomeIcon icon={faPlus} className="me-2" />New Task
+            <FontAwesomeIcon icon={faPlus} className="me-2" />New Order
           </Dropdown.Toggle>
           <Dropdown.Menu className="dashboard-dropdown dropdown-menu-left mt-2">
             <Dropdown.Item className="fw-bold">
-              <FontAwesomeIcon icon={faTasks} className="me-2" /> New Task
+              <Link to={Routes.AddParcel.path}>
+              <FontAwesomeIcon icon={faTasks} className="me-2" /> New Order
+              </Link>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

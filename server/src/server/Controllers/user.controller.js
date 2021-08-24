@@ -155,3 +155,16 @@ module.exports.Login = async (req, res, next) => {
 		next(error);
 	}
 };
+
+
+module.exports.verifyToken = (req, res, next) => {
+   const token = req.body.token;
+   if (!token) {
+	  return res.status(400).send({ message: "Token is missing" });
+   }
+
+   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+	   if(err) return res.status(403).send({ message: "Token is invalid" });
+	   return res.send({ message: "Token verified" })
+   })
+}
