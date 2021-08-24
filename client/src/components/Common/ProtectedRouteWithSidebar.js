@@ -48,7 +48,7 @@ function ProtectedRouteWithSidebar({ component: Component, ...rest }) {
           <Sidebar token={token} />
           
           <main className="content">
-            <Navbar token={token} />
+            <Navbar token={token} user={user}/>
               <Component token={token} {...props} user={user}/>
             <Footer toggleSettings={toggleSettings} showSettings={showSettings} />
           </main>
