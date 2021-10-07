@@ -23,8 +23,6 @@ switch (process.env.NODE_ENV) {
 const options = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
 };
 
 function establishConnection() {
