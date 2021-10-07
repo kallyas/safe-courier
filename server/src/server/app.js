@@ -14,7 +14,9 @@ const RateLimit = require("./helpers/rateLimit");
 //const sendEmail = require("./helpers/sendEmail")
 const swaggerDocument = require('./swagger.json');
 
-app.use(morgan("common"));
+if(process.env.NODE_ENV === "local") {
+  app.use(morgan("common"));
+}
 app.use(helmet());
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
