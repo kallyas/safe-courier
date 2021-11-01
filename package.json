@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/kallyas/safe-courier#readme",
   "dependencies": {
-    "concurrently": "^6.2.0"
+    "concurrently": "^6.3.0"
   }
 }
