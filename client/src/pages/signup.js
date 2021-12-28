@@ -21,8 +21,7 @@ const Signup =  () => {
     email: "",
     password: "",
     firstName: "",
-    lastName: "",
-    isAdmin: checked
+    lastName: ""
   })
 
   const handleChange = (e) => {
@@ -32,10 +31,6 @@ const Signup =  () => {
     })
   }
 
-  const handleChecked = (e) => {
-    setChecked(e.target.checked)
-    setData({...data, isAdmin: e.target.checked})
-  }
 
   const submit = async (e) => {
     setLoading(true)
@@ -150,20 +145,6 @@ const Signup =  () => {
                       />
                     </InputGroup>
                   </Form.Group>
-                  <FormCheck type="checkbox" className="d-flex mb-4">
-                    <FormCheck.Input
-                     id="terms" 
-                     className="me-2" 
-                     checked={checked}
-                     onChange={handleChecked}
-                     />
-                    <FormCheck.Label 
-                    htmlFor="admin"
-                    >
-                      <Card.Link>admin account</Card.Link>
-                    </FormCheck.Label>
-                  </FormCheck>
-
                   <Button variant="primary" type="submit" className="w-100">
                     {loading ? "Signing up...": "Signup"}
                   </Button>
