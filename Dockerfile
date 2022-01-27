@@ -4,10 +4,10 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY client/package.json ./
 COPY client/package-lock.json ./
-RUN npm ci --silent
 RUN apk add --no-cache --virtual .build-deps make gcc g++ python \
 RUN npm install --production --silent \
 RUN apk del .build-deps
+RUN npm ci --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 COPY client/ . ./
 RUN cd client && npm run build
