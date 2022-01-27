@@ -5,6 +5,15 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY client/package.json ./
 COPY client/package-lock.json ./
 RUN apk add --no-cache --virtual .build-deps make gcc g++ python 
+# set python to path
+RUN apk add --no-cache --virtual .build-deps python-dev
+
+# npm config path for python
+RUN npm config set python /usr/bin/python3
+
+# npm config set path for node-gyp
+RUN npm config set node-gyp /app/node_modules/.bin/node-gyp
+
 RUN npm install --production --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 RUN apk del .build-deps
