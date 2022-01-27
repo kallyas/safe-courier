@@ -1,19 +1,16 @@
 # build environment
-FROM andreysenov/node-gyp:latest
+FROM node:lts-alpine
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY client/package.json ./
 COPY client/package-lock.json ./
-# RUN apk add --no-cache --virtual .build-deps make gcc g++ python 
 
-# install python3
-# RUN apk add --no-cache --virtual .build-deps python3
-
-# npm config path for python
-# RUN npm config set python /usr/bin/python3
-
-# npm config set path for node-gyp
-# RUN npm config set node-gyp /app/node_modules/.bin/node-gyp
+RUN apk add --no-cache python3 make g++ && \
+    yarn global add node-gyp && \
+    yarn cache clean && \
+    node-gyp help 
+    # mkdir $HOME/.cache && \
+    # chown -R node:node $HOME
 
 RUN npm install --production --silent
 RUN npm install react-scripts@3.4.1 -g --silent
