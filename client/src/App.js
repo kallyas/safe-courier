@@ -18,7 +18,7 @@ import {
   AdminDashboard,
   AddParcel
  } from "./pages/index"
-require('dotenv').config()
+ 
 
 function App() {
   const { token } = useToken();
