@@ -1,63 +1,71 @@
-![safe-courier](https://socialify.git.ci/kallyas/safe-courier/image?description=1&font=Raleway&logo=https%3A%2F%2Fi.imgur.com%2Fo1KgON7.png&owner=1&theme=Light)
-# safe-courier [![Build Status](https://travis-ci.com/morisha/safe-courier.svg?branch=backend-api)](https://travis-ci.com/morisha/safe-courier) [![Run tests](https://github.com/kallyas/safe-courier/actions/workflows/safe-main.yml/badge.svg)](https://github.com/kallyas/safe-courier/actions/workflows/safe-main.yml) [![CircleCI](https://circleci.com/gh/kallyas/safe-courier.svg?style=shield)](https://circleci.com/gh/kallyas/safe-courier) <img src="https://ci.appveyor.com/api/projects/status/github/kallyas/safe-courier?svg=true&passingText=develop%20-%20OK" alt="Project Badge">
+# Getting Started with Create React App
+[![Netlify Status](https://api.netlify.com/api/v1/badges/eed81969-486e-4c2f-b2e2-ab2c9fca798f/deploy-status)](https://app.netlify.com/sites/safe-courier-preview/deploys)
 
-Safe courier is a courier service that helps users deliver parcels to different destinations. <br>
-safe courier provides courier quotes based on weight categories
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Requirements
+## Available Scripts
 
-1. Node JS
-2. Mongo DB for backend database
+In the project directory, you can run:
 
-### Tech Stack
+### `yarn start`
 
-1. Node JS
-2. React JS
-3. Mongo DB
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### Environment Variables
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-### `.env` file for server
+### `yarn test`
 
-```bash
-PORT= specify port
-DB_URL_LOC= specify mongodb url
-SECRET= specify secret key
-NODE_ENV=local
-ACCESS_TOKEN_SECRET=specify access token secret
-REFRESH_TOKEN_SECRET=specify refresh token secret
-```
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-<br>
+### `yarn build`
 
-### `.env` file for client
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-```bash
-REACT_APP_API_URL= specify API URL
-```
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-### Usage
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-`git clone` the repository or [download the zip](https://github.com/kallyas/safe-courier/archive/refs/heads/develop.zip) file.
-<br>
-use the [develop](https://github.com/kallyas/safe-courier/) branch<br><br>
+### `yarn eject`
 
-```bash
-# Install Dependencis
-npm install
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-# Install dependencies in both client and server folders
-npm run instDep
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-#Run dev servers
-npm run start
-```
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-- visit: http://localhost:5000/api/v1 to test API<br>
-- visit: http://localhost:3000 for front end
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-### Live Preview
+## Learn More
 
-- [API](https://safe-courier-backend-api.herokuapp.com/api/v1/)<br>
-- [API DOCS](https://safe-courier-backend-api.herokuapp.com/api/v1/api-docs/)<br>
-- [Front End](https://safe-courier-front-end.netlify.app)<br>
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `yarn build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
