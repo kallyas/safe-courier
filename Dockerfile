@@ -5,8 +5,9 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY client/package.json ./
 COPY client/package-lock.json ./
 RUN apk add --no-cache --virtual .build-deps make gcc g++ python 
-# set python to path
-RUN apk add --no-cache --virtual .build-deps python-dev
+
+# install python3
+RUN apk add --no-cache --virtual .build-deps python3
 
 # npm config path for python
 RUN npm config set python /usr/bin/python3
