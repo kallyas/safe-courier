@@ -24,8 +24,8 @@ RUN cd client && npm run build
 # EXPOSE 80
 
 
-FROM httpd:alpine
-WORKDIR /var/www/html
-COPY --from=build /app/build/ .
-EXPOSE 80
+# FROM httpd:alpine
+# WORKDIR /var/www/html
+# COPY --from=build /app/build/ .
+# EXPOSE 80
 
