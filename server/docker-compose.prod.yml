@@ -1,0 +1,35 @@
+# production docker-compose file
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    command: bash -c "npm run start"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - DB_URL_PROD=mongodb://localhost:27017/safe-courier
+      - ACCESS_TOKEN_SECRET=access-token-secret
+      
+    depends_on:
+      - serviceName: mongo
+    networks:
+      - web
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=s3cr3tpwd
+    networks:
+      - web
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - web
