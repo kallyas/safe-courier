@@ -55,13 +55,17 @@ const Login = () => {
         color: "red",
       });
     isError && dispatch(reset());
+    user && notification.showNotification({
+      title: "Success",
+      message: "You have successfully logged in",
+      color: "green",
+    });
     user && navigate("/");
   }, [user, isLoading, isError, errorMessage, dispatch, navigate, notification]);
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (type === "login") {
-      console.log("loggging in");
       dispatch(
         loginUser({
           username: form.values.username,
