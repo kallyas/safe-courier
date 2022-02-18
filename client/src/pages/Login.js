@@ -1,4 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  authSelector,
+  loginUser,
+  reset,
+  registerUser,
+} from "../features/auth/authSlice";
 import { useForm, useToggle, upperFirst } from "@mantine/hooks";
 import {
   Grid,
@@ -10,11 +18,17 @@ import {
   Button,
   Divider,
   Anchor,
+  LoadingOverlay,
 } from "@mantine/core";
+import { useNotifications } from "@mantine/notifications";
 import Layout from "../components/Layout";
 import { SocialButtons } from "../components/SocialButtons";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const notification = useNotifications();
+  const dispatch = useDispatch();
+  const { isLoading, isError, errorMessage, user } = useSelector(authSelector);
   const [type, toggle] = useToggle("login", ["login", "register"]);
   const form = useForm({
     initialValues: {
@@ -33,9 +47,31 @@ const Login = () => {
     },
   });
 
-  const onSubmit = form.onSubmit(() => {
-    type === "login" ? console.log("login") : console.log("register");
-  });
+  useEffect(() => {
+    isError &&
+      notification.showNotification({
+        title: "Error",
+        message: errorMessage,
+        color: "red",
+      });
+    isError && dispatch(reset());
+    user && navigate("/");
+  }, [user, isLoading, isError, errorMessage, dispatch, navigate, notification]);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (type === "login") {
+      console.log("loggging in");
+      dispatch(
+        loginUser({
+          username: form.values.username,
+          password: form.values.password,
+        })
+      );
+    } else {
+      dispatch(registerUser(form.values));
+    }
+  };
 
   return (
     <Layout>
@@ -57,8 +93,10 @@ const Login = () => {
             />
             <form onSubmit={onSubmit}>
               <Group direction="column" grow>
+                <LoadingOverlay visible={isLoading} />
                 {type === "register" && (
                   <>
+                    <LoadingOverlay visible={isLoading} />
                     <TextInput
                       required
                       label="First Name"
@@ -71,7 +109,11 @@ const Login = () => {
                           event.currentTarget.value
                         )
                       }
-                      error={form.errors.firstName && "First name should be at least 3 characters"}
+                      error={
+                        form.errors.firstName &&
+                        type === "register" &&
+                        "First name should be at least 3 characters"
+                      }
                     />
                     <TextInput
                       required
@@ -85,7 +127,11 @@ const Login = () => {
                           event.currentTarget.value
                         )
                       }
-                      error={form.errors.lastName && "last name should be at least 3 characters"}
+                      error={
+                        form.errors.lastName &&
+                        type === "register" &&
+                        "last name should be at least 3 characters"
+                      }
                     />
 
                     <TextInput
@@ -96,7 +142,11 @@ const Login = () => {
                       onChange={(event) =>
                         form.setFieldValue("email", event.currentTarget.value)
                       }
-                      error={form.errors.email && "Invalid email"}
+                      error={
+                        form.errors.email &&
+                        type === "register" &&
+                        "Invalid email"
+                      }
                     />
                   </>
                 )}
@@ -109,7 +159,10 @@ const Login = () => {
                   onChange={(event) =>
                     form.setFieldValue("username", event.currentTarget.value)
                   }
-                  error={form.errors.username && "Username should be at least 3 characters"}
+                  error={
+                    form.errors.username &&
+                    "Username should be at least 3 characters"
+                  }
                 />
 
                 <PasswordInput
@@ -139,7 +192,9 @@ const Login = () => {
                     ? "Already have an account? Login"
                     : "Don't have an account? Register"}
                 </Anchor>
-                <Button type="submit">{upperFirst(type)}</Button>
+                <Button disabled={isLoading} type="submit">
+                  {isLoading ? upperFirst(type) + "ing" : upperFirst(type)}
+                </Button>
               </Group>
             </form>
           </Paper>

@@ -1,13 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { MantineProvider } from '@mantine/core';
-import App from './App';
+import React from "react";
+import ReactDOM from "react-dom";
+import { MantineProvider } from "@mantine/core";
+import { NotificationsProvider } from '@mantine/notifications';
+import { Provider } from "react-redux";
+import { store } from "./app/store";
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <MantineProvider theme={{ colorScheme: 'light' }}>
-      <App />
-    </MantineProvider>
+    <Provider store={store}>
+      <MantineProvider theme={{ colorScheme: "light" }}>
+        <NotificationsProvider autoClose={4000} position="top-right" zIndex={2077}>
+        <App />
+        </NotificationsProvider>
+      </MantineProvider>
+    </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
