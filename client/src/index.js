@@ -9,7 +9,7 @@ import App from "./App";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <MantineProvider theme={{ colorScheme: "light" }}>
+      <MantineProvider>
         <NotificationsProvider autoClose={4000} position="top-right" zIndex={2077}>
         <App />
         </NotificationsProvider>
