@@ -206,7 +206,7 @@ const Login = () => {
                     : "Don't have an account? Register"}
                 </Anchor>
                 <Button disabled={isLoading} type="submit">
-                  {isLoading ? upperFirst(type) + 'ing' : upperFirst(type)}
+                  {isLoading ? upperFirst(type) + 'g' : upperFirst(type)}
                 </Button>
               </Group>
             </form>
