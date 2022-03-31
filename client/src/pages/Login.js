@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
   authSelector,
   loginUser,
   reset,
   registerUser,
-} from "../features/auth/authSlice";
-import { useForm, useToggle, upperFirst } from "@mantine/hooks";
+} from '../features/auth/authSlice';
+import { useForm, useToggle, upperFirst } from '@mantine/hooks';
 import {
   Grid,
   TextInput,
@@ -19,24 +19,24 @@ import {
   Divider,
   Anchor,
   LoadingOverlay,
-} from "@mantine/core";
-import { useNotifications } from "@mantine/notifications";
-import Layout from "../components/Layout";
-import { SocialButtons } from "../components/SocialButtons";
+} from '@mantine/core';
+import { useNotifications } from '@mantine/notifications';
+import Layout from '../components/Layout';
+import { SocialButtons } from '../components/SocialButtons';
 
 const Login = () => {
   const navigate = useNavigate();
   const notification = useNotifications();
   const dispatch = useDispatch();
   const { isLoading, isError, errorMessage, user } = useSelector(authSelector);
-  const [type, toggle] = useToggle("login", ["login", "register"]);
+  const [type, toggle] = useToggle('login', ['login', 'register']);
   const form = useForm({
     initialValues: {
-      email: "",
-      password: "",
-      username: "",
-      firstName: "",
-      lastName: "",
+      email: '',
+      password: '',
+      username: '',
+      firstName: '',
+      lastName: '',
     },
     validationRules: {
       email: (value) => /^\S+@\S+$/.test(value),
@@ -50,25 +50,34 @@ const Login = () => {
   useEffect(() => {
     isError &&
       notification.showNotification({
-        title: "Error",
+        title: 'Error',
         message: errorMessage,
-        color: "red",
+        color: 'red',
       });
     isError && dispatch(reset());
-    user && notification.showNotification({
-      title: "Success",
-      message: "You have successfully logged in",
-      color: "green",
-    });
-    user && navigate("/");
-  }, [user, isLoading, isError, errorMessage, dispatch, navigate, notification]);
+    user &&
+      notification.showNotification({
+        title: 'Success',
+        message: 'You have successfully logged in',
+        color: 'green',
+      });
+    user && navigate('/dashboard');
+  }, [
+    user,
+    isLoading,
+    isError,
+    errorMessage,
+    dispatch,
+    navigate,
+    notification,
+  ]);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (type === "login") {
+    if (type === 'login') {
       dispatch(
         loginUser({
-          username: form.values.username,
+          email: form.values.email,
           password: form.values.password,
         })
       );
@@ -98,7 +107,7 @@ const Login = () => {
             <form onSubmit={onSubmit}>
               <Group direction="column" grow>
                 <LoadingOverlay visible={isLoading} />
-                {type === "register" && (
+                {type === 'register' && (
                   <>
                     <LoadingOverlay visible={isLoading} />
                     <TextInput
@@ -109,14 +118,14 @@ const Login = () => {
                       value={form.values.firstName}
                       onChange={(event) =>
                         form.setFieldValue(
-                          "firstName",
+                          'firstName',
                           event.currentTarget.value
                         )
                       }
                       error={
                         form.errors.firstName &&
-                        type === "register" &&
-                        "First name should be at least 3 characters"
+                        type === 'register' &&
+                        'First name should be at least 3 characters'
                       }
                     />
                     <TextInput
@@ -127,29 +136,31 @@ const Login = () => {
                       value={form.values.lastName}
                       onChange={(event) =>
                         form.setFieldValue(
-                          "lastName",
+                          'lastName',
                           event.currentTarget.value
                         )
                       }
                       error={
                         form.errors.lastName &&
-                        type === "register" &&
-                        "last name should be at least 3 characters"
+                        type === 'register' &&
+                        'last name should be at least 3 characters'
                       }
                     />
 
                     <TextInput
                       required
-                      label="Email"
-                      placeholder="hello@safe-courier.com"
-                      value={form.values.email}
+                      label="Username"
+                      placeholder="Username"
+                      value={form.values.username}
                       onChange={(event) =>
-                        form.setFieldValue("email", event.currentTarget.value)
+                        form.setFieldValue(
+                          'username',
+                          event.currentTarget.value
+                        )
                       }
                       error={
-                        form.errors.email &&
-                        type === "register" &&
-                        "Invalid email"
+                        form.errors.username &&
+                        'Username should be at least 3 characters'
                       }
                     />
                   </>
@@ -157,29 +168,27 @@ const Login = () => {
 
                 <TextInput
                   required
-                  label="Username"
-                  placeholder="Username"
-                  value={form.values.username}
+                  label="Email"
+                  placeholder="hello@safe-courier.com"
+                  value={form.values.email}
                   onChange={(event) =>
-                    form.setFieldValue("username", event.currentTarget.value)
+                    form.setFieldValue('email', event.currentTarget.value)
                   }
                   error={
-                    form.errors.username &&
-                    "Username should be at least 3 characters"
+                    form.errors.email && type === 'register' && 'Invalid email'
                   }
                 />
-
                 <PasswordInput
                   required
                   label="Password"
                   placeholder="Your password"
                   value={form.values.password}
                   onChange={(event) =>
-                    form.setFieldValue("password", event.currentTarget.value)
+                    form.setFieldValue('password', event.currentTarget.value)
                   }
                   error={
                     form.errors.password &&
-                    "Password should include at least 6 characters"
+                    'Password should include at least 6 characters'
                   }
                 />
               </Group>
@@ -192,12 +201,12 @@ const Login = () => {
                   onClick={() => toggle()}
                   size="xs"
                 >
-                  {type === "register"
-                    ? "Already have an account? Login"
+                  {type === 'register'
+                    ? 'Already have an account? Login'
                     : "Don't have an account? Register"}
                 </Anchor>
                 <Button disabled={isLoading} type="submit">
-                  {isLoading ? upperFirst(type) + "ing" : upperFirst(type)}
+                  {isLoading ? upperFirst(type) + 'ing' : upperFirst(type)}
                 </Button>
               </Group>
             </form>
