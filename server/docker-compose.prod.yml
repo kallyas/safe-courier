@@ -1,0 +1,58 @@
+# use version 3
+version: "3"
+
+services:
+  node-app:
+    image: "node:8.11.1-alpine"
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app:/app
+    environment:
+      - NODE_ENV=production
+      - NODE_PORT=8080
+      - NODE_HOST=localhost
+      - NODE_CONFIG_DIR=/app/config
+      - NODE_LOG_DIR=/app/logs
+      - NODE_APP_DIR=/app/app
+      - NODE_APP_NAME=node-app
+      - NODE_APP_VERSION=1.0.0
+
+  node-db:
+    image: "mongo:4.2.8-alpine"
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./db:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=node-app
+      - MONGO_INITDB_USER=node-app
+      - MONGO_INITDB_PASSWORD=node-app
+      - MONGO_INITDB_AUTH_SOURCE=admin
+
+  node-api:
+    image: "node:8.11.1-alpine"
+    ports:
+      - "80:80"
+    volumes:
+      - ./api:/app
+    environment:
+      - NODE_ENV=production
+      - NODE_PORT=80
+      - NODE_HOST=localhost
+      - NODE_CONFIG_DIR=/app/config
+      - NODE_LOG_DIR=/app/logs
+      - NODE_APP_DIR=/app/app
+      - NODE_APP_NAME=node-api
+      - NODE_APP_VERSION=1.0.0
+      - NODE_APP_DB_HOST=node-db
+      - NODE_APP_DB_PORT=27017
+      - NODE_APP_DB_NAME=node-app
+      - NODE_APP_DB_USER=node-app
+      - NODE_APP_DB_PASSWORD=node-app
+      - NODE_APP_DB_AUTH_SOURCE=admin
+      - NODE_APP_DB_CONNECTION_STRING=mongodb://node-app:node-app@node-db:27017/node-app?authSource=admin
+      - NODE_APP_DB_CONNECTION_STRING_NO_AUTH=mongodb://node-app:node-app@node-db:27017/node-app?authSource=admin
+      

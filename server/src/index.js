@@ -1,12 +1,23 @@
-require("dotenv").config();
-require("./server/config/connect");
-const app = require("./server/app");
+import dotenv from "dotenv";
+import chalk from "chalk";
+import app from "./server/app.js";
+import DB from "./server/config/db.js";
+
+dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`Using environment: ${process.env.NODE_ENV}`);
-  console.log(`Server successfully started and listening on port ${PORT}`);
-});
+DB()
+  .then(() => {
+    console.log(chalk.green(`Database connected successfully`));
+  })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(chalk.green(`Server is running on port ${PORT} using ${process.env.NODE_ENV} environment`));
+    });
+  })
+  .catch((err) => {
+    console.log(chalk.red(`Database connection failed: ${err}`));
+  });
 
-module.exports = app //testing
+  export default app; // for testing

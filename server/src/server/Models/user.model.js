@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import validator from "validator";
 import bcrypt from "bcryptjs";
 import { toJson, paginate } from "./plugins/index.js";
 import { roles } from "../config/roles.js";
@@ -19,11 +18,6 @@ const userSchema = Schema(
       unique: true,
       trim: true,
       lowercase: true,
-      validate(value) {
-        if (!validator.isEmail(value)) {
-          throw new Error("Invalid email");
-        }
-      },
     },
     password: {
       type: String,
