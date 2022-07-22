@@ -1,90 +1,68 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import mongoose from "mongoose"
+import { toJson, paginate } from "./plugins/index.js"
 
-let validateEmail = (email) => {
-  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  return re.test(email);
-};
 
-const parcelSchema = new Schema({
-  parcelType: {
-    type: String,
-    required: true,
-  },
-  description: {
-    type: String
-  },
-  sender: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-  locationFrom: {
-    type: String,
-    required: true,
-  },
-  locationTo: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
-  status: {
-    type: String,
-    default: "pending",
-  },
-  price: {
-    type: String,
-    default: "$100",
-  },
-  trackingCode: {
-    type: String,
-  },
-  weight: {
-    type: Number,
-    required: true,
-  },
-  city: {
-    type: String,
-    required: true,
-  },
-  recipient: {
-    name: {
+const { Schema } = mongoose
+
+const pareclSchema = Schema({
+    sender: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    receiver: {
+      name: {
+        type: String,
+        required: true,
+      },
+      address: {
+        type: String,
+        required: true,
+      },
+      country: {
+        type: String,
+        required: true,
+      },
+      phone_number: {
+        type: String,
+        required: true,
+        maxLength: [10, "Phone number must be 10 digits"],
+      },
+    },
+    parcel_type: {
+      type: String,
+      required: true,
+      enum: ["documents", "clothes", "other"],
+    },
+    parcel_weight: {
+      type: String,
+      required: true,
+      enum: ["light", "medium", "heavy"],
+    },
+    parcel_description: {
       type: String,
       required: true,
     },
-    phone: {
+    drop_off_location: {
+      type: String,
+      required: true,
+    },
+    pick_up_location: {
       type: String,
     },
-    email: {
+    status: {
       type: String,
-      trim: true,
-      unique: false,
-      lowercase: true,
-      required: "Email address is required",
-      validate: [validateEmail, "Please fill a valid email address"],
-      match: [
-        /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-        "Please fill a valid email address",
-      ],
+      default: "pending",
+      enum: ["pending", "in-transit", "delivered"],
     },
-  },
-  presentLocation: {
-    type: String
-  },
-  pickupLocation: {
-    type: String
-  },
-  dropOffLocation: {
-    type: String
-  },
-  notes: {
-    type: String
-  }
-});
+    current_location: {
+      type: String,
+    },
+  })
 
-parcelSchema.index({ "$**": "text" });
+pareclSchema.plugin(toJson)
+pareclSchema.plugin(paginate)
 
-module.exports = mongoose.model("parcel", parcelSchema);
+const Parcel = mongoose.model("Parcel", pareclSchema)
+
+export default Parcel

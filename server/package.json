@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "safe courier api for courier delivery service.",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js --trace-warnings",
     "start": "node src/index.js --trace-warnings",
