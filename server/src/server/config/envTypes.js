@@ -1,8 +1,8 @@
-const envs = {
-  DEVELOPMENT: "development",
-  PRODUCTION: "production",
-  LOCAL: "local",
-  TEST: "test"
-};
+const envTypes = {
+  DEVELOPMENT: 'development',
+  TESTING: 'testing',
+  PRODUCTION: 'production',
+  LOCAL: 'local'
+}
 
-module.exports = envs;
+export const  { DEVELOPMENT, TESTING, PRODUCTION, LOCAL } = envTypes
