@@ -24,7 +24,7 @@
     "chartist-plugin-tooltips-updated": "^0.1.4",
     "elementz": "^2.0.5",
     "jwt-decode": "^3.1.2",
-    "mapbox-gl": "^2.8.2",
+    "mapbox-gl": "^2.9.1",
     "moment-timezone": "^0.5.34",
     "node-sass": "^7.0.1",
     "react": "^17.0.2",
