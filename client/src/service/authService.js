@@ -1,7 +1,7 @@
 import API from '../api/index';
 
 const LOGIN_API_URL = process.env.REACT_APP_API_URL + '/auth/login';
-const REG_API_URL = process.env.REACT_APP_API_URL + '/auth/signup';
+const REG_API_URL = process.env.REACT_APP_API_URL + '/auth/register';
 
 const loginUser = async (payload) => {
   const response = await fetch(LOGIN_API_URL, {
@@ -13,9 +13,9 @@ const loginUser = async (payload) => {
   });
   const data = await response.json();
 
-  if (data.access_token) {
-    localStorage.setItem('access_token', data.access_token);
-    localStorage.setItem('refresh_token', data.refresh_token);
+  if (data.tokens) {
+    localStorage.setItem('access_token', JSON.stringify(data.tokens.access));
+    localStorage.setItem('refresh_token', JSON.stringify(data.tokens.refresh));
     localStorage.setItem('user', JSON.stringify(data.user));
     return data.user;
   } else {
@@ -34,6 +34,10 @@ const registerUser = async (payload) => {
 
   const data = await response.json();
 
+  if (data.code && data.code === 400) {
+    throw new Error(data.message);
+  }
+
   return data;
 };
 
@@ -48,7 +52,6 @@ const logoutUser = async () => {
   } else {
     throw new Error(data.message);
   }
-
 };
 const authService = {
   loginUser,

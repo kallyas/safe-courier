@@ -1,6 +1,12 @@
 import React from 'react';
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { authSelector, registerUser } from "../features/auth/authSlice"
 
 const Register = () => {
+  const { user, isLoading, isError, errorMessage } = useSelector(authSelector)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [formData, setFormData] = React.useState({
     email: '',
     password: '',
@@ -14,11 +20,16 @@ const Register = () => {
     }));
   };
 
+  const handleSubmit = e => {
+    e.preventDefault()
+    dispatch(registerUser(formData))
+  }
+
   return (
     <section className="login template-minimal template-minimal--width-normal">
       <div className="template-minimal__wrap">
         <div className="login__brand">Safe Courier</div>
-        <form className="form">
+        <form onSubmit={handleSubmit} className="form">
           <div className="field-type email">
             <label htmlFor="field-email" className="field-label">
               Full Name<span className="required">*</span>
@@ -65,7 +76,9 @@ const Register = () => {
               className="btn btn--style-primary btn--icon-style-without-border btn--size-medium btn--icon-position-right"
             >
               <span className="btn__content">
-                <span className="btn__label">Register</span>
+                <span className="btn__label">
+                  {isLoading ? "Loading...." : "Register"}
+                </span>
               </span>
             </button>
           </div>
