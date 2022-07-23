@@ -44,7 +44,7 @@
     "react-scripts": "5.0.0",
     "react-spinners": "^0.11.0",
     "react-transition-group": "^4.4.2",
-    "simplebar-react": "^2.3.6",
+    "simplebar-react": "^2.4.1",
     "sweetalert2": "^11.4.4",
     "sweetalert2-react-content": "^4.2.0",
     "urlencode": "^1.1.0",
