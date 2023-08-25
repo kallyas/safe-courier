@@ -1,22 +1,23 @@
-FROM node:16-bullseye-slim
+# Use the official Node.js image as the base image
+FROM node:lts-alpine
 
-# Create app directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Install app dependencies
-COPY package*.json ./
+# Copy package.json and package-lock.json
+COPY server/package.json server/package-lock.json ./
 
-ARG NODE_ENV
+# Install dependencies
+RUN npm install --production
 
-RUN if [ "$NODE_ENV" == "development" ]; \
-    then npm install; \
-    else npm install --only=production; \
-    fi
+# Install MongoDB
+RUN apk add --no-cache mongodb-tools
 
-# Bundle app source
-COPY . ./
+# Create a directory for MongoDB data and logs
+RUN mkdir -p /data/db /var/log/mongodb
 
-ENV PORT 5000
+# Expose the port that your Node.js Express app listens on (e.g., 3000)
+EXPOSE 5000
 
-EXPOSE ${PORT}
-CMD [ "node", "src/index.js" ]
+# Start MongoDB and your server
+CMD mongod --fork --logpath /var/log/mongodb/mongod.log && node src/index.js
