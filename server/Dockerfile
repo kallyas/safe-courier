@@ -7,21 +7,17 @@ WORKDIR /app
 # Install Python and build essentials
 RUN apk add --no-cache python3 make g++
 
-# Copy package.json and package-lock.json
-COPY server/package.json server/package-lock.json ./
-
-# Add the Alpine Linux v3.6 main and community repositories
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
-
-RUN apk update
-
-# Install MongoDB tools from the added repositories
-RUN apk add --no-cache mongodb mongodb-tools
+# Install MongoDB and MongoDB tools from Alpine Edge repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories
+RUN apk update && apk add --no-cache mongodb mongodb-tools
 
 # Create a directory for MongoDB data and logs
 RUN mkdir -p /data/db /var/log/mongodb
-RUN chown 'root' /data/db
+
+# Initialize the data directory and set permissions
+RUN mongod --fork --logpath /var/log/mongodb/mongod.log --dbpath /data/db --smallfiles --port 27017 && \
+    sleep 5 && \
+    mongo admin --eval "db.createUser({ user: 'admin', pwd: 'password', roles: [ 'root' ] });"
 
 # Install OpenRC, which is used to manage system services
 RUN apk add --no-cache openrc
@@ -33,4 +29,4 @@ RUN rc-update add mongodb default
 EXPOSE 5000
 
 # Start MongoDB and your server
-CMD rc-service mongodb start && mongod --fork --logpath /var/log/mongodb/mongod.log && node src/index.js
+CMD rc-service mongodb start && node src/index.js
