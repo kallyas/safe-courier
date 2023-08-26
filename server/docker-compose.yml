@@ -1,24 +1,32 @@
-# use version 3
-version: "3"
+version: '3'
+
 services:
-  node-app:
-    build: .
-    ports:
-      - "5000:5000"
-    environment:
-      - PORT=5000
+  server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+      args:
+        - ARCH=amd64
+    image: idenmorisha/safe-courier-backend:latest
     depends_on:
       - mongo
 
+  # MongoDB
   mongo:
-    image: mongo:3.6
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=s3cr3tpwd
+    image: mongo:latest
+    ports:
+      - "27017:27017"
     volumes:
-      - mongo-db:/data/db
+      - mongo_data:/data/db
 
-  redis:
-    image: redis:3.2
+  # Uncomment the following section if you want to include the 'client' service
+  # client:
+  #   build:
+  #     context: .
+  #     dockerfile: ./client/Dockerfile
+  #     args:
+  #       - ARCH=amd64
+  #   image: idenmorisha/safe-courier-frontend:latest
+
 volumes:
-  mongo-db:
+  mongo_data:
