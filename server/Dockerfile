@@ -4,6 +4,9 @@ FROM node:lts-alpine
 # Set the working directory in the container
 WORKDIR /app
 
+# Install Python and build essentials
+RUN apk add --no-cache python3 make g++
+
 # Copy package.json and package-lock.json
 COPY server/package.json server/package-lock.json ./
 
