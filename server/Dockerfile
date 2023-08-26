@@ -1,37 +1,38 @@
-# Use the official Node.js image as the base image
-FROM node:lts-alpine
+# Use the official Ubuntu image as the base image
+FROM ubuntu:20.04
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Install Python and build essentials
-RUN apk add --no-cache python3 make g++
+# Install essential packages
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
-# Add the Alpine Linux v3.6 main and community repositories
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
-RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
-
-# Update the repository cache
-RUN apk update
-
-# Install MongoDB version 3.4.4
-RUN apk add mongodb=3.4.4-r0
-
-# Display MongoDB version
-RUN mongo --version
+# Install MongoDB and MongoDB tools
+RUN apt-get update && apt-get install -y mongodb
 
 # Create a directory for MongoDB data and logs
 RUN mkdir -p /data/db /var/log/mongodb
-RUN chown 'root' /data/db
 
-# Install OpenRC, which is used to manage system services
-RUN apk add --no-cache openrc
+# Initialize the data directory and set permissions
+RUN mongod --fork --logpath /var/log/mongodb/mongod.log --dbpath /data/db --smallfiles --port 27017 && \
+    sleep 5 && \
+    mongo admin --eval "db.createUser({ user: 'admin', pwd: 'password', roles: [ 'root' ] });"
 
-# Enable MongoDB to start at boot
-RUN rc-update add mongodb default
+# Install Node.js and npm
+RUN apt-get update && apt-get install -y nodejs npm
 
 # Expose the port that your Node.js Express app listens on (e.g., 3000)
 EXPOSE 5000
 
+# Install OpenRC, which is used to manage system services (Ubuntu uses systemd, not OpenRC)
+RUN apt-get update && apt-get install -y systemd
+
+# Enable MongoDB to start at boot
+RUN systemctl enable mongodb
+
 # Start MongoDB and your server
-CMD rc-service mongodb start && mongod --fork --logpath /var/log/mongodb/mongod.log && node src/index.js
+CMD systemctl start mongodb && node src/index.js
