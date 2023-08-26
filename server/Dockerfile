@@ -14,11 +14,14 @@ COPY server/package.json server/package-lock.json ./
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
 RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
 
+RUN apk update
+
 # Install MongoDB tools from the added repositories
-RUN apk add --no-cache mongodb-tools
+RUN apk add --no-cache mongodb mongodb-tools
 
 # Create a directory for MongoDB data and logs
 RUN mkdir -p /data/db /var/log/mongodb
+RUN chown 'root' /data/db
 
 # Install OpenRC, which is used to manage system services
 RUN apk add --no-cache openrc
