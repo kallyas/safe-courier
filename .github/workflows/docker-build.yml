@@ -47,4 +47,4 @@ jobs:
       #     file: ./client/Dockerfile
       #     platforms: linux/amd64,linux/arm64
       #     push: true
-          tags: idenmorisha/safe-courier-frontend:latest
+          # tags: idenmorisha/safe-courier-frontend:latest
