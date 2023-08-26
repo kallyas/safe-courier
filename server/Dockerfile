@@ -17,4 +17,4 @@ RUN npm install --production
 EXPOSE 5000
 
 # Start your Node.js server
-CMD ["npm", "start"]
+CMD ["node", "$(find src -name 'index.js')"]
