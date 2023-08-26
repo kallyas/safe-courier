@@ -10,11 +10,12 @@ RUN apk add --no-cache python3 make g++
 # Copy package.json and package-lock.json
 COPY server/package.json server/package-lock.json ./
 
-# Install dependencies
-RUN npm install --production
+# Add the Alpine Linux v3.6 main and community repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
+RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
 
-# Install MongoDB server
-RUN apk add --no-cache mongodb
+# Install MongoDB tools from the added repositories
+RUN apk add --no-cache mongodb-tools
 
 # Create a directory for MongoDB data and logs
 RUN mkdir -p /data/db /var/log/mongodb
