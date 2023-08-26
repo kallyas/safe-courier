@@ -1,17 +1,32 @@
 version: '3'
-services:
-  client:
-    build:
-      context: .
-      dockerfile: client/Dockerfile
-    ports:
-      - "3000:80" # Map port 3000 on your host to port 80 in the container
-    depends_on:
-      - server # Ensure the server is started before the client
 
+services:
   server:
     build:
       context: .
-      dockerfile: server/Dockerfile
+      dockerfile: ./server/Dockerfile
+      args:
+        - ARCH=amd64
+    image: idenmorisha/safe-courier-backend:latest
+    depends_on:
+      - mongo
+
+  # MongoDB
+  mongo:
+    image: mongo:latest
     ports:
-      - "8080:5000" # Map port 8080 on your host to port 3000 in the container
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  # Uncomment the following section if you want to include the 'client' service
+  # client:
+  #   build:
+  #     context: .
+  #     dockerfile: ./client/Dockerfile
+  #     args:
+  #       - ARCH=amd64
+  #   image: idenmorisha/safe-courier-frontend:latest
+
+volumes:
+  mongo_data:
