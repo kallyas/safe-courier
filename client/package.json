@@ -26,7 +26,7 @@
     "jwt-decode": "^3.1.2",
     "mapbox-gl": "^2.9.1",
     "moment-timezone": "^0.5.34",
-    "node-sass": "^7.0.1",
+    "node-sass": "^9.0.0",
     "react": "^17.0.2",
     "react-bootstrap-table-next": "^4.0.3",
     "react-bootstrap-table2-paginator": "^2.1.2",
