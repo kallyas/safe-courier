@@ -13,8 +13,8 @@ COPY server/package.json server/package-lock.json ./
 # Install dependencies
 RUN npm install --production
 
-# Install MongoDB
-RUN apk add --no-cache mongodb-tools
+# Install MongoDB server
+RUN apk add --no-cache mongodb
 
 # Create a directory for MongoDB data and logs
 RUN mkdir -p /data/db /var/log/mongodb
