@@ -20,8 +20,14 @@ RUN apk add --no-cache mongodb-tools
 # Create a directory for MongoDB data and logs
 RUN mkdir -p /data/db /var/log/mongodb
 
+# Install OpenRC, which is used to manage system services
+RUN apk add --no-cache openrc
+
+# Enable MongoDB to start at boot
+RUN rc-update add mongodb default
+
 # Expose the port that your Node.js Express app listens on (e.g., 3000)
 EXPOSE 5000
 
 # Start MongoDB and your server
-CMD mongod --fork --logpath /var/log/mongodb/mongod.log && node src/index.js
+CMD rc-service mongodb start && mongod --fork --logpath /var/log/mongodb/mongod.log && node src/index.js
