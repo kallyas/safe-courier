@@ -35,5 +35,5 @@ jobs:
       # Build and push using Docker Compose
       - name: Build and push images using Docker Compose
         run: |
-          docker-compose -f docker-compose.yml build
-          docker-compose -f docker-compose.yml push
+          docker-compose -f ./server/docker-compose.yml build
+          docker-compose -f ./server/docker-compose.yml push
