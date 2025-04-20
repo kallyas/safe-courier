@@ -1,23 +1,45 @@
-# Use the official Node.js Alpine image as the base image
-FROM node:14-alpine
+# Build stage
+FROM node:18-alpine AS build
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Install Python and build essentials
-RUN apk add --no-cache python3 make g++
-
 # Copy package.json and package-lock.json
-COPY server/package.json server/package-lock.json ./
+COPY package*.json ./
 
 # Install dependencies
-RUN npm install --production
+RUN npm ci --only=production
 
-# Expose the port that your Node.js Express app listens on (e.g., 5000)
+# Production stage
+FROM node:18-alpine
+
+# Set environment variables
+ENV NODE_ENV=production
+ENV PORT=5000
+
+# Set working directory
+WORKDIR /app
+
+# Install production dependencies
+COPY --from=build /app/node_modules ./node_modules
+
+# Copy application code
+COPY . .
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001 && \
+    chown -R nodejs:nodejs /app
+
+# Set user
+USER nodejs
+
+# Expose port
 EXPOSE 5000
 
-# Copy the rest of the code from ./server to the working directory /app
-COPY server/ ./
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:5000/health || exit 1
 
-# Start your Node.js server
-CMD ["node", "$(find src -name 'index.js')"]
+# Start command
+CMD ["node", "src/index.js"]
