@@ -1,8 +1,5 @@
-const envs = {
-  DEVELOPMENT: "development",
-  PRODUCTION: "production",
-  LOCAL: "local",
-  TEST: "test"
-};
-
-module.exports = envs;
+// src/server/config/envTypes.js
+export const DEVELOPMENT = "development";
+export const PRODUCTION = "production";
+export const LOCAL = "local";
+export const TEST = "test";
