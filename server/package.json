@@ -16,8 +16,7 @@
     "test:system": "NODE_ENV=test mocha src/server/test/system.test.js",
     "test:health": "NODE_ENV=test mocha src/server/test/health.test.js",
     "lint": "eslint .",
-    "format": "prettier --write 'src/**/*.js'",
-    "prepare": "husky install"
+    "format": "prettier --write 'src/**/*.js'"
   },
   "repository": {
     "type": "git",
