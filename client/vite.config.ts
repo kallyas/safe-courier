@@ -29,7 +29,23 @@ export default defineConfig({
           if (!id.includes("node_modules")) return undefined;
           if (id.includes("@mui/x-data-grid")) return "mui-datagrid";
           if (id.includes("@mui") || id.includes("@emotion")) return "mui";
-          if (id.includes("react")) return "react";
+          // Keep react-dom's own runtime deps bundled with react/react-dom.
+          // Splitting them into "vendor" creates a circular chunk dependency
+          // (vendor needs react, react needs scheduler from vendor), which
+          // can trigger "Cannot access '<var>' before initialization" at
+          // runtime since Rollup can't guarantee a safe load order for
+          // mutually-dependent chunks.
+          if (
+            id.includes("react") ||
+            id.includes("/scheduler/") ||
+            id.includes("/use-sync-external-store/") ||
+            id.includes("/prop-types/") ||
+            id.includes("/object-assign/") ||
+            id.includes("@tanstack") ||
+            id.includes("notistack") ||
+            id.includes("@hookform")
+          )
+            return "react";
           return "vendor";
         },
       },
