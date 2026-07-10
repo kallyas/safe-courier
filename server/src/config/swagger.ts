@@ -1,5 +1,5 @@
-// src/server/swagger.js
-export default {
+// OpenAPI 3.0 specification served at /api/v1/api-docs
+const swaggerDocument = {
   openapi: "3.0.0",
   info: {
     title: "Safe Courier API",
@@ -2566,3 +2566,5 @@ export default {
     },
   },
 };
+
+export default swaggerDocument;

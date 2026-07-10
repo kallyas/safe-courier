@@ -1,45 +1,39 @@
-# Build stage
-FROM node:18-alpine AS build
+# Build stage — install all deps and compile TypeScript to dist/
+FROM node:20-alpine AS build
 
-# Set working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json
 COPY package*.json ./
+RUN npm ci
 
-# Install dependencies
-RUN npm ci --only=production
+COPY tsconfig*.json ./
+COPY src ./src
+RUN npm run build
+
+# Prune dev dependencies for the runtime image
+RUN npm prune --omit=dev
 
 # Production stage
-FROM node:18-alpine
+FROM node:20-alpine
 
-# Set environment variables
 ENV NODE_ENV=production
 ENV PORT=5000
 
-# Set working directory
 WORKDIR /app
 
-# Install production dependencies
 COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY package*.json ./
 
-# Copy application code
-COPY . .
-
-# Create non-root user
+# Create and use a non-root user
 RUN addgroup -g 1001 -S nodejs && \
     adduser -S nodejs -u 1001 && \
     chown -R nodejs:nodejs /app
-
-# Set user
 USER nodejs
 
-# Expose port
 EXPOSE 5000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:5000/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:5000/api/v1/health || exit 1
 
-# Start command
-CMD ["node", "src/index.js"]
+CMD ["node", "dist/index.js"]

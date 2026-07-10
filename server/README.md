@@ -27,36 +27,47 @@ Safe Courier API is a modern backend service that powers the Safe Courier delive
 - **Search Functionality**: Advanced search for users and parcels
 - **Role-Based Access Control**: Different permissions for users, couriers, and administrators
 - **Real-time Tracking**: Track parcels with their current status and location
-- **Caching**: Redis-based caching for improved performance
+- **Token Revocation**: Optional Redis-backed JWT blacklist on logout
 - **Logging**: Comprehensive logging with Winston
 - **Rate Limiting**: Protection against abuse and DoS attacks
 - **Swagger Documentation**: Interactive API documentation
 
 ## Technology Stack
 
+- **TypeScript**: End-to-end static typing
 - **Node.js**: JavaScript runtime
 - **Express.js**: Web framework
-- **MongoDB**: NoSQL database
-- **Mongoose**: MongoDB ODM
-- **Redis**: Caching and token management
+- **MongoDB / Mongoose**: Database and typed ODM
+- **Redis**: Optional token revocation store
 - **JWT**: Authentication
-- **Joi**: Validation
+- **Zod**: Schema validation (requests + environment config) with inferred types
 - **Winston**: Logging
-- **Helmet**: Security headers
-- **Compression**: Response compression
+- **Helmet / CORS / Compression**: Security headers, CORS, response compression
+- **Vitest + Supertest**: Testing (with `mongodb-memory-server`)
 - **Docker**: Containerization
 - **Swagger**: API documentation
 
 ## Architecture
 
-The application follows a modular architecture with separation of concerns:
+The application uses a **feature-module** layout with a clear service layer that
+separates HTTP concerns from business logic and data access:
 
-- **controllers**: Handle HTTP requests and responses
-- **models**: Define data schemas and business logic
-- **routes**: Define API endpoints
-- **Middlewares**: Handle cross-cutting concerns
-- **Utils**: Utility functions and helpers
-- **Config**: Configuration settings
+```
+src/
+  app.ts              # Express app factory (no side effects)
+  index.ts            # Entrypoint: connect deps, listen, graceful shutdown
+  config/             # env (Zod-validated), logger, database, redis, swagger
+  shared/             # ApiError, asyncHandler, pagination, ObjectId guards, types
+  middlewares/        # authenticate, authorize, validate, errorHandler, rateLimiter
+  modules/
+    <feature>/        # model · validation · service · controller · routes (+ tests)
+  tests/              # shared setup + helpers, cross-cutting system tests
+```
+
+Each request flows: **route → validate (Zod) → authenticate/authorize →
+controller (thin) → service (business logic) → model**. Errors are thrown as
+`ApiError` and normalized by a single error handler, so controllers contain no
+`try/catch` boilerplate.
 
 ## Installation & Setup
 
@@ -108,14 +119,38 @@ The application follows a modular architecture with separation of concerns:
 #### Manual Deployment
 
 1. Set environment variables for production
-2. Build the application:
+2. Install dependencies and compile TypeScript:
    ```bash
-   npm ci --only=production
+   npm ci
+   npm run build
    ```
 3. Start the server:
    ```bash
    npm start
    ```
+
+## Scripts
+
+| Script | Description |
+| --- | --- |
+| `npm run dev` | Start the dev server with hot reload (`tsx watch`) |
+| `npm run build` | Compile TypeScript to `dist/` |
+| `npm start` | Run the compiled server (`dist/index.js`) |
+| `npm run typecheck` | Type-check without emitting |
+| `npm test` | Run the Vitest suite |
+| `npm run test:coverage` | Run tests with coverage |
+| `npm run lint` | Lint with ESLint |
+| `npm run format` | Format with Prettier |
+
+## Testing
+
+Tests run on **Vitest** with **Supertest** driving the Express app directly (no
+listening server) and an in-memory MongoDB via `mongodb-memory-server`, so no
+external services are required:
+
+```bash
+npm test
+```
 
 ## Environment Variables
 
@@ -173,12 +208,11 @@ http://localhost:5000/api/v1/api-docs
 
 The API includes several performance optimizations:
 
-1. **Caching**: Redis-based caching for database queries
-2. **Compression**: Response compression to reduce bandwidth
-3. **Connection Pooling**: MongoDB connection pooling
-4. **Pagination**: All list endpoints support pagination
-5. **Indexing**: Strategic database indexes for faster queries
-6. **Efficient Queries**: Optimized MongoDB queries with projection
+1. **Compression**: Response compression to reduce bandwidth
+2. **Connection Pooling**: MongoDB connection pooling
+3. **Pagination**: All list endpoints support bounded pagination
+4. **Indexing**: Strategic database indexes (incl. text indexes) for faster queries
+5. **Efficient Queries**: Projection and parallelized count/fetch queries
 
 ## Security Features
 
@@ -188,7 +222,7 @@ The API implements multiple security measures:
 2. **Rate Limiting**: Prevent abuse and brute force attacks
 3. **JWT with Expiry**: Secure authentication with token expiration
 4. **Password Hashing**: Secure password storage using bcrypt
-5. **Input Validation**: Joi validation for all inputs
+5. **Input Validation**: Zod validation for all inputs and environment config
 6. **CORS Protection**: Configurable CORS policy
 7. **Role-Based Access Control**: Different permissions based on user roles
 8. **Token Blacklisting**: Invalidate tokens on logout
